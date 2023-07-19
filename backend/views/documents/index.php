@@ -142,4 +142,14 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
+    <p> 
+        <div class="col-md-12">
+                <div class="alert alert-info">
+                    * ระบบจะเตือนเอกสารหมดอายุที่ต่ำกว่า 60 วัน
+                    <br>
+                    * เอกสาร1ชุด สามารถอัพโหลดได้สูงสุด 10 ไฟล์ ไม่สามารถอัพโหลดรูปภาพได้
+                </div>
+
+            </div></p>
+   
 </div>
