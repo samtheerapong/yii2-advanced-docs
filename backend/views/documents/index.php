@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'title',
                             'format' => 'html',
                             'value' => function ($model) {
-                                return $model->title;
+                                return Html::a($model->title, ['view', 'id' => $model->id]);
                             },
                         ],
 
@@ -142,14 +142,17 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
-    <p> 
-        <div class="col-md-12">
-                <div class="alert alert-info">
-                    * ระบบจะเตือนเอกสารหมดอายุที่ต่ำกว่า 60 วัน
-                    <br>
-                    * เอกสาร1ชุด สามารถอัพโหลดได้สูงสุด 10 ไฟล์ ไม่สามารถอัพโหลดรูปภาพได้
-                </div>
+    <p>
+    <div class="col-md-12">
+        <div class="alert alert-info">
+            * ระบบจะเตือนเอกสารหมดอายุที่ต่ำกว่า 60 วัน
+            <br>
+            * เอกสาร1ชุด สามารถอัพโหลดได้สูงสุด 10 ไฟล์ เป็นเอกสารเท่านั้น ไม่สามารถอัพโหลดรูปภาพได้
+            <br>
+            <p>สอบถามการใช้งาน Line ID = sam-it</p>
+        </div>
 
-            </div></p>
-   
+    </div>
+    </p>
+
 </div>
