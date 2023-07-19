@@ -13,6 +13,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\UploadedFile;
 use Exception;
+use yii\filters\AccessControl;
 use yii\helpers\BaseFileHelper;
 
 /**
@@ -25,17 +26,24 @@ class DocumentsController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index', 'view', 'create', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'roles' => ['@'], // Allow logged-in users
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'roles' => ['admin'], // Allow users with the "admin" role
                     ],
                 ],
-            ]
-        );
+            ],
+        ];
     }
 
     /**
@@ -66,10 +74,6 @@ class DocumentsController extends Controller
      */
     public function actionView($id)
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['site/login']); // หากไม่ได้เข้าสู่ระบบให้ redirect ไปยังหน้า login
-        }
-
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -82,10 +86,6 @@ class DocumentsController extends Controller
      */
     public function actionCreate()
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['site/login']); // หากไม่ได้เข้าสู่ระบบให้ redirect ไปยังหน้า login
-        }
-
         $model = new Documents();
         $ref = substr(Yii::$app->getSecurity()->generateRandomString(), 10);
 
@@ -123,10 +123,6 @@ class DocumentsController extends Controller
      */
     public function actionUpdate($id)
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['site/login']); // หากไม่ได้เข้าสู่ระบบให้ redirect ไปยังหน้า login
-        }
-
         $model = $this->findModel($id);
 
         $tempDocs = $model->docs;
@@ -157,10 +153,6 @@ class DocumentsController extends Controller
      */
     public function actionDelete($id)
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(['site/login']); // หากไม่ได้เข้าสู่ระบบให้ redirect ไปยังหน้า login
-        }
-
         $model = $this->findModel($id);
         //remove upload file & data
         $this->removeUploadDir($model->ref);

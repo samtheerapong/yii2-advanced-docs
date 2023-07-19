@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\Status;
 use backend\models\StatusSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -18,17 +19,24 @@ class StatusController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::class,
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index', 'view', 'create', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'roles' => ['@'], // Allow logged-in users
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'roles' => ['admin'], // Allow users with the "admin" role
                     ],
                 ],
-            ]
-        );
+            ],
+        ];
     }
 
     /**
