@@ -7,17 +7,17 @@ Changelog V1.0.0
 ######################
 Demo Version 
 ######################
-User: admin@admin.com
-Password: admin123456
+- User: admin@admin.com
+- Password: admin123456
 
 ######################
 #ENV
 ######################
-php = Version 7.4+
-Mysql = Version 5+
+- php = Version 7.4+
+- Mysql = Version 5+
 
-"yiisoft/yii2-bootstrap5": "~2.0.2",
-"kartik-v/yii2-widgets": "dev-master",
-"kartik-v/yii2-widget-select2": "dev-master",
-"mdmsoft/yii2-autonumber": "*"
+- "yiisoft/yii2-bootstrap5": "~2.0.2",
+- "kartik-v/yii2-widgets": "dev-master",
+- "kartik-v/yii2-widget-select2": "dev-master",
+- "mdmsoft/yii2-autonumber": "*"
 
