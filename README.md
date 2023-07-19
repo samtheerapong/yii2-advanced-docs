@@ -7,7 +7,7 @@ Changelog V1.0.0
 ######################
 Demo Version 
 ######################
-- User: admin@admin.com
+- User: admin
 - Password: admin123456
 
 ######################

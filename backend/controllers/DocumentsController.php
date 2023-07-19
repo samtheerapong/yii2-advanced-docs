@@ -2,13 +2,18 @@
 
 namespace backend\controllers;
 
+use Yii;
 use backend\models\Documents;
 use backend\models\DocumentsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use mdm\autonumber\AutoNumber;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 use yii\web\UploadedFile;
+use Exception;
+use yii\helpers\BaseFileHelper;
 
 /**
  * DocumentsController implements the CRUD actions for Documents model.
@@ -43,6 +48,10 @@ class DocumentsController extends Controller
         $searchModel = new DocumentsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
+        $dataProvider->pagination = [
+            'pageSize' => 10, // Number of items per page
+        ];
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -57,6 +66,10 @@ class DocumentsController extends Controller
      */
     public function actionView($id)
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login']); // หากไม่ได้เข้าสู่ระบบให้ redirect ไปยังหน้า login
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -69,26 +82,31 @@ class DocumentsController extends Controller
      */
     public function actionCreate()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login']); // หากไม่ได้เข้าสู่ระบบให้ redirect ไปยังหน้า login
+        }
+
         $model = new Documents();
+        $ref = substr(Yii::$app->getSecurity()->generateRandomString(), 10);
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                // Auto Number
-                $model->numbers = AutoNumber::generate(date('Ym') . '-???');
+        if ($model->load(Yii::$app->request->post())) {
+            //  Auto Number
+            $AutoNumber = AutoNumber::generate(date('Ym') . '-???');
+            $model->numbers = $AutoNumber;
 
-                // uploadfile
-                $file = UploadedFile::getInstance($model, 'pdf_file');
-                if ($file !== null) {
-                    $model->files = $file->name;
-                    $file->saveAs('uploads/' . $file->name);
-                }
+            // uploadfile
+            $this->CreateDir($model->ref);
+            $model->docs = $this->uploadMultipleFile($model);
 
-                // save
-                $model->save();
+
+            if ($model->save()) {
+
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Created Successfully'));
+
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
-            $model->loadDefaultValues();
+            $model->ref =  $ref;
         }
 
         return $this->render('create', [
@@ -105,18 +123,23 @@ class DocumentsController extends Controller
      */
     public function actionUpdate($id)
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login']); // หากไม่ได้เข้าสู่ระบบให้ redirect ไปยังหน้า login
+        }
+
         $model = $this->findModel($id);
+
+        $tempDocs = $model->docs;
 
         if ($this->request->isPost && $model->load($this->request->post())) {
 
-            // uploadfile
-            $file = UploadedFile::getInstance($model, 'pdf_file');
-            if (isset($file->size) && $file !== null) {
-                $model->files = $file->name;
-                $file->saveAs('uploads/' . $file->name);
-            }
+            $this->CreateDir($model->ref);
+            $model->docs = $this->uploadMultipleFile($model, $tempDocs);
 
             $model->save();
+
+            Yii::$app->session->setFlash('success', Yii::t('app', 'Updated Successfully'));
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -134,10 +157,22 @@ class DocumentsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login']); // หากไม่ได้เข้าสู่ระบบให้ redirect ไปยังหน้า login
+        }
+
+        $model = $this->findModel($id);
+        //remove upload file & data
+        $this->removeUploadDir($model->ref);
+        // Uploads::deleteAll(['ref' => $model->ref]);
+
+        $model->delete();
 
         return $this->redirect(['index']);
+        // $this->findModel($id)->delete();
+        // return $this->redirect(['index']);
     }
+
 
     /**
      * Finds the Documents model based on its primary key value.
@@ -153,5 +188,97 @@ class DocumentsController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+
+    /***************** action Deletefile ******************/
+    public function actionDeletefile($id, $field, $fileName)
+    {
+        $status = ['success' => false];
+        if (in_array($field, ['docs'])) {
+            $model = $this->findModel($id);
+            $files =  Json::decode($model->{$field});
+            if (array_key_exists($fileName, $files)) {
+                if ($this->deleteFile('file', $model->ref, $fileName)) {
+                    $status = ['success' => true];
+                    unset($files[$fileName]);
+                    $model->{$field} = Json::encode($files);
+                    $model->save();
+                }
+            }
+        }
+        echo json_encode($status);
+    }
+
+
+    /***************** deleteFile ******************/
+    private function deleteFile($type = 'file', $ref, $fileName)
+    {
+        if (in_array($type, ['file', 'thumbnail'])) {
+            if ($type === 'file') {
+                $filePath = Documents::getUploadPath() . $ref . '/' . $fileName;
+            } else {
+                $filePath = Documents::getUploadPath() . $ref . '/thumbnail/' . $fileName;
+            }
+            @unlink($filePath);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    /***************** upload MultipleFile ******************/
+    private function uploadMultipleFile($model, $tempFile = null)
+    {
+        $files = [];
+        $json = '';
+        $tempFile = Json::decode($tempFile);
+        $UploadedFiles = UploadedFile::getInstances($model, 'docs');
+        if ($UploadedFiles !== null) {
+            foreach ($UploadedFiles as $file) {
+                try {
+                    $oldFileName = $file->basename . '.' . $file->extension;
+                    $newFileName = md5($file->basename . time()) . '.' . $file->extension;
+                    $file->saveAs(Documents::UPLOAD_FOLDER . '/' . $model->ref . '/' . $newFileName);
+                    $files[$newFileName] = $oldFileName;
+                } catch (Exception $e) {
+                }
+            }
+            $json = json::encode(ArrayHelper::merge($tempFile, $files));
+        } else {
+            $json = $tempFile;
+        }
+        return $json;
+    }
+
+    /***************** Create Dir ******************/
+    private function CreateDir($folderName)
+    {
+        if ($folderName != NULL) {
+            $basePath = Documents::getUploadPath();
+            if (BaseFileHelper::createDirectory($basePath . $folderName, 0777)) {
+                BaseFileHelper::createDirectory($basePath . $folderName . '/thumbnail', 0777);
+            }
+        }
+        return;
+    }
+
+    /***************** Remove Upload Dir ******************/
+    private function removeUploadDir($dir)
+    {
+        BaseFileHelper::removeDirectory(Documents::getUploadPath() . $dir);
+    }
+
+
+    /***************** Download ******************/
+    public function actionDownload($id, $file, $fullname)
+    {
+        $model = $this->findModel($id);
+        if (!empty($model->ref) && !empty($model->docs)) {
+            Yii::$app->response->sendFile($model->getUploadPath() . '/' . $model->ref . '/' . $file, $fullname);
+        } else {
+            $this->redirect(['/documents/view', 'id' => $id]);
+        }
     }
 }

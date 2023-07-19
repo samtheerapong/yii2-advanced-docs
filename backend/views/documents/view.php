@@ -10,14 +10,14 @@ $this->title = $model->numbers;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Documents'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+
 ?>
 <div class="documents-view">
 
     <div style="display: flex; justify-content: space-between;">
         <p>
             <?= Html::a('<i class="fas fa-chevron-left"></i> ' . Yii::t('app', 'Go Back'), ['index'], ['class' => 'btn btn-primary']) ?>
-
-            <?= Html::a('<i class="fas fa-download"></i> ' . Yii::t('app', 'Download'), ['download', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
+            <!-- <?= Html::a('<i class="fas fa-download"></i> ' . Yii::t('app', 'Download'), ['download', 'id' => $model->id], ['class' => 'btn btn-info']) ?> -->
         </p>
 
         <p style="text-align: right;">
@@ -34,11 +34,23 @@ $this->params['breadcrumbs'][] = $this->title;
         </p>
     </div>
 
+
     <div class="card border-secondary">
         <div class="card-header text-white bg-secondary">
             <?= Html::encode($this->title) ?>
         </div>
         <div class="card-body">
+
+
+            <div class="col-md-12">
+                <!-- <p>วันหมดอายุ: <?= Yii::$app->formatter->asDate($model->expiration_date, 'php:d/m/Y') ?></p> -->
+
+                <div class="alert alert-danger">
+                    เอกสารนี้จะหมดอายุในอีก: <?= $model->getDaysToExpiration() ?> วัน
+                </div>
+
+            </div>
+
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
@@ -46,10 +58,27 @@ $this->params['breadcrumbs'][] = $this->title;
                     'numbers',
                     'title',
                     'description:ntext',
+                    'expiration_date:date',
                     'created_at',
-                    'updated_at',
-                    'created_by',
-                    'updated_by',
+                    // 'updated_at',
+                    // 'created_by',
+                    [
+                        'attribute' => 'created_by',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            $user = $model->createdBy->thai_name;
+                            return $user ? $model->createdBy->thai_name : $model->createdBy->username;
+                        },
+                    ],
+                    // 'updated_by',
+                    // [
+                    //     'attribute' => 'updated_by',
+                    //     'format' => 'html',
+                    //     'value' => function ($model) {
+                    //         $user = $model->createdBy->thai_name;
+                    //         return $user ? $model->createdBy->thai_name : $model->createdBy->username;
+                    //     },
+                    // ],
                     // 'categories_id',
                     [
                         'attribute' => 'categories_id',
@@ -72,8 +101,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 . ' </b></span>';
                         },
                     ],
-                    'ref',
-                    'files:ntext',
+                    // 'ref',
+                    // 'files:ntext',
+                    [
+                        'attribute' => 'docs',
+                        'format' => 'html',
+                        'value' => $model->listDownloadFiles('docs')
+                    ],
                 ],
             ]) ?>
 

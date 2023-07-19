@@ -6,6 +6,7 @@ use kartik\widgets\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\widgets\FileInput;
+use kartik\widgets\DatePicker;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
@@ -26,6 +27,8 @@ use yii\helpers\Url;
         <div class="card-body">
             <div class="row">
 
+                <?= $form->field($model, 'ref')->hiddenInput()->label(false); ?>
+
                 <div class="col-md-12" style="display: none;">
                     <?= $form->field($model, 'numbers')->textInput(['maxlength' => true, 'disabled' => true]) ?>
                 </div>
@@ -38,15 +41,29 @@ use yii\helpers\Url;
                     <?= $form->field($model, 'description')->textarea(['rows' => 2]) ?>
                 </div>
 
-                <div class="col-md-6">
-                    <?= $form->field($model, 'ref')->textInput(['maxlength' => true]) ?>
+                <div class="col-md-4">
+                    <?= $form->field($model, 'expiration_date')->widget(
+                        DatePicker::class,
+                        [
+                            'language' => 'th',
+                            'options' => [
+                                'placeholder' => Yii::t('app', 'Select...'),
+                                'required' => true,
+                            ],
+                            'pluginOptions' => [
+                                'format' => 'yyyy-mm-dd',
+                                'todayHighlight' => true,
+                                'autoclose' => true,
+                            ]
+                        ]
+                    ); ?>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <?= $form->field($model, 'categories_id')->widget(Select2::class, [
                         'language' => 'th',
                         'data' => ArrayHelper::map(Categories::find()->all(), 'id', 'name'),
-                        'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                        // 'options' => ['placeholder' => Yii::t('app', 'Select...')],
                         'pluginOptions' => [
                             'allowClear' => true
                         ],
@@ -54,24 +71,33 @@ use yii\helpers\Url;
                     ?>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <?= $form->field($model, 'status_id')->widget(Select2::class, [
                         'language' => 'th',
                         'data' => ArrayHelper::map(Status::find()->all(), 'id', 'name'),
-                        'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                        // 'options' => ['placeholder' => Yii::t('app', 'Select...')],
                         'pluginOptions' => [
-                            'showUpload' => false, // Hide the upload button
-                            'allowedFileExtensions' => ['pdf'], // Allow these file extensions
-                            'allowedFileTypes' => ['pdf'], // Allow only images and pdf files
+                            'allowClear' => true
                         ],
                     ]);
                     ?>
                 </div>
 
                 <div class="col-md-12">
-                    <?= $form->field($model, 'pdf_file')->widget(FileInput::classname(), [
-                        'options' => ['multiple' => false], // Allow selecting multiple files (if needed)
-                        'pluginOptions' => ['previewFileType' => 'any']
+                    <?= $form->field($model, 'docs[]')->widget(FileInput::class, [
+                        'options' => [
+                            'multiple' => true
+                        ],
+                        'pluginOptions' => [
+                            'initialPreview' => $model->initialPreview($model->docs, 'docs', 'file'),
+                            'initialPreviewConfig' => $model->initialPreview($model->docs, 'docs', 'config'),
+                            'allowedFileExtensions' => ['pdf', 'doc', 'docx', 'xls', 'xlsx'],
+                            'showPreview' => true,
+                            'showCaption' => true,
+                            'showRemove' => true,
+                            'showUpload' => false,
+                            'overwriteInitial' => false
+                        ]
                     ]); ?>
                 </div>
             </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 18, 2023 at 10:02 AM
+-- Generation Time: Jul 19, 2023 at 08:42 AM
 -- Server version: 5.7.39
 -- PHP Version: 7.4.9
 
@@ -39,8 +39,8 @@ CREATE TABLE `auto_number` (
 --
 
 INSERT INTO `auto_number` (`group`, `number`, `optimistic_lock`, `update_time`) VALUES
-('202307-???', 15, 1, 1689673698),
-('5bce8a536749f4b5ebc03a256521426b', 3, 1, 1689673698),
+('202307-???', 29, 1, 1689756090),
+('5bce8a536749f4b5ebc03a256521426b', 17, 1, 1689756090),
 ('aa12af1f00f3057c5a86dd99ac6b3fcd', 9, 1, 1689642329);
 
 -- --------------------------------------------------------
@@ -61,10 +61,10 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `details`, `color`) VALUES
-(1, 'COA', 'ใบรายงานผลการตรวจวิเคราะห์สินค้า Certificate of Analysis', '#A1CCD1'),
+(1, 'General', 'เอกสารทั่วไป', '#6aa84f'),
 (2, 'COI', 'หนังสือรับรองสูตรส่วนประกอบ (Certificate of Ingredient)', '#F31559'),
 (3, 'ISO', 'International Organization for Standardization', '#6527BE'),
-(4, 'General', 'เอกสารทั่วไป', '#090580'),
+(4, 'COA', 'ใบรายงานผลการตรวจวิเคราะห์สินค้า Certificate of Analysis', '#090580'),
 (5, 'Sale', 'เอกสารสำหรับฝ่ายขาย', '#E4A5FF'),
 (6, 'QC', 'เอกสารสำหรับแผนกควบคุมคุณภาพ', '#F2BE22'),
 (7, 'Report', 'รายงาน', '#6aa84f');
@@ -80,6 +80,7 @@ CREATE TABLE `documents` (
   `numbers` varchar(255) DEFAULT NULL COMMENT 'รหัสเอกสาร',
   `title` varchar(255) NOT NULL COMMENT 'ชื่อเอกสาร',
   `description` text COMMENT 'รายละเอียด',
+  `expiration_date` date DEFAULT NULL COMMENT 'วันที่หมดอายุ',
   `created_at` datetime DEFAULT NULL COMMENT 'วันที่เอกสาร',
   `updated_at` datetime DEFAULT NULL COMMENT 'วันที่ปรับปรุง',
   `created_by` int(11) DEFAULT NULL COMMENT 'ผู้สร้าง',
@@ -87,26 +88,19 @@ CREATE TABLE `documents` (
   `categories_id` int(11) DEFAULT NULL COMMENT 'หมวดหมู่',
   `status_id` int(11) DEFAULT '1' COMMENT 'สถานะ',
   `ref` varchar(255) DEFAULT NULL COMMENT 'อ้างอิง',
-  `files` text COMMENT 'ไฟล์เอกสาร'
+  `docs` text COMMENT 'ไฟล์เอกสาร'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `documents`
 --
 
-INSERT INTO `documents` (`id`, `numbers`, `title`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `categories_id`, `status_id`, `ref`, `files`) VALUES
-(12, '202307-001', 'ยินดีต้อนรับเข้าสู่ฝ่ายสนับสนุน Microsoft Community', '', NULL, '2023-07-18 16:53:13', NULL, NULL, 2, 2, '', 'เลิกใช้ทรัพย์สิน NB ณัฐพล En.pdf'),
-(13, '202307-002', 'แอปที่มีประสิทธิภาพระดับพรีเมียม ', '', NULL, '2023-07-18 16:53:36', NULL, NULL, 2, 1, '', 'BK23005193.pdf'),
-(14, '202307-003', 'ที่จัดเก็บข้อมูลบนระบบคลาวด์ 1 TB การรักษาความปลอดภัยขั้นสูง และอื่นๆ ', '', NULL, '2023-07-18 16:54:05', NULL, NULL, 1, 4, '', 'SHE-HS-01_Rev_12[1].pdf'),
-(15, '202307-004', 'ทั้งหมดในการสมัครใช้งานเพียงครั้งเดียวที่สะดวกสบาย', '', NULL, '2023-07-18 12:33:24', NULL, NULL, 4, 2, '', NULL),
-(16, '202307-005', 'สำหรับคำถามที่คุณแจ้งมาว่าต้องการ Download Software', '', NULL, '2023-07-18 12:33:37', NULL, NULL, 3, 3, '', NULL),
-(17, '202307-006', 'ให้การรักษาความปลอดภัยบนโลกออนไลน์ทำได้ง่ายขึ้น', '', NULL, '2023-07-18 12:33:54', NULL, NULL, 5, 3, '', NULL),
-(18, '202307-007', 'คุณจำเป็นต้องอยู่หน้าเครื่องคอมพิวเตอร์ที่มีปัญหา', '', NULL, '2023-07-18 12:34:20', NULL, NULL, 6, 4, '', NULL),
-(19, '202307-008', 'กรุณเตรียม Product Key เพื่อการตรวจสอบสถานะของไลเซนส์ด้วยครับ', '', NULL, '2023-07-18 12:34:24', NULL, NULL, 1, 1, '', NULL),
-(20, '202307-009', ' ก่อนใช้งาน คุณสามารถโทรไปยัง Microsoft Activation Team ', 'zxc3', '2023-07-18 08:05:29', '2023-07-18 16:54:44', NULL, NULL, 2, 1, 'xczxc', 'BK23004796.pdf'),
-(21, '202307-001', 'dasasd', '', '2023-07-18 16:37:00', NULL, NULL, NULL, 2, 1, '', 'Document (1).pdf'),
-(22, '202307-002', 'asdasd', '', '2023-07-18 16:48:02', '2023-07-18 16:54:21', NULL, NULL, 3, 1, '', 'QT3205_2023_v4.pdf'),
-(23, '202307-003', 'asdasdas', '', '2023-07-18 16:48:18', '2023-07-18 16:52:55', NULL, NULL, 3, 1, '', 'NT_พร้อมตาราง.pdf');
+INSERT INTO `documents` (`id`, `numbers`, `title`, `description`, `expiration_date`, `created_at`, `updated_at`, `created_by`, `updated_by`, `categories_id`, `status_id`, `ref`, `docs`) VALUES
+(32, '202307-012', 'ทดสอบ1', '', '2024-01-31', '2023-07-19 13:51:45', '2023-07-19 14:56:51', 1, 1, 1, 3, 'mAf8i89ukO_0qNsB1DdCIy', '{\"5d61ac84d62b2c03cefd138b1a6b1051.pdf\":\"Document (1) (1).pdf\"}'),
+(33, '202307-013', 'ทดสอบ2', '', '2023-08-19', '2023-07-19 14:45:50', '2023-07-19 15:17:30', 1, 1, 3, 3, 'fGKTvqQXrU4YvJGLP2dmSW', '{\"96ff04754e03bf359dce996cf400ac71.pdf\":\"PKA2023_Ver1_22-Dec-2022_10.00.pdf\"}'),
+(34, '202307-014', 'ฟหกฟหกฟห', '', '2023-07-21', '2023-07-19 15:04:24', '2023-07-19 15:21:51', 1, 1, 5, 1, 'dTZKFEm6kxp8RKXQAoRkj_', 'null'),
+(36, '202307-016', 'dwwdwdw', '', '2023-08-04', '2023-07-19 15:35:49', '2023-07-19 15:36:28', 1, 1, 1, 1, 'ULvtT_B8cisLyDZd0tyxjC', '{\"e1e2918488a4517be611978dc763febe.pdf\":\"Document (1) (1).pdf\"}'),
+(37, '202307-017', 'oloolo', '', '2023-08-31', '2023-07-19 15:41:30', '2023-07-19 15:42:17', 2, 2, 3, 1, 'wmOS1cPDxgytq0rAvwL43d', 'null');
 
 -- --------------------------------------------------------
 
@@ -159,6 +153,7 @@ INSERT INTO `status` (`id`, `name`, `color`) VALUES
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `thai_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'ชื่อ-สกุล',
   `auth_key` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `password_hash` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password_reset_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -174,8 +169,9 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `verification_token`, `role`) VALUES
-(1, 'admin', '2tzscTHLNpS0rJlIJx_Uz1qZnvi6yS_q', '$2y$13$HwJ0Osagp4BHhcjKJMS.Su1kte.bpcDMCIusYWpu088FzQai9YqC6', NULL, 'admin@admin.com', 10, 1689666356, 1689666356, 'SA3gozOob2BBbQR0Ue5t4mJQpoyb0gcp_1689666356', 1);
+INSERT INTO `user` (`id`, `username`, `thai_name`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `verification_token`, `role`) VALUES
+(1, 'admin', 'ผู้ดูแลระบบ', '2tzscTHLNpS0rJlIJx_Uz1qZnvi6yS_q', '$2y$13$HwJ0Osagp4BHhcjKJMS.Su1kte.bpcDMCIusYWpu088FzQai9YqC6', NULL, 'admin@admin.com', 10, 1689666356, 1689666356, 'SA3gozOob2BBbQR0Ue5t4mJQpoyb0gcp_1689666356', 1),
+(2, 'demo', 'ธีรพงศ์ ขันตา', 'lJsMEFiO-XjqJrVhH2aDcjXyrP0oC0vy', '$2y$13$9cR6h5aFzqkDiaIYP4DQYuywLj.cgAyUBuIexfQNZCqaJQ.T/Zxfi', NULL, 'demo@demo.com', 10, 1689756005, 1689756005, 'sfLH5psKTa0wMf7dH-kiSrkNcSPqn9OD_1689756005', 1);
 
 --
 -- Indexes for dumped tables
@@ -236,7 +232,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `documents`
 --
 ALTER TABLE `documents`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `status`
@@ -248,7 +244,7 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

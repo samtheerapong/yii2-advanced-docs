@@ -8,9 +8,8 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use kartik\select2\Select2;
+use yii\bootstrap5\LinkPager;
 use yii\helpers\ArrayHelper;
-
-
 
 /** @var yii\web\View $this */
 /** @var backend\models\DocumentsSearch $searchModel */
@@ -34,6 +33,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
+                    'pager' => [
+                        'class' => LinkPager::class,
+                        // 'prevPageLabel' => 'Previous',
+                        // 'nextPageLabel' => 'Next',
+                        'options' => ['class' => 'pagination justify-content-center'], // Adjust this class to center the pagination.
+                        'linkContainerOptions' => ['class' => 'page-item'],
+                        'linkOptions' => ['class' => 'page-link'],
+                    ],
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                         [
@@ -53,19 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $model->title;
                             },
                         ],
-                        // [
-                        //     'attribute' => 'title',
-                        //     'format' => 'html',
-                        //     'value' => function ($model) {
-                        //         return Html::a($model->title, ['view', 'id' => $model->id]);
-                        //     },
-                        // ],
-                        // 'description:ntext',
-                        // 'created_at',
-                        //'updated_at',
-                        //'created_by',
-                        //'updated_by',
-                        // 'categories_id',
+
                         [
                             'attribute' => 'categories_id',
                             'format' => 'html',
@@ -78,8 +73,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'model' => $searchModel,
                                 'attribute' => 'categories_id',
                                 'data' => ArrayHelper::map(Categories::find()->all(), 'id', 'name'),
-                                // 'theme' => Select2::THEME_DEFAULT,
-                                'theme' => Select2::THEME_KRAJEE,
                                 'options' => ['placeholder' => Yii::t('app', 'Select...')],
                                 'language' => 'th',
                                 'pluginOptions' => [
@@ -88,6 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ])
                         ],
                         // 'status_id',
+
                         [
                             'attribute' => 'status_id',
                             'format' => 'html',
@@ -101,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'status_id',
                                 'data' => ArrayHelper::map(Status::find()->all(), 'id', 'name'),
                                 // 'theme' => Select2::THEME_DEFAULT,
-                                'theme' => Select2::THEME_KRAJEE,
+                                // 'theme' => Select2::THEME_KRAJEE,
                                 'options' => ['placeholder' => Yii::t('app', 'Select...')],
                                 'language' => 'th',
                                 'pluginOptions' => [
@@ -111,6 +105,25 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         //'ref',
                         // 'files:ntext',
+                        [
+                            'attribute' => 'expiration',
+                            'options' => ['style' => 'width:120px'],
+                            'format' => 'html',
+                            'value' => function ($model) {
+                                $daysToExpiration = $model->getDaysToExpiration();
+
+                                // ตรวจสอบว่าค่าน้อยกว่า 30 หรือไม่ ถ้าใช่ให้กำหนด CSS background-color เป็นสีแดง
+                                $AlertColor = ($daysToExpiration < 30) ? '#FF1E00' : '#5BB318';
+                                $style = 'text-align: center; color:#fff; background-color: ' . $AlertColor . ';';
+
+                                $options = [
+                                    'class' => 'text',
+                                    'style' => $style . ' display: flex; justify-content: center; align-items: center;',
+                                ];
+
+                                return Html::tag('div', $daysToExpiration, $options);
+                            },
+                        ],
                         [
                             'class' => ActionColumn::class,
                             'header' => 'จัดการ',
