@@ -113,7 +113,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 $daysToExpiration = $model->getDaysToExpiration();
 
                                 // ตรวจสอบว่าค่าน้อยกว่า 30 หรือไม่ ถ้าใช่ให้กำหนด CSS background-color เป็นสีแดง
-                                $AlertColor = ($daysToExpiration < 30) ? '#FF1E00' : '#5BB318';
+                                $AlertColor = ($daysToExpiration < 60) ? '#FF1E00' : '#5BB318';
                                 $style = 'text-align: center; color:#fff; background-color: ' . $AlertColor . ';';
 
                                 $options = [
