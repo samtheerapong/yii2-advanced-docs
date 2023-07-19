@@ -7,8 +7,15 @@ Changelog V1.0.0
 ######################
 Demo Version 
 ######################
-- User: admin
-- Password: admin123456
+```
+User: admin
+Password: admin123456
+```
+
+```
+User: demo
+Password: demo123456
+```
 
 ######################
 #ENV
