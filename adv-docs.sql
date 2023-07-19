@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 19, 2023 at 08:42 AM
--- Server version: 5.7.39
--- PHP Version: 7.4.9
+-- Generation Time: Jul 19, 2023 at 09:48 AM
+-- Server version: 5.7.33
+-- PHP Version: 7.4.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -39,9 +39,8 @@ CREATE TABLE `auto_number` (
 --
 
 INSERT INTO `auto_number` (`group`, `number`, `optimistic_lock`, `update_time`) VALUES
-('202307-???', 29, 1, 1689756090),
-('5bce8a536749f4b5ebc03a256521426b', 17, 1, 1689756090),
-('aa12af1f00f3057c5a86dd99ac6b3fcd', 9, 1, 1689642329);
+('202307-???', 1, 1, 1689759896),
+('5bce8a536749f4b5ebc03a256521426b', 1, 1, 1689759896);
 
 -- --------------------------------------------------------
 
@@ -96,11 +95,7 @@ CREATE TABLE `documents` (
 --
 
 INSERT INTO `documents` (`id`, `numbers`, `title`, `description`, `expiration_date`, `created_at`, `updated_at`, `created_by`, `updated_by`, `categories_id`, `status_id`, `ref`, `docs`) VALUES
-(32, '202307-012', 'ทดสอบ1', '', '2024-01-31', '2023-07-19 13:51:45', '2023-07-19 14:56:51', 1, 1, 1, 3, 'mAf8i89ukO_0qNsB1DdCIy', '{\"5d61ac84d62b2c03cefd138b1a6b1051.pdf\":\"Document (1) (1).pdf\"}'),
-(33, '202307-013', 'ทดสอบ2', '', '2023-08-19', '2023-07-19 14:45:50', '2023-07-19 15:17:30', 1, 1, 3, 3, 'fGKTvqQXrU4YvJGLP2dmSW', '{\"96ff04754e03bf359dce996cf400ac71.pdf\":\"PKA2023_Ver1_22-Dec-2022_10.00.pdf\"}'),
-(34, '202307-014', 'ฟหกฟหกฟห', '', '2023-07-21', '2023-07-19 15:04:24', '2023-07-19 15:21:51', 1, 1, 5, 1, 'dTZKFEm6kxp8RKXQAoRkj_', 'null'),
-(36, '202307-016', 'dwwdwdw', '', '2023-08-04', '2023-07-19 15:35:49', '2023-07-19 15:36:28', 1, 1, 1, 1, 'ULvtT_B8cisLyDZd0tyxjC', '{\"e1e2918488a4517be611978dc763febe.pdf\":\"Document (1) (1).pdf\"}'),
-(37, '202307-017', 'oloolo', '', '2023-08-31', '2023-07-19 15:41:30', '2023-07-19 15:42:17', 2, 2, 3, 1, 'wmOS1cPDxgytq0rAvwL43d', 'null');
+(1, '202307-001', 'ทดสอบอัพโหลดเอกสาร', 'ทดสอบอัพโหลดจำนวน 2 ฉบับ', '2023-07-31', '2023-07-19 16:44:56', NULL, 3, 3, 1, 1, 'JAZkJfXmaGtdsjHzVfQLlD', '{\"dc6ca1e8d0b9e48204b4593f0800b1ed.pdf\":\"FM-GR-176_Rev_00[1].pdf\",\"a36fbf663479b1c39143b38645642738.pdf\":\"FM-EM-28_Rev_01[1].pdf\"}');
 
 -- --------------------------------------------------------
 
@@ -171,7 +166,13 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `username`, `thai_name`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `verification_token`, `role`) VALUES
 (1, 'admin', 'ผู้ดูแลระบบ', '2tzscTHLNpS0rJlIJx_Uz1qZnvi6yS_q', '$2y$13$HwJ0Osagp4BHhcjKJMS.Su1kte.bpcDMCIusYWpu088FzQai9YqC6', NULL, 'admin@admin.com', 10, 1689666356, 1689666356, 'SA3gozOob2BBbQR0Ue5t4mJQpoyb0gcp_1689666356', 1),
-(2, 'demo', 'ธีรพงศ์ ขันตา', 'lJsMEFiO-XjqJrVhH2aDcjXyrP0oC0vy', '$2y$13$9cR6h5aFzqkDiaIYP4DQYuywLj.cgAyUBuIexfQNZCqaJQ.T/Zxfi', NULL, 'demo@demo.com', 10, 1689756005, 1689756005, 'sfLH5psKTa0wMf7dH-kiSrkNcSPqn9OD_1689756005', 1);
+(2, 'demo', 'ธีรพงศ์ ขันตา', 'lJsMEFiO-XjqJrVhH2aDcjXyrP0oC0vy', '$2y$13$9cR6h5aFzqkDiaIYP4DQYuywLj.cgAyUBuIexfQNZCqaJQ.T/Zxfi', NULL, 'demo@demo.com', 10, 1689756005, 1689756005, 'sfLH5psKTa0wMf7dH-kiSrkNcSPqn9OD_1689756005', 1),
+(3, 'onanong', 'อรอนงค์ ชมภู', '2bj5VmZ1PEwJDerqRsj3fhE8i2zvsVZq', '$2y$13$08zXpjOdJu83tT84JNqebe3SMFVctXSfynLDfss3sFMiveC7tPEUS', NULL, 'onanong@nfc.com', 10, 1689759317, 1689759317, '9NqfkSJcx8KkIodMLNCeH9HLqhOUmcxw_1689759317', 1),
+(4, 'supanna', 'สุพรรณา พันธ์ภู่', 'yJwBMulOJv3IDmDkCXrdYZ-VMEw_zwLZ', '$2y$13$O4m3JByeXwarBQx8Na5aXuqT8v0WqaRJakqletAVt/p8XffgPvcau', NULL, 'supanna@nfc.com', 10, 1689759339, 1689759339, '4Zgy1uVGJvXg2nZOAHcFCSj0NK0Ll3Ze_1689759339', 1),
+(5, 'prakaiwan', 'ประกายวรรณ เทพมณี', 'y2RYhV3E1NG68CUaa8svzBknRdbCTO79', '$2y$13$GkUZhR.dM5CJdm9MCnTYp.Ij9eya2sBVX.9CaRP/nlJq92WAQ7y02', NULL, 'prakaiwan@nfc.com', 10, 1689759362, 1689759362, '2qNZk71gb01_K-bdCiscD38z36G9exZH_1689759362', 1),
+(6, 'sale', 'ฝ่ายขาย', 'EHSvx6uElywR8fG2XRQ_xKE4sups-8cO', '$2y$13$fOXl5gCyOYl4NxlvgBJ85O7wQvWcVNYnzg4IGDNkIkX6hl2d7aMbO', NULL, 'sale@nfc.com', 10, 1689759388, 1689759388, '9ZnxmSRzPpvLgxD0MPSamdokpcp_eMul_1689759388', 1),
+(7, 'planning', 'ฝ่ายวางแผน', 'JWT4BgIkYF4TIN62mLaKv5iL0uLMn7C9', '$2y$13$g08zQ7xjXISzs99kS2yApuOCRcV6QpMOfdzNAwYY8fP9N96pEuAye', NULL, 'planning@nfc.com', 10, 1689759413, 1689759413, '7xCjBXE9xNLx1gWqKX2LaVex2ah0IWt4_1689759413', 1),
+(8, 'production', 'ฝ่ายผลิต', 'FjE8vrSWJ1uVTanpvQJDnpq_OiUySrzg', '$2y$13$Oa3U4rEqDwN8W0ytkDHCjuPw8CW4d44l9tEWbi3N3myBogr4mmzBy', NULL, 'production@nfc.com', 10, 1689759430, 1689759430, 'qNJ-e9RkWlfqvHqmvmSsItU1rlpb_D3j_1689759430', 1);
 
 --
 -- Indexes for dumped tables
@@ -232,7 +233,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `documents`
 --
 ALTER TABLE `documents`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `status`
@@ -244,7 +245,7 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
