@@ -10,6 +10,17 @@
   /* font-family: 'Itim', cursive; */
 }
 
+/* body {
+  background-image: url('https://static.vecteezy.com/system/resources/previews/008/089/962/non_2x/carbon-fiber-texture-with-redial-gradient-background-illustration-vector.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+} */
+
+.help-block{
+    color: red;
+    animation: blink 1s infinite;
+}
+
 .home-link {
   background-color: #5534a5;
 }
@@ -56,7 +67,6 @@
     opacity: 1;
   }
 }
-
 .blink {
   animation: blink 1s infinite;
 }
