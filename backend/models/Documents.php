@@ -89,7 +89,7 @@ class Documents extends \yii\db\ActiveRecord
             [['numbers'], 'autonumber', 'format' => date('Ym') . '-?'],
             [['description'], 'string'],
             [['created_at', 'updated_at', 'expiration_date'], 'safe'],
-            [['created_by', 'updated_by', 'categories_id', 'status_id','document_date'], 'integer'],
+            [['created_by', 'updated_by', 'categories_id', 'status_id', 'document_date'], 'integer'],
             [['numbers', 'title', 'ref'], 'string', 'max' => 255],
             [['categories_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::class, 'targetAttribute' => ['categories_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['status_id' => 'id']],
@@ -180,23 +180,64 @@ class Documents extends \yii\db\ActiveRecord
         return $docs_file;
     }
 
+    
+    // public function initialPreview($data, $field, $type = 'file')
+    // {
+    //     $initial = [];
+    //     $files = Json::decode($data);
+    //     if (is_array($files)) {
+    //         foreach ($files as $key => $value) {
+    //             if ($type == 'file') {
+    //                 $initial[] = "<div class='file-preview-other'><h2><i class='glyphicon glyphicon-file'></i></h2></div>";
+    //             } elseif ($type == 'config') {
+    //                 $initial[] = [
+    //                     'caption' => $value,
+    //                     'width'  => '120px',
+    //                     'url'    => Url::to(['/freelance/deletefile', 'id' => $this->id, 'fileName' => $key, 'field' => $field]),
+    //                     'key'    => $key
+    //                 ];
+    //             } else {
+    //                 $initial[] = Html::img(self::getUploadUrl() . $this->ref . '/' . $value, ['class' => 'file-preview-image', 'alt' => $this->file_name, 'title' => $this->file_name]);
+    //             }
+    //         }
+    //     }
+    //     return $initial;
+    // }
+
+
+    public function isImage($filePath)
+    {
+        return @is_array(getimagesize($filePath)) ? true : false;
+    }
+
+
     public function initialPreview($data, $field, $type = 'file')
     {
         $initial = [];
         $files = Json::decode($data);
         if (is_array($files)) {
             foreach ($files as $key => $value) {
+                $filePath = self::getUploadUrl() . $this->ref . '/' . $value;
+                $filePathDownload = self::getUploadUrl() . $this->ref . '/' . $value;
+
+                $isImage = $this->isImage($filePath);
+
                 if ($type == 'file') {
                     $initial[] = "<div class='file-preview-other'><h2><i class='glyphicon glyphicon-file'></i></h2></div>";
                 } elseif ($type == 'config') {
                     $initial[] = [
                         'caption' => $value,
                         'width'  => '120px',
-                        'url'    => Url::to(['/freelance/deletefile', 'id' => $this->id, 'fileName' => $key, 'field' => $field]),
+                        'url'    => Url::to(['documents/deletefile', 'id' => $this->id, 'fileName' => $key, 'field' => $field]),
                         'key'    => $key
                     ];
                 } else {
-                    $initial[] = Html::img(self::getUploadUrl() . $this->ref . '/' . $value, ['class' => 'file-preview-image', 'alt' => $this->file_name, 'title' => $this->file_name]);
+                    if ($isImage) {
+                        $file = Html::img($filePath, ['class' => 'file-preview-image', 'alt' => $this->file_name, 'title' => $this->file_name]);
+                    } else {
+                        $file = Html::a('View File', $filePathDownload, ['target' => '_blank']);
+                    }
+                    $initial[] = $file;
                 }
             }
         }

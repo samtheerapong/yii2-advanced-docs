@@ -61,7 +61,7 @@ use yii\helpers\Url;
                 <div class="col-md-2">
                     <?= $form->field($model, 'document_date')->textInput(['maxlength' => true]) ?>
                 </div>
-                
+
 
                 <div class="col-md-3">
                     <?= $form->field($model, 'categories_id')->widget(Select2::class, [
@@ -95,7 +95,7 @@ use yii\helpers\Url;
                         'pluginOptions' => [
                             'initialPreview' => $model->initialPreview($model->docs, 'docs', 'file'),
                             'initialPreviewConfig' => $model->initialPreview($model->docs, 'docs', 'config'),
-                            'allowedFileExtensions' => ['pdf', 'doc', 'docx', 'xls', 'xlsx'],
+                            'allowedFileExtensions' => ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'odt', 'ods', 'jpg', 'png', 'jpeg'],
                             'showPreview' => true,
                             'showCaption' => true,
                             'showRemove' => true,
