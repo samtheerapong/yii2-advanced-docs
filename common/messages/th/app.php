@@ -16,4 +16,6 @@ return [
     'Login' => 'เข้าสู่ระบบ',
     'Logout' => 'ออกจากระบบ',
     'Save' => 'บันทึก',
+    'Created Successfully' => 'เพิ่มข้อมูลสำเร็จ',
+    'Updated Successfully' => 'ปรับปรุงข้อมูลสำเร็จ',
 ];

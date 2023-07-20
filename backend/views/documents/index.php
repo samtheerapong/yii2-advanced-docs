@@ -106,23 +106,25 @@ $this->params['breadcrumbs'][] = $this->title;
                         //'ref',
                         // 'files:ntext',
                         [
-                            'attribute' => 'expiration',
-                            'options' => ['style' => 'width:120px'],
+                            'attribute' => 'expiration_date',
+                            'label' => 'หมดอายุ',
+                            'options' => ['style' => 'width:100px'],
+                            'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
                             'format' => 'html',
                             'value' => function ($model) {
                                 $daysToExpiration = $model->getDaysToExpiration();
-
-                                // ตรวจสอบว่าค่าน้อยกว่า 30 หรือไม่ ถ้าใช่ให้กำหนด CSS background-color เป็นสีแดง
-                                $AlertColor = ($daysToExpiration < 60) ? '#FF1E00' : '#5BB318';
-                                $style = 'text-align: center; color:#fff; background-color: ' . $AlertColor . ';';
-
+                                // ตรวจสอบว่าค่าน้อยกว่า 60 หรือไม่ ถ้าใช่ให้กำหนด CSS background-color เป็นสีแดง
+                                $badgeColor = ($daysToExpiration < $model->document_date) ? '#FF1E00' : '#5BB318';
+                                $style = 'text-align: center; color:#fff; background-color: ' . $badgeColor . ';';
+                        
                                 $options = [
-                                    'class' => 'text',
-                                    'style' => $style . ' display: flex; justify-content: center; align-items: center;',
+                                    'class' => 'badge', // Change class to 'badge'
+                                    'style' => $style,
                                 ];
-
-                                return Html::tag('div', $daysToExpiration, $options);
+                        
+                                return Html::tag('div', $daysToExpiration . ' วัน', $options); // Add 'days left' text to the badge
                             },
+                            'filter' => false, // Disable search for this column
                         ],
                         [
                             'class' => ActionColumn::class,
@@ -142,17 +144,6 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
-    <p>
-    <div class="col-md-12">
-        <div class="alert alert-info">
-            * ระบบจะเตือนเอกสารหมดอายุที่ต่ำกว่า 60 วัน
-            <br>
-            * เอกสาร1ชุด สามารถอัพโหลดได้สูงสุด 10 ไฟล์ เป็นเอกสารเท่านั้น ไม่สามารถอัพโหลดรูปภาพได้
-            <br>
-            <p>สอบถามการใช้งาน Line ID = sam-it</p>
-        </div>
-
-    </div>
-    </p>
+    
 
 </div>

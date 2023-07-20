@@ -41,14 +41,10 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="card-body">
 
-
             <div class="col-md-12">
-                <!-- <p>วันหมดอายุ: <?= Yii::$app->formatter->asDate($model->expiration_date, 'php:d/m/Y') ?></p> -->
-
-                <div class="alert alert-danger">
+                <div class="<?= $model->getDaysToExpiration() < $model->document_date ? 'alert alert-danger' : 'alert alert-success' ?>">
                     เอกสารนี้จะหมดอายุในอีก: <?= $model->getDaysToExpiration() ?> วัน
                 </div>
-
             </div>
 
             <?= DetailView::widget([
@@ -58,9 +54,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'numbers',
                     'title',
                     'description:ntext',
-                    'expiration_date:date',
-                    'created_at',
-                    // 'updated_at',
+                    // 'expiration_date:date',
+                    [
+                        'attribute' => 'expiration_date',
+                        'format' => 'html',
+                        'value' => Yii::$app->formatter->asDate($model->expiration_date, 'php:d M Y') .
+                            ' <span class="badge" style="background-color: ' . ($model->getDaysToExpiration() < $model->document_date ? 'red' : 'green') . ';">' . $model->getDaysToExpiration() . ' days left</span>'
+                    ],
+                    'document_date',
+                    'created_at:date',
+                    'updated_at:date',
                     // 'created_by',
                     [
                         'attribute' => 'created_by',

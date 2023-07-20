@@ -89,7 +89,7 @@ class Documents extends \yii\db\ActiveRecord
             [['numbers'], 'autonumber', 'format' => date('Ym') . '-?'],
             [['description'], 'string'],
             [['created_at', 'updated_at', 'expiration_date'], 'safe'],
-            [['created_by', 'updated_by', 'categories_id', 'status_id'], 'integer'],
+            [['created_by', 'updated_by', 'categories_id', 'status_id','document_date'], 'integer'],
             [['numbers', 'title', 'ref'], 'string', 'max' => 255],
             [['categories_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::class, 'targetAttribute' => ['categories_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['status_id' => 'id']],
@@ -117,7 +117,8 @@ class Documents extends \yii\db\ActiveRecord
             'status_id' => Yii::t('app', 'สถานะ'),
             'ref' => Yii::t('app', 'อ้างอิง'),
             'docs' => Yii::t('app', 'ไฟล์เอกสาร'),
-            'expiration' => Yii::t('app', 'หมดอายุในอีก (วัน)'),
+            'expiration' => Yii::t('app', 'หมดอายุ'),
+            'document_date' => Yii::t('app', 'เตือนหมดอายุ (วัน)'),
             // 'pdf_file' => Yii::t('app', 'ไฟล์เอกสาร'),
         ];
     }

@@ -15,6 +15,9 @@ use yii\web\UploadedFile;
 use Exception;
 use yii\filters\AccessControl;
 use yii\helpers\BaseFileHelper;
+use kartik\widgets\Alert;
+
+
 
 /**
  * DocumentsController implements the CRUD actions for Documents model.
@@ -87,7 +90,9 @@ class DocumentsController extends Controller
     public function actionCreate()
     {
         $model = new Documents();
+        $model->document_date = 60;
         $ref = substr(Yii::$app->getSecurity()->generateRandomString(), 10);
+
 
         if ($model->load(Yii::$app->request->post())) {
             //  Auto Number
@@ -101,7 +106,8 @@ class DocumentsController extends Controller
 
             if ($model->save()) {
 
-                Yii::$app->session->setFlash('success', Yii::t('app', 'Created Successfully'));
+                // Yii::$app->session->setFlash('success', Yii::t('app', 'Created Successfully'));
+                
 
                 return $this->redirect(['view', 'id' => $model->id]);
             }

@@ -58,8 +58,12 @@ use yii\helpers\Url;
                         ]
                     ); ?>
                 </div>
+                <div class="col-md-2">
+                    <?= $form->field($model, 'document_date')->textInput(['maxlength' => true]) ?>
+                </div>
+                
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <?= $form->field($model, 'categories_id')->widget(Select2::class, [
                         'language' => 'th',
                         'data' => ArrayHelper::map(Categories::find()->all(), 'id', 'name'),
@@ -71,7 +75,7 @@ use yii\helpers\Url;
                     ?>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <?= $form->field($model, 'status_id')->widget(Select2::class, [
                         'language' => 'th',
                         'data' => ArrayHelper::map(Status::find()->all(), 'id', 'name'),
