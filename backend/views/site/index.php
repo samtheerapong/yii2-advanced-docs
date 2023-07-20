@@ -22,9 +22,7 @@ $this->title = 'Documents Center';
                     <h5 class="card-title">For Demo</h5>
                     <p>User : demo <br>
                         Pass : demo123456</p>
-                    <div class="d-grid gap-2">
                         <?= Html::a(Yii::t('app', 'เข้าใช้งาน'), ['documents/index'], ['class' => 'btn btn-primary']) ?>
-                    </div>
                 </div>
             </div>
         </div>
