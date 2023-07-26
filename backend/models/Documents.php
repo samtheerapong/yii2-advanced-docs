@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use backend\models\Categories;
+use backend\models\Types;
 use backend\models\Status;
 use common\models\User;
 use DateTime;
@@ -85,14 +86,15 @@ class Documents extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['numbers', 'title', 'categories_id', 'status_id'], 'required'],
+            [['numbers', 'title', 'categories_id', 'status_id','types_id'], 'required'],
             [['numbers'], 'autonumber', 'format' => date('Ym') . '-?'],
             [['description'], 'string'],
             [['created_at', 'updated_at', 'expiration_date'], 'safe'],
-            [['created_by', 'updated_by', 'categories_id', 'status_id', 'document_date'], 'integer'],
+            [['created_by', 'updated_by', 'categories_id', 'status_id', 'document_date','types_id'], 'integer'],
             [['numbers', 'title', 'ref'], 'string', 'max' => 255],
             [['categories_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::class, 'targetAttribute' => ['categories_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['status_id' => 'id']],
+            [['types_id'], 'exist', 'skipOnError' => true, 'targetClass' => Types::class, 'targetAttribute' => ['types_id' => 'id']],
             // [['pdf_file'], 'file', 'skipOnEmpty' => true, 'on' => 'update', 'extensions' => 'pdf'],
             [['docs'], 'file', 'maxFiles' => 10, 'skipOnEmpty' => true]
         ];
@@ -114,6 +116,7 @@ class Documents extends \yii\db\ActiveRecord
             'created_by' => Yii::t('app', 'ผู้สร้าง'),
             'updated_by' => Yii::t('app', 'ผู้ปรับปรุง'),
             'categories_id' => Yii::t('app', 'หมวดหมู่'),
+            'types_id' => Yii::t('app', 'ประเภท'),
             'status_id' => Yii::t('app', 'สถานะ'),
             'ref' => Yii::t('app', 'อ้างอิง'),
             'docs' => Yii::t('app', 'ไฟล์เอกสาร'),
@@ -143,7 +146,10 @@ class Documents extends \yii\db\ActiveRecord
         return $this->hasOne(Status::class, ['id' => 'status_id']);
     }
 
-
+    public function getTypes()
+    {
+        return $this->hasOne(Types::class, ['id' => 'types_id']);
+    }
 
     public static function getUploadPath()
     {

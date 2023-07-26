@@ -2,20 +2,20 @@
 
 namespace backend\controllers;
 
-use backend\models\Status;
-use backend\models\StatusSearch;
+use backend\models\Types;
+use backend\models\TypesSearch;
+use common\components\HanumanRule;
 use common\components\Rule;
 use common\models\User;
-use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StatusController implements the CRUD actions for Status model.
+ * TypesController implements the CRUD actions for Types model.
  */
-class StatusController extends Controller
+class TypesController extends Controller
 {
     /**
      * @inheritDoc
@@ -50,13 +50,13 @@ class StatusController extends Controller
     }
 
     /**
-     * Lists all Status models.
+     * Lists all Types models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new StatusSearch();
+        $searchModel = new TypesSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -66,7 +66,7 @@ class StatusController extends Controller
     }
 
     /**
-     * Displays a single Status model.
+     * Displays a single Types model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -79,13 +79,13 @@ class StatusController extends Controller
     }
 
     /**
-     * Creates a new Status model.
+     * Creates a new Types model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Status();
+        $model = new Types();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -101,7 +101,7 @@ class StatusController extends Controller
     }
 
     /**
-     * Updates an existing Status model.
+     * Updates an existing Types model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -121,7 +121,7 @@ class StatusController extends Controller
     }
 
     /**
-     * Deletes an existing Status model.
+     * Deletes an existing Types model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -135,15 +135,15 @@ class StatusController extends Controller
     }
 
     /**
-     * Finds the Status model based on its primary key value.
+     * Finds the Types model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Status the loaded model
+     * @return Types the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Status::findOne(['id' => $id])) !== null) {
+        if (($model = Types::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

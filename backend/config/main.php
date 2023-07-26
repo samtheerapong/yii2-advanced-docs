@@ -9,14 +9,20 @@ $params = array_merge(
 return [
     'id' => 'app-backend',
     'name' => 'NFC',
-    'language' => 'th',
+    // 'language' => 'th',
     'timezone' => 'Asia/Bangkok',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'log',
+        [
+            'class' => 'common\components\LanguageSelector',
+            'supportedLanguages' => ['en-US', 'th-TH'], //กำหนดรายการภาษาที่ support หรือใช้ได้
+        ]
+    ],
     'modules' => [
-         // kartik gridview
-         'gridview' =>  [
+        // kartik gridview
+        'gridview' =>  [
             'class' => '\kartik\grid\Module'
             // enter optional module parameters below - only if you need to  
             // use your own export download action or custom translation 
@@ -51,14 +57,14 @@ return [
             'errorAction' => 'site/error',
         ],
         'i18n' => [
-			'translations' => [
-				'app*' => [
-					'class' => 'yii\i18n\PhpMessageSource',
-					'basePath' => '@common/messages',
-					// 'sourceLanguage' => 'en-US',
-				],
-			],
-		],
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@common/messages',
+                    // 'sourceLanguage' => 'en-US',
+                ],
+            ],
+        ],
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
             // Disable index.php
@@ -73,6 +79,13 @@ return [
                 '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
             ],
         ],
+        //     'urlManagerFrontend' => [
+        //         'class' => 'yii\web\urlManager',
+        //         'baseUrl' => '/yii2-advanced-docs/frontend/web',
+        //         'scriptUrl'=>'/yii2-advanced-docs/frontend/web/index',
+        //         'enablePrettyUrl' => true,
+        //         'showScriptName' => true,
+        //  ],
     ],
     'params' => $params,
 ];

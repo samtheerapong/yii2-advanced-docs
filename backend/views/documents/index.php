@@ -3,6 +3,7 @@
 use backend\models\Documents;
 use backend\models\Categories;
 use backend\models\Status;
+use backend\models\Types;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -78,6 +79,26 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'model' => $searchModel,
                                 'attribute' => 'categories_id',
                                 'data' => ArrayHelper::map(Categories::find()->all(), 'id', 'name'),
+                                'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                                'language' => 'th',
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ])
+                        ],
+
+                        [
+                            'attribute' => 'types_id',
+                            'format' => 'html',
+                            'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
+                            // 'options' => ['style' => 'width:150px'],
+                            'value' => function ($model) {
+                                return '<span class="badge" style="background-color:' . $model->types->color . ';"><b>' . $model->types->name . '</b></span>';
+                            },
+                            'filter' => Select2::widget([
+                                'model' => $searchModel,
+                                'attribute' => 'types_id',
+                                'data' => ArrayHelper::map(Types::find()->all(), 'id', 'name'),
                                 'options' => ['placeholder' => Yii::t('app', 'Select...')],
                                 'language' => 'th',
                                 'pluginOptions' => [

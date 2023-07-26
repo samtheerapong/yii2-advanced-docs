@@ -111,6 +111,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                 . ' </b></span>';
                         },
                     ],
+                    [
+                        'attribute' => 'types_id',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            return '<span class="badge" style="background-color:'
+                                . $model->types->color . ';"><b>'
+                                . $model->types->name
+                                . ' </b></span>';
+                        },
+                    ],
                     // 'status_id',
                     [
                         'attribute' => 'status_id',

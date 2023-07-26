@@ -4,6 +4,8 @@ namespace backend\controllers;
 
 use backend\models\Categories;
 use backend\models\CategoriesSearch;
+use common\components\Rule;
+use common\models\User;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -20,38 +22,31 @@ class CategoriesController extends Controller
     public function behaviors()
     {
         return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['index', 'view', 'create', 'update', 'delete'],
+                'ruleConfig' => [
+                    'class' => Rule::class,
+                ],
+                'only' => ['index', 'view', 'create', 'update', 'delete', 'download'],
                 'rules' => [
                     [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'download'],
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
-                        'roles' => ['@'], // Allow logged-in users
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
-                        'roles' => ['admin'], // Allow users with the "admin" role
+                        'roles' => [
+                            User::ROLE_ADMIN,
+                            User::ROLE_MANAGER
+                        ],
                     ],
                 ],
             ],
         ];
     }
-    // public function behaviors()
-    // {
-    //     return array_merge(
-    //         parent::behaviors(),
-    //         [
-    //             'verbs' => [
-    //                 'class' => VerbFilter::class,
-    //                 'actions' => [
-    //                     'delete' => ['POST'],
-    //                 ],
-    //             ],
-    //         ]
-    //     );
-    // }
 
     /**
      * Lists all Categories models.

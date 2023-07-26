@@ -2,6 +2,7 @@
 
 use backend\models\Categories;
 use backend\models\Status;
+use backend\models\Types;
 use kartik\widgets\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -63,7 +64,7 @@ use yii\helpers\Url;
                 </div>
 
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <?= $form->field($model, 'categories_id')->widget(Select2::class, [
                         'language' => 'th',
                         'data' => ArrayHelper::map(Categories::find()->all(), 'id', 'name'),
@@ -75,7 +76,19 @@ use yii\helpers\Url;
                     ?>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
+                    <?= $form->field($model, 'types_id')->widget(Select2::class, [
+                        'language' => 'th',
+                        'data' => ArrayHelper::map(Types::find()->all(), 'id', 'name'),
+                        // 'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]);
+                    ?>
+                </div>
+
+                <div class="col-md-2">
                     <?= $form->field($model, 'status_id')->widget(Select2::class, [
                         'language' => 'th',
                         'data' => ArrayHelper::map(Status::find()->all(), 'id', 'name'),

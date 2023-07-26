@@ -10,15 +10,16 @@
   /* font-family: 'Itim', cursive; */
 }
 
-/* body {
-  background-image: url('https://static.vecteezy.com/system/resources/previews/008/089/962/non_2x/carbon-fiber-texture-with-redial-gradient-background-illustration-vector.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-} */
+.logout-link {
+  color: red;
+  /* Set the color of the logout link to red */
+  text-decoration: none;
+  /* Remove any underlines or styling */
+}
 
-.help-block{
-    color: red;
-    animation: blink 1s infinite;
+.help-block {
+  color: red;
+  animation: blink 1s infinite;
 }
 
 .home-link {
@@ -67,6 +68,7 @@
     opacity: 1;
   }
 }
+
 .blink {
   animation: blink 1s infinite;
 }

@@ -5,6 +5,8 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Documents;
 use backend\models\DocumentsSearch;
+use common\components\Rule;
+use common\models\User;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -15,7 +17,6 @@ use yii\web\UploadedFile;
 use Exception;
 use yii\filters\AccessControl;
 use yii\helpers\BaseFileHelper;
-use kartik\widgets\Alert;
 
 
 
@@ -30,19 +31,65 @@ class DocumentsController extends Controller
     public function behaviors()
     {
         return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['index', 'view', 'create', 'update', 'delete'],
+                'ruleConfig' => [
+                    'class' => Rule::class,
+                ],
+                'only' => ['index', 'view', 'create', 'update', 'delete', 'download'],
                 'rules' => [
                     [
+                        'actions' => ['index'],
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
-                        'roles' => ['@'], // Allow logged-in users
+                        'roles' => [
+                            User::ROLE_ADMIN,
+                            User::ROLE_MANAGER,
+                            User::ROLE_USER,
+                            User::ROLE_QA,
+                            User::ROLE_SALE,
+                        ],
                     ],
                     [
+                        'actions' => ['view'],
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
-                        'roles' => ['admin'], // Allow users with the "admin" role
+                        'roles' => [
+                            User::ROLE_ADMIN,
+                            User::ROLE_MANAGER,
+                            User::ROLE_QA,
+                            User::ROLE_SALE,
+                        ],
+                    ],
+                    [
+                        'actions' => ['update'],
+                        'allow' => true,
+                        'roles' => [
+                            User::ROLE_ADMIN,
+                            User::ROLE_MANAGER,
+                            User::ROLE_QA
+                        ],
+                    ],
+                    [
+                        'actions' => ['delete'],
+                        'allow' => true,
+                        'roles' => [
+                            User::ROLE_ADMIN
+                        ],
+                    ],
+                    [
+                        'actions' => ['download'],
+                        'allow' => true,
+                        'roles' => [
+                            User::ROLE_ADMIN,
+                            User::ROLE_MANAGER,
+                            User::ROLE_QA,
+                            User::ROLE_SALE,
+                        ],
                     ],
                 ],
             ],
@@ -107,7 +154,7 @@ class DocumentsController extends Controller
             if ($model->save()) {
 
                 // Yii::$app->session->setFlash('success', Yii::t('app', 'Created Successfully'));
-                
+
 
                 return $this->redirect(['view', 'id' => $model->id]);
             }

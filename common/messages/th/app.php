@@ -1,6 +1,7 @@
 <?php
 return [
     // *** config
+    'Documents Center' => 'ตารางเอกสาร',
     'Create' => 'เพิ่ม',
     'Create Document' => 'เพิ่มเอกสาร',
     'Create Categories' => 'เพิ่มหมวดหมู่',
@@ -13,6 +14,8 @@ return [
     'Documents' => 'เอกสาร',
     'Categories' => 'หมวดหมู่',
     'Statuses' => 'สถานะ',
+    'Types' => 'ประเภท',
+    'Systems' => 'ตั้งค่า',
     'Login' => 'เข้าสู่ระบบ',
     'Logout' => 'ออกจากระบบ',
     'Save' => 'บันทึก',
