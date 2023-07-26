@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 19, 2023 at 09:48 AM
+-- Generation Time: Jul 26, 2023 at 01:01 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.32
 
@@ -39,8 +39,8 @@ CREATE TABLE `auto_number` (
 --
 
 INSERT INTO `auto_number` (`group`, `number`, `optimistic_lock`, `update_time`) VALUES
-('202307-???', 1, 1, 1689759896),
-('5bce8a536749f4b5ebc03a256521426b', 1, 1, 1689759896);
+('202307-???', 12, 1, 1690006561),
+('5bce8a536749f4b5ebc03a256521426b', 12, 1, 1690006561);
 
 -- --------------------------------------------------------
 
@@ -60,13 +60,14 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `details`, `color`) VALUES
-(1, 'General', 'เอกสารทั่วไป', '#6aa84f'),
+(1, 'ทั่วไป', 'เอกสารทั่วไป', '#0000ff'),
 (2, 'COI', 'หนังสือรับรองสูตรส่วนประกอบ (Certificate of Ingredient)', '#F31559'),
 (3, 'ISO', 'International Organization for Standardization', '#6527BE'),
 (4, 'COA', 'ใบรายงานผลการตรวจวิเคราะห์สินค้า Certificate of Analysis', '#090580'),
-(5, 'Sale', 'เอกสารสำหรับฝ่ายขาย', '#E4A5FF'),
+(5, 'Sale', 'เอกสารสำหรับฝ่ายขาย', '#ef4dd8'),
 (6, 'QC', 'เอกสารสำหรับแผนกควบคุมคุณภาพ', '#F2BE22'),
-(7, 'Report', 'รายงาน', '#6aa84f');
+(7, 'Test Report', 'รายงาน', '#6aa84f'),
+(8, 'Certificate', '', '#e06666');
 
 -- --------------------------------------------------------
 
@@ -80,6 +81,7 @@ CREATE TABLE `documents` (
   `title` varchar(255) NOT NULL COMMENT 'ชื่อเอกสาร',
   `description` text COMMENT 'รายละเอียด',
   `expiration_date` date DEFAULT NULL COMMENT 'วันที่หมดอายุ',
+  `document_date` smallint(6) DEFAULT '60',
   `created_at` datetime DEFAULT NULL COMMENT 'วันที่เอกสาร',
   `updated_at` datetime DEFAULT NULL COMMENT 'วันที่ปรับปรุง',
   `created_by` int(11) DEFAULT NULL COMMENT 'ผู้สร้าง',
@@ -94,8 +96,15 @@ CREATE TABLE `documents` (
 -- Dumping data for table `documents`
 --
 
-INSERT INTO `documents` (`id`, `numbers`, `title`, `description`, `expiration_date`, `created_at`, `updated_at`, `created_by`, `updated_by`, `categories_id`, `status_id`, `ref`, `docs`) VALUES
-(1, '202307-001', 'ทดสอบอัพโหลดเอกสาร', 'ทดสอบอัพโหลดจำนวน 2 ฉบับ', '2023-07-31', '2023-07-19 16:44:56', NULL, 3, 3, 1, 1, 'JAZkJfXmaGtdsjHzVfQLlD', '{\"dc6ca1e8d0b9e48204b4593f0800b1ed.pdf\":\"FM-GR-176_Rev_00[1].pdf\",\"a36fbf663479b1c39143b38645642738.pdf\":\"FM-EM-28_Rev_01[1].pdf\"}');
+INSERT INTO `documents` (`id`, `numbers`, `title`, `description`, `expiration_date`, `document_date`, `created_at`, `updated_at`, `created_by`, `updated_by`, `categories_id`, `status_id`, `ref`, `docs`) VALUES
+(6, '202307-005', 'ถั่วเหลือง Organic (อุ่มแสง)', '', '2024-01-11', 170, '2023-07-21 16:52:12', NULL, 3, 3, 4, 1, 'Mh2Q3vg4bBIVuEB64Joxb0', '{\"befc1fd021f4ecbf6e6620e02a3ffc29.pdf\":\"ถั่วเหลือง Organic - อุ่มแสง.pdf\"}'),
+(7, '202307-006', 'ถั่วเหลือง Organic Fairtrade (อุ่มแสง)', '', '2021-05-31', 1, '2023-07-22 08:54:08', '2023-07-22 09:14:40', 3, 3, 4, 3, 'EuL6CpCXtrijFWTXmEkdya', '{\"735854d45a4faf0cf656d0522e1bae23.pdf\":\"ถั่วเหลือง Organic FT. - อุ่มแสง.pdf\"}'),
+(8, '202307-007', 'ถั่วเหลือง Organic Fairtrade (Gebana)', '', '2023-12-31', 60, '2023-07-22 09:09:40', '2023-07-22 10:15:40', 3, 3, 4, 1, 'GebU-zdiovR_5XoDiylaAj', '{\"18bd120b62fa910d2a721b7f5a55ba46.pdf\":\"Organic Soybean Fairtrade - Gebana.pdf\"}'),
+(9, '202307-008', 'ถั่วเหลือง (ชาญ บรรณมาศ)', '', '2023-11-09', 60, '2023-07-22 09:26:50', '2023-07-22 10:15:52', 3, 3, 4, 1, 'gUnyjNevFJMU7rZQ3M4XsY', '{\"69008dceb176053607d173bfc58f22f7.pdf\":\"ถั่วเหลือง - ชาญ บรรณมาศ.pdf\"}'),
+(10, '202307-009', 'ข้าวสาลี (Blue Point)', '', '2022-02-23', 60, '2023-07-22 09:49:32', NULL, 3, 3, 4, 3, '8AfVcCcTixDY_ckM4-pro8', '{\"23555e50f9f5a3105fcc7a076b7a0ed8.pdf\":\"ข้าวสาลี - Blue Point.pdf\"}'),
+(11, '202307-010', 'ถั่วเหลือง Organic Fairtrade (Pratithi)', '', '2027-02-06', 60, '2023-07-22 10:15:12', NULL, 3, 3, 4, 1, 'HtKTESkQWykqPDPpG2JkQG', '{\"e053e82e52d86ac3673e40dd65fd173b.pdf\":\"Organic Soybean Fairtrade - Pratithi Organic Foods.pdf\"}'),
+(12, '202307-011', 'ข้าวหอมมะลิอินทรีย์ (กฤษณกรณ์ออร์แกนิคฟาร์ม)', '', '2022-12-23', 60, '2023-07-22 10:27:25', NULL, 3, 3, 4, 3, 'lQm3O5BNqFSA_OhOC6BhFD', '{\"02daa11c12a6811f8626656e1ad50129.pdf\":\"ข้าวหอมมะลิอินทรีย์ - กฤษณกรณ์.pdf\"}'),
+(13, '202307-012', 'ถั่วเหลือง Organic (ST.Lawrence Beans)', '', '2019-11-28', 60, '2023-07-22 13:16:01', '2023-07-22 13:16:26', 3, 3, 4, 3, 'hH11yBt30BGkqY3dzmL2b0', '{\"d739cad180f87056c5867f323fdc6a24.pdf\":\"ถั่วเหลือง Organic - ST-Lawrence Beans.pdf\"}');
 
 -- --------------------------------------------------------
 
@@ -134,10 +143,10 @@ CREATE TABLE `status` (
 --
 
 INSERT INTO `status` (`id`, `name`, `color`) VALUES
-(1, 'Active', '#557A46'),
-(2, 'Dismiss', '#FE0000'),
-(3, 'Draft', '#3AA6B9'),
-(4, 'Pending', '#E7B10A');
+(1, 'ใช้งาน', '#328906'),
+(2, 'ยกเลิก', '#FE0000'),
+(3, 'ร่าง', '#3AA6B9'),
+(4, 'ดำเนินการ', '#E7B10A');
 
 -- --------------------------------------------------------
 
@@ -227,13 +236,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `documents`
 --
 ALTER TABLE `documents`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `status`
