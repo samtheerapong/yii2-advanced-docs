@@ -39,6 +39,7 @@ class Documents extends \yii\db\ActiveRecord
 
     const UPLOAD_FOLDER = 'uploads';
 
+    // public $notify_date;
     // public $pdf_file;
 
 
@@ -90,6 +91,7 @@ class Documents extends \yii\db\ActiveRecord
             [['numbers'], 'autonumber', 'format' => date('Ym') . '-?'],
             [['description'], 'string'],
             [['created_at', 'updated_at', 'expiration_date'], 'safe'],
+            // [['notify_date'], 'safe'],
             [['created_by', 'updated_by', 'categories_id', 'status_id', 'document_date','types_id'], 'integer'],
             [['numbers', 'title', 'ref'], 'string', 'max' => 255],
             [['categories_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::class, 'targetAttribute' => ['categories_id' => 'id']],
@@ -107,21 +109,22 @@ class Documents extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'numbers' => Yii::t('app', 'รหัสเอกสาร'),
-            'title' => Yii::t('app', 'ชื่อเอกสาร'),
-            'description' => Yii::t('app', 'รายละเอียด'),
-            'expiration_date' => Yii::t('app', 'วันที่หมดอายุ'),
-            'created_at' => Yii::t('app', 'วันที่เอกสาร'),
-            'updated_at' => Yii::t('app', 'วันที่ปรับปรุง'),
-            'created_by' => Yii::t('app', 'ผู้สร้าง'),
-            'updated_by' => Yii::t('app', 'ผู้ปรับปรุง'),
-            'categories_id' => Yii::t('app', 'หมวดหมู่'),
-            'types_id' => Yii::t('app', 'ประเภท'),
-            'status_id' => Yii::t('app', 'สถานะ'),
-            'ref' => Yii::t('app', 'อ้างอิง'),
-            'docs' => Yii::t('app', 'ไฟล์เอกสาร'),
-            'expiration' => Yii::t('app', 'หมดอายุ'),
-            'document_date' => Yii::t('app', 'เตือนหมดอายุ (วัน)'),
+            'numbers' => Yii::t('app', 'Number'),
+            'title' => Yii::t('app', 'Title'),
+            'description' => Yii::t('app', 'Description'),
+            'expiration_date' => Yii::t('app', 'Expiration Date'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Udated At'),
+            'created_by' => Yii::t('app', 'Created By'),
+            'updated_by' => Yii::t('app', 'Updated By'),
+            'categories_id' => Yii::t('app', 'Categories'),
+            'types_id' => Yii::t('app', 'Types'),
+            'status_id' => Yii::t('app', 'Status'),
+            'ref' => Yii::t('app', 'Ref'),
+            'docs' => Yii::t('app', 'Docs'),
+            'expiration' => Yii::t('app', 'Expiration'),
+            'document_date' => Yii::t('app', 'Notify Date'),
+            // 'notify_date' => Yii::t('app', 'Notify Date'),
             // 'pdf_file' => Yii::t('app', 'ไฟล์เอกสาร'),
         ];
     }
@@ -270,16 +273,4 @@ class Documents extends \yii\db\ActiveRecord
         return ($daysToExpiration >= 0) ? $daysToExpiration : 0;
     }
 
-
-    // ฟังก์ชันตรวจสอบว่าก่อนถึงวันหมดอายุ 1 เดือนหรือไม่
-    public function isExpiringSoon()
-    {
-        $currentTimestamp = time();
-        $expirationTimestamp = strtotime($this->expiration_date);
-
-        // คำนวณวันที่หมดอายุ 1 เดือนก่อนวันหมดอายุ
-        $oneMonthBeforeExpiration = strtotime('-1 month', $expirationTimestamp);
-
-        return ($currentTimestamp < $oneMonthBeforeExpiration);
-    }
 }

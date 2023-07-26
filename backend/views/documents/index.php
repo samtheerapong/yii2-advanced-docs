@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('app', 'Create Document'), ['create'], ['class' => 'btn btn-danger']) ?>
     </p>
-    
+
 
     <div class="card border-secondary">
         <div class="card-header text-white bg-secondary">
@@ -133,7 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         // 'files:ntext',
                         [
                             'attribute' => 'expiration_date',
-                            'label' => 'หมดอายุ',
+                            'label' => Yii::t('app', 'Days left'),
                             // 'options' => ['style' => 'width:100px'],
                             'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
                             'format' => 'html',
@@ -142,20 +142,20 @@ $this->params['breadcrumbs'][] = $this->title;
                                 // ตรวจสอบว่าค่าน้อยกว่า 60 หรือไม่ ถ้าใช่ให้กำหนด CSS background-color เป็นสีแดง
                                 $badgeColor = ($daysToExpiration < $model->document_date) ? '#FF1E00' : '#5BB318';
                                 $style = 'text-align: center; color:#fff; background-color: ' . $badgeColor . ';';
-                        
+
                                 $options = [
                                     'class' => 'badge', // Change class to 'badge'
                                     'style' => $style,
                                 ];
-                        
-                                return Html::tag('div', $daysToExpiration . ' วัน', $options); // Add 'days left' text to the badge
+
+                                return Html::tag('div', $daysToExpiration, $options); // Add 'days left' text to the badge
                             },
                             'filter' => false, // Disable search for this column
                         ],
                         [
                             // 'class' => ActionColumn::class,
                             'class' => 'kartik\grid\ActionColumn',
-                            'header' => 'จัดการ',
+                            // 'header' => 'จัดการ',
                             // 'headerOptions' => ['style' => 'width: 140px;'],
                             'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
                             'buttonOptions' => ['class' => 'btn btn-sm btn-outline-primary btn-group'],
@@ -170,6 +170,6 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
-    
+
 
 </div>

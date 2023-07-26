@@ -21,4 +21,26 @@ return [
     'Save' => 'บันทึก',
     'Created Successfully' => 'เพิ่มข้อมูลสำเร็จ',
     'Updated Successfully' => 'ปรับปรุงข้อมูลสำเร็จ',
+    
+    // documents
+    'Number' => 'รหัสเอกสาร',
+    'Title' => 'ชื่อเอกสาร',
+    'Description' => 'รายละเอียด',
+    'Expiration Date' => 'วันหมดอายุเอกสาร',
+    'Created At' => 'สร้างเมื่อ',
+    'Udated At' => 'ปรับปรุงเมื่อ',
+    'Created By' => 'สร้างโดย',
+    'Updated By' => 'ปรับปรุงโดย',
+    'Ref' => 'อ้างอิง',
+    'Docs' => 'ไฟล์เอกสาร',
+    'Status' => 'สถานะ',
+    'Expiration' => 'วันหมดอายุเอกสาร',
+    'Notify Date' => 'กำหนดเตือน(วัน)',
+    'Days left' => 'วันที่เหลือ',
+
+    // User
+    'Users' => 'สมาชิก',
+    
+    // Profile
+    'Profile' => 'โปรไฟล์',
 ];
