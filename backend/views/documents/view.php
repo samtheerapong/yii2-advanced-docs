@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
@@ -17,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div style="display: flex; justify-content: space-between;">
         <p>
             <?= Html::a('<i class="fas fa-chevron-left"></i> ' . Yii::t('app', 'Go Back'), ['index'], ['class' => 'btn btn-primary']) ?>
-            <!-- <?= Html::a('<i class="fas fa-download"></i> ' . Yii::t('app', 'Download'), ['download', 'id' => $model->id], ['class' => 'btn btn-info']) ?> -->
+            <?= Html::button('<i class="fas fa-share"></i> ' . Yii::t('app', 'Share'), ['class' => 'btn btn-secondary', 'id' => 'copy-button']) ?>
         </p>
 
         <p style="text-align: right;">
@@ -30,10 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'method' => 'post',
                 ],
             ]) ?>
-
         </p>
     </div>
 
+    <!-- copy-button -->
+    <?php $currentUrl = Yii::$app->request->absoluteUrl; ?>
+    
 
     <div class="card border-secondary">
         <div class="card-header text-white bg-secondary">

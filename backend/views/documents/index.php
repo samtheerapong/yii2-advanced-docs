@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('app', 'Create Document'), ['create'], ['class' => 'btn btn-danger']) ?>
     </p>
+    
 
     <div class="card border-secondary">
         <div class="card-header text-white bg-secondary">
