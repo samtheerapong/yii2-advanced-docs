@@ -36,7 +36,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <!-- copy-button -->
     <?php $currentUrl = Yii::$app->request->absoluteUrl; ?>
-    
+    <script>
+        document.getElementById('copy-button').addEventListener('click', function() {
+            var textArea = document.createElement('textarea');
+            textArea.value = '<?= $currentUrl ?>';
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                alert('URL copied to clipboard.');
+            } catch (err) {
+                console.error('Unable to copy URL: ', err);
+            }
+            document.body.removeChild(textArea);
+        });
+    </script>
 
     <div class="card border-secondary">
         <div class="card-header text-white bg-secondary">
