@@ -109,7 +109,7 @@ class Documents extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'numbers' => Yii::t('app', 'Number'),
+            'numbers' => Yii::t('app', 'DocumentID'),
             'title' => Yii::t('app', 'Title'),
             'description' => Yii::t('app', 'Description'),
             'expiration_date' => Yii::t('app', 'Expiration Date'),

@@ -23,8 +23,8 @@ return [
     'Updated Successfully' => 'ปรับปรุงข้อมูลสำเร็จ',
     
     // documents
-    'Number' => 'รหัสเอกสาร',
-    'Title' => 'ชื่อเอกสาร',
+    'DocumentID' => 'รหัสเอกสาร',
+    'Title' => 'ชื่อเรื่อง',
     'Description' => 'รายละเอียด',
     'Expiration Date' => 'วันหมดอายุเอกสาร',
     'Created At' => 'สร้างเมื่อ',
