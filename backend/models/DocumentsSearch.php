@@ -46,7 +46,12 @@ class DocumentsSearch extends Documents
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            // เรียงล่าสุดก่อน จาก id
+            'sort'=> ['defaultOrder' => [
+                'id'=> 'DESC'
+                ]]
         ]);
+
 
         $this->load($params);
 

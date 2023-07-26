@@ -6,7 +6,8 @@ use backend\models\Status;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
-use yii\grid\GridView;
+// use yii\grid\GridView;
+use kartik\grid\GridView;
 use kartik\select2\Select2;
 use yii\bootstrap5\LinkPager;
 use yii\helpers\ArrayHelper;
@@ -127,11 +128,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             'filter' => false, // Disable search for this column
                         ],
                         [
-                            'class' => ActionColumn::class,
+                            // 'class' => ActionColumn::class,
+                            'class' => 'kartik\grid\ActionColumn',
                             'header' => 'จัดการ',
                             'headerOptions' => ['style' => 'width: 140px;'],
                             'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
-                            // 'headerOptions' => ['class' => 'btn btn-sm btn-outline-primary btn-group'],
                             'buttonOptions' => ['class' => 'btn btn-sm btn-outline-primary btn-group'],
                             'urlCreator' => function ($action, Documents $model, $key, $index, $column) {
                                 return Url::toRoute([$action, 'id' => $model->id]);
