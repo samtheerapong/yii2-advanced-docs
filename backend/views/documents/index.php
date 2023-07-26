@@ -48,8 +48,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'numbers',
                             'format' => 'html',
-                            'options' => ['style' => 'width:180px'],
-                            'contentOptions' => ['class' => 'text-center'],
+                            'options' => ['style' => 'width:auto;'],
+                            // 'contentOptions' => ['class' => 'text-center'],
                             'value' => function ($model) {
                                 return Html::a($model->numbers, ['view', 'id' => $model->id]);
                             },
@@ -58,6 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'title',
                             'format' => 'html',
+                            // 'options' => ['style' => 'width:50%'],
                             'value' => function ($model) {
                                 return Html::a($model->title, ['view', 'id' => $model->id]);
                             },
@@ -67,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'categories_id',
                             'format' => 'html',
                             'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
-                            'options' => ['style' => 'width:150px'],
+                            // 'options' => ['style' => 'width:150px'],
                             'value' => function ($model) {
                                 return '<span class="badge" style="background-color:' . $model->categories->color . ';"><b>' . $model->categories->name . '</b></span>';
                             },
@@ -88,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'status_id',
                             'format' => 'html',
                             'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
-                            'options' => ['style' => 'width:120px'],
+                            // 'options' => ['style' => 'width:120px'],
                             'value' => function ($model) {
                                 return '<span class="badge" style="background-color:' . $model->status->color . ';"><b>' . $model->status->name . '</b></span>';
                             },
@@ -110,7 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'expiration_date',
                             'label' => 'หมดอายุ',
-                            'options' => ['style' => 'width:100px'],
+                            // 'options' => ['style' => 'width:100px'],
                             'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
                             'format' => 'html',
                             'value' => function ($model) {
@@ -132,7 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             // 'class' => ActionColumn::class,
                             'class' => 'kartik\grid\ActionColumn',
                             'header' => 'จัดการ',
-                            'headerOptions' => ['style' => 'width: 140px;'],
+                            // 'headerOptions' => ['style' => 'width: 140px;'],
                             'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
                             'buttonOptions' => ['class' => 'btn btn-sm btn-outline-primary btn-group'],
                             'urlCreator' => function ($action, Documents $model, $key, $index, $column) {
