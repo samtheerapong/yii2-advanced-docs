@@ -8,7 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
-    'name' => 'Admin',
+    'name' => 'NFC',
     'language' => 'th',
     'timezone' => 'Asia/Bangkok',
     'basePath' => dirname(__DIR__),
