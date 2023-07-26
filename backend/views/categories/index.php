@@ -15,6 +15,10 @@ use kartik\grid\GridView;
 $this->title = Yii::t('app', 'Categories');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<!-- Add the following meta tag to refresh the page every 1 minute -->
+<meta http-equiv="refresh" content="360">
+
 <div class="categories-index">
 
     <p>

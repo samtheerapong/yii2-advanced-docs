@@ -19,6 +19,8 @@ use yii\helpers\ArrayHelper;
 $this->title = Yii::t('app', 'Documents');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<!-- Add the following meta tag to refresh the page every 1 minute -->
+<meta http-equiv="refresh" content="360">
 <div class="documents-index">
 
     <p>
