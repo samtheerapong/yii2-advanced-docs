@@ -66,7 +66,7 @@ class DocumentsController extends Controller
                         ],
                     ],
                     [
-                        'actions' => ['update'],
+                        'actions' => ['update', 'create'],
                         'allow' => true,
                         'roles' => [
                             User::ROLE_ADMIN,
