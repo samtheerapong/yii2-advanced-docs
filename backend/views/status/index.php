@@ -15,6 +15,8 @@ use kartik\grid\GridView;
 $this->title = Yii::t('app', 'Statuses');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<!-- Add the following meta tag to refresh the page every 1 minute -->
+<meta http-equiv="refresh" content="360">
 <div class="status-index">
 
     <p>
