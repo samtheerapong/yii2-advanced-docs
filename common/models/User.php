@@ -69,7 +69,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['role', 'in', 'range' => [
                 self::ROLE_USER,
                 self::ROLE_MANAGER,
-                self::ROLE_QC,
+                self::ROLE_QA,
                 self::ROLE_SALE,
                 self::ROLE_ADMIN
             ]],
