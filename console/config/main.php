@@ -20,9 +20,12 @@ return [
         'fixture' => [
             'class' => \yii\console\controllers\FixtureController::class,
             'namespace' => 'common\fixtures',
-          ],
+        ],
     ],
     'components' => [
+        'authManager' => [
+            'class' => 'dektrium\rbac\components\DbManager'
+        ],
         'log' => [
             'targets' => [
                 [
