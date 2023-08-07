@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 26, 2023 at 09:08 AM
+-- Generation Time: Aug 07, 2023 at 04:34 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.32
 
@@ -40,7 +40,9 @@ CREATE TABLE `auto_number` (
 
 INSERT INTO `auto_number` (`group`, `number`, `optimistic_lock`, `update_time`) VALUES
 ('202307-???', 24, 1, 1690343279),
-('5bce8a536749f4b5ebc03a256521426b', 24, 1, 1690343279);
+('202308-???', 2, 1, 1691211217),
+('5bce8a536749f4b5ebc03a256521426b', 24, 1, 1690343279),
+('cb6105f484ffd5639fbc25fa3de20634', 2, 1, 1691211217);
 
 -- --------------------------------------------------------
 
@@ -60,14 +62,15 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `details`, `color`) VALUES
-(1, 'ทั่วไป', 'เอกสารทั่วไป', '#0000ff'),
+(1, 'ทั่วไป', 'เอกสารทั่วไป', '#cccccc'),
 (2, 'COI', 'หนังสือรับรองสูตรส่วนประกอบ (Certificate of Ingredient)', '#F31559'),
 (3, 'ISO', 'International Organization for Standardization', '#6527BE'),
 (4, 'COA', 'ใบรายงานผลการตรวจวิเคราะห์สินค้า Certificate of Analysis', '#090580'),
-(5, 'Sale', 'เอกสารสำหรับฝ่ายขาย', '#ef4dd8'),
-(6, 'QC', 'เอกสารสำหรับแผนกควบคุมคุณภาพ', '#F2BE22'),
-(7, 'Test Report', 'รายงานผลการทดสอบ', '#6aa84f'),
-(8, 'Certificate', 'ใบรับรอง', '#e06666');
+(5, 'TC', 'ใบรับรองการขนส่ง (Transport Certificate)', '#ef4dd8'),
+(6, 'TS (NFC)', 'รายงานผลการทดสอบ ของ NFC', '#f6b26b'),
+(7, 'TS (Supplier)', 'รายงานผลการทดสอบ Supplier', '#0000ff'),
+(8, 'MC (NFC)', 'ใบรับรอง ของ NFC (Master Certificate)', '#ff9900'),
+(9, 'MC (Supplier)', 'ใบรับรอง ของ Supplier (Master Certificate)', '#3c78d8');
 
 -- --------------------------------------------------------
 
@@ -117,7 +120,9 @@ INSERT INTO `documents` (`id`, `numbers`, `title`, `description`, `expiration_da
 (22, '202307-021', 'Certificate มอก. 45001:2561 / ISO 45001:2018 (NFC)', '', '2025-10-17', 60, '2023-07-26 10:01:31', NULL, 3, 3, 8, 1, 1, '_jAc_uTZb4aFOLieumfku6', '{\"7988b480b78dd626bb27e5e258bd3610.pdf\":\"ISO45001 Exp10 2025 EN (1).pdf\",\"a62b3cb5b21f34e74de842f7f30b41cb.pdf\":\"ISO45001 EXP10 2565  TH.pdf\"}'),
 (23, '202307-022', 'Certificate VALID-IT Non-GM PROTOCOL (NFC)', '', '2024-04-30', 60, '2023-07-26 10:30:31', NULL, 3, 3, 8, 1, 1, 'iqigDUohgJ6qWtEEA0xWVW', '{\"11e77277d80f0656411ad15db2ef8bf6.pdf\":\"Northern Food Complex Co Ltd - 146 (2) (2).pdf\"}'),
 (24, '202307-023', 'Halal Certificate (NFC)', '', '2023-07-31', 60, '2023-07-26 10:36:44', '2023-07-26 11:51:47', 3, 1, 8, 1, 1, 'p7sir4lYZaSBuo_-YRBE07', '{\"3c9d53a4d1820ba3cb1a36dc9eab2f5a.pdf\":\"scan-Halal 2565-2566.pdf\"}'),
-(25, '202307-024', 'Certificate TLS 8001:2020 (NFC)', '', '2025-01-16', 60, '2023-07-26 10:47:59', NULL, 3, 3, 8, 1, 1, 'YqXl2u8QpLAT1F-nuOlJrx', '{\"f0c84206b2dafb4e21690eda031a1ed1.pdf\":\"scan-มรท.8001-2563 (2565-2568)-(Eng).pdf\"}');
+(25, '202307-024', 'Certificate TLS 8001:2020 (NFC)', '', '2025-01-16', 60, '2023-07-26 10:47:59', NULL, 3, 3, 8, 1, 1, 'YqXl2u8QpLAT1F-nuOlJrx', '{\"f0c84206b2dafb4e21690eda031a1ed1.pdf\":\"scan-มรท.8001-2563 (2565-2568)-(Eng).pdf\"}'),
+(26, '202308-001', 'Certificate USDA Organic (PB Valley Chiangrai)', 'DSDA Organic regulations, 7 CFR part 205 (NOP) และ Product list', '2023-07-31', 60, '2023-08-05 10:45:07', NULL, 3, 3, 8, 1, 3, 'MlAspZCEGfeZyCPa9GeY-k', '{\"9b4a8be6ab410a8a7df371702073374a.pdf\":\"CERES_Produkteliste_PB valley.pdf\",\"6ff69564ad1c0d8cef7cdfdb098f8d7a.pdf\":\"CERES_Zertifikat_PB Valley.pdf\"}'),
+(27, '202308-002', 'Certificate CERES Organic Standard (CE-OS) EU Equivalent Standard (NFC)', 'CERES Organic Standard (CE-OS) EU Equivalent Standard for third countries และ Product list', '2023-07-31', 60, '2023-08-05 11:53:37', '2023-08-07 11:18:41', 3, 1, 8, 1, 3, 'bAQMxZX7ZtFDq1rCXQ2hkB', '{\"d9bd7413ec8873474cd277bbe4f702b4.pdf\":\"CERES_Produkteliste.pdf\",\"e79f6407f7440e71ea5018346e752fa0.pdf\":\"CERES_Zertifikat_v4.pdf\"}');
 
 -- --------------------------------------------------------
 
@@ -179,10 +184,13 @@ CREATE TABLE `types` (
 --
 
 INSERT INTO `types` (`id`, `name`, `details`, `color`) VALUES
-(1, 'ทดสอบ 1', NULL, '#328906'),
-(2, 'ทดสอบ 2', NULL, '#FE0000'),
-(3, 'ทดสอบ 3', NULL, '#3AA6B9'),
-(4, 'ทดสอบ 4', NULL, '#E7B10A');
+(1, 'System Oranic', 'System Organic', '#274e13'),
+(2, 'System Original', '', '#a64d79'),
+(3, 'System Fairtrade', 'System Fairtrade', '#3AA6B9'),
+(4, 'ในประเทศ', '', '#6aa84f'),
+(5, 'ต่างประเทศ', 'ต่างประเทศ', '#e69138'),
+(6, 'NFC', 'NFC', '#0c343d'),
+(7, 'Supplier', 'Supplier', '#ff9900');
 
 -- --------------------------------------------------------
 
@@ -217,7 +225,8 @@ INSERT INTO `user` (`id`, `username`, `thai_name`, `auth_key`, `password_hash`, 
 (5, 'prakaiwan', 'ประกายวรรณ เทพมณี', 'y2RYhV3E1NG68CUaa8svzBknRdbCTO79', '$2y$13$GkUZhR.dM5CJdm9MCnTYp.Ij9eya2sBVX.9CaRP/nlJq92WAQ7y02', NULL, 'prakaiwan@nfc.com', 10, 1689759362, 1689759362, '2qNZk71gb01_K-bdCiscD38z36G9exZH_1689759362', 9),
 (6, 'sale', 'ฝ่ายขาย', 'EHSvx6uElywR8fG2XRQ_xKE4sups-8cO', '$2y$13$fOXl5gCyOYl4NxlvgBJ85O7wQvWcVNYnzg4IGDNkIkX6hl2d7aMbO', NULL, 'sale@nfc.com', 10, 1689759388, 1689759388, '9ZnxmSRzPpvLgxD0MPSamdokpcp_eMul_1689759388', 8),
 (7, 'planning', 'ฝ่ายวางแผน', 'JWT4BgIkYF4TIN62mLaKv5iL0uLMn7C9', '$2y$13$g08zQ7xjXISzs99kS2yApuOCRcV6QpMOfdzNAwYY8fP9N96pEuAye', NULL, 'planning@nfc.com', 10, 1689759413, 1689759413, '7xCjBXE9xNLx1gWqKX2LaVex2ah0IWt4_1689759413', 1),
-(8, 'production', 'ฝ่ายผลิต', 'FjE8vrSWJ1uVTanpvQJDnpq_OiUySrzg', '$2y$13$Oa3U4rEqDwN8W0ytkDHCjuPw8CW4d44l9tEWbi3N3myBogr4mmzBy', NULL, 'production@nfc.com', 10, 1689759430, 1689759430, 'qNJ-e9RkWlfqvHqmvmSsItU1rlpb_D3j_1689759430', 1);
+(8, 'production', 'ฝ่ายผลิต', 'FjE8vrSWJ1uVTanpvQJDnpq_OiUySrzg', '$2y$13$Oa3U4rEqDwN8W0ytkDHCjuPw8CW4d44l9tEWbi3N3myBogr4mmzBy', NULL, 'production@nfc.com', 10, 1689759430, 1689759430, 'qNJ-e9RkWlfqvHqmvmSsItU1rlpb_D3j_1689759430', 1),
+(9, 'user01', NULL, 'dzN9G2A9mWZAsQ3vCDQ-fURVTYtv3aeL', '$2y$13$a0Q5.RSeVw/46V/J.HfkWO3e7nSxbmyaZiJQyHq2pbOxukM2320Ei', NULL, 'user01@user.com', 10, 1690430330, 1690430330, 't1iesBNA9TNHWotQHvGzbLCVhrK6LF9O_1690430330', 1);
 
 --
 -- Indexes for dumped tables
@@ -278,13 +287,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `documents`
 --
 ALTER TABLE `documents`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `status`
@@ -296,13 +305,13 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT for table `types`
 --
 ALTER TABLE `types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
