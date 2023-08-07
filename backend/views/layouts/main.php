@@ -67,7 +67,7 @@ AppAsset::register($this);
                 ['label' => Yii::t('app', 'Categories'), 'url' => ['categories/index']],
                 ['label' => Yii::t('app', 'Statuses'), 'url' => ['status/index']],
                 ['label' => Yii::t('app', 'Types'), 'url' => ['types/index']],
-                ['label' => Yii::t('app', 'Users'), 'url' => [' ']],
+                ['label' => Yii::t('app', 'Users'), 'url' => ['user/index']],
 
                 [
                     'label' => '( ' . $nameToDisplay . ' )',

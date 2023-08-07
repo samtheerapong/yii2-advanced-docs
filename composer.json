@@ -26,7 +26,8 @@
         "yii2mod/yii2-sweet-alert": "*",
         "kartik-v/yii2-icons": "^1.4",
         "dektrium/yii2-rbac": "1.0.0-alpha@dev",
-        "mdmsoft/yii2-admin": "*"
+        "mdmsoft/yii2-admin": "*",
+        "dektrium/yii2-user": "0.9.*@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
