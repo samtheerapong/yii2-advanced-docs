@@ -4,6 +4,9 @@ namespace backend\controllers;
 
 use common\models\User;
 use common\models\UserSearch;
+use common\components\Rule;
+use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -18,17 +21,38 @@ class UserController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::class,
+                'ruleConfig' => [
+                    'class' => Rule::class,
+                ],
+                'only' => ['index', 'view', 'create', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => [
+                            User::ROLE_ADMIN,
+                            User::ROLE_MANAGER
+                        ],
+                    ],
+                    [
+                        'actions' => ['view'],
+                        'allow' => true,
+                        'roles' => [
+                            User::ROLE_USER,
+                        ],
                     ],
                 ],
-            ]
-        );
+            ],
+        ];
     }
 
     /**
@@ -70,7 +94,10 @@ class UserController extends Controller
         $model = new User();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                $model->password_hash = Yii::$app->security->generatePasswordHash($model->password_hash); // สร้าง Password hash
+                $model->auth_key = Yii::$app->Security->generateRandomString(); // สร้าง RandomString
+                $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -92,8 +119,14 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $oldPass = $model->password_hash;
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            if ($oldPass != $model->password_hash) { //กรณีเปลี่ยนรหัสผ่าน
+                $model->password_hash = Yii::$app->security->generatePasswordHash($model->password_hash);
+                //$user->auth_key = Yii::$app->Security->generateRandomString();
+                $model->save();
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

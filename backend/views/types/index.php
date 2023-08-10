@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="types-index">
 
     <p>
-        <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('app', 'Create Status'), ['create'], ['class' => 'btn btn-danger']) ?>
+        <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('app', 'Create Data'), ['create'], ['class' => 'btn btn-danger']) ?>
     </p>
 
     <div class="card border-secondary">

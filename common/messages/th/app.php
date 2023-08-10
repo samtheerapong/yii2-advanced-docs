@@ -1,6 +1,8 @@
 <?php
 return [
     // *** config
+    'Start App' => 'เริ่มใช้งาน',
+    'Register' => 'สมัครสมาชิก',
     'Documents Center' => 'ตารางเอกสาร',
     'Create' => 'เพิ่ม',
     'Create Document' => 'เพิ่มเอกสาร',
@@ -14,7 +16,7 @@ return [
     'Go Back' => 'ย้อนกลับ',
     'Documents' => 'เอกสาร',
     'Categories' => 'หมวดหมู่',
-    'Occupier' => 'ผู้จัดหา',
+    'Occupier' => 'หน่วยงาน',
     'Statuses' => 'สถานะ',
     'Types' => 'ประเภท',
     'Configuration' => 'การกำหนดค่า',
@@ -31,7 +33,7 @@ return [
     'Description' => 'รายละเอียด',
     'Expiration Date' => 'วันหมดอายุเอกสาร',
     'Created At' => 'สร้างเมื่อ',
-    'Udated At' => 'ปรับปรุงเมื่อ',
+    'Updated At' => 'ปรับปรุงเมื่อ',
     'Created By' => 'สร้างโดย',
     'Updated By' => 'ปรับปรุงโดย',
     'Ref' => 'อ้างอิง',
@@ -43,7 +45,14 @@ return [
 
     // User
     'Users' => 'สมาชิก',
-    
+    'Username' => 'ชื่อเข้าสู่ระบบ',
+    'Password' => 'รหัสผ่าน',
+    'Thai Name' => 'ชื่อ-สกุล',
+    'Role' => 'สิทธิ์',
+    'Email' => 'อีเมล',
+    'Users' => 'สมาชิก',
+    'Active' => 'ใช้งาน',
+    'Inactive' => 'ไม่ได้ใช้งาน',
     // Profile
     'Profile' => 'โปรไฟล์',
 ];

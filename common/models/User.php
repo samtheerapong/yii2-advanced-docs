@@ -37,8 +37,6 @@ class User extends ActiveRecord implements IdentityInterface
     const ROLE_MANAGER = 5;
     const ROLE_USER = 1;
 
-
-
     /**
      * {@inheritdoc}
      */
@@ -73,6 +71,23 @@ class User extends ActiveRecord implements IdentityInterface
                 self::ROLE_SALE,
                 self::ROLE_ADMIN
             ]],
+            [['thai_name', 'email'], 'string'],
+            [['username', 'password_hash', 'email', 'thai_name'], 'required'],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            // 'id' => Yii::t('app', 'ID'),
+            'username' => Yii::t('app', 'Username'),
+            'thai_name' => Yii::t('app', 'Thai Name'),
+            'password_hash' => Yii::t('app', 'Password'),
+            'status' => Yii::t('app', 'Status'),
+            'email' => Yii::t('app', 'Email'),
+            'role' => Yii::t('app', 'Role'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
         ];
     }
 
@@ -83,6 +98,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
     }
+
 
     /**
      * {@inheritdoc}

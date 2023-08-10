@@ -7,6 +7,9 @@ use backend\models\OccupierSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\components\Rule;
+use yii\filters\AccessControl;
+use common\models\User;
 
 /**
  * OccupierController implements the CRUD actions for Occupier model.
@@ -18,17 +21,31 @@ class OccupierController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::class,
+                'ruleConfig' => [
+                    'class' => Rule::class,
+                ],
+                'only' => ['index', 'view', 'create', 'update', 'delete', 'download'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'download'],
+                        'allow' => true,
+                        'roles' => [
+                            User::ROLE_ADMIN,
+                            User::ROLE_MANAGER
+                        ],
                     ],
                 ],
-            ]
-        );
+            ],
+        ];
     }
 
     /**

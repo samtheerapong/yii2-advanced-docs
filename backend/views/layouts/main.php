@@ -54,12 +54,12 @@ AppAsset::register($this);
                 'div',
                 Html::a(
                     Yii::t('app', 'Register'),
-                    ['../../frontend/web/site/signup'], // Assuming 'site/signup' is the route to the signup page
-                    ['class' => 'btn btn-primary'] // Setting the link class to 'btn-primary'
+                    ['../../frontend/web/site/signup'],
+                    ['class' => 'btn btn-link signup text-decoration-none']
                 ),
                 ['class' => 'd-flex']
             );
-            echo Html::tag('div', Html::a(Yii::t('app', 'Login'), ['/site/login'], ['class' => ['btn btn-link login text-decoration-none']]), ['class' => ['d-flex']]);
+            echo Html::tag('div', Html::a(Yii::t('app', 'Login'), ['/site/login'], ['class' => ['btn btn-danger']]), ['class' => ['d-flex']]);
         } else {
             $nameToDisplay = Yii::$app->user->identity->thai_name ? Yii::$app->user->identity->thai_name : Yii::$app->user->identity->username;
             $menuItems = [
@@ -79,10 +79,10 @@ AppAsset::register($this);
                 [
                     'label' => '( ' . $nameToDisplay . ' )',
                     'items' => [
-                        ['label' => Yii::t('app', 'Profile'), 'url' => ['/profile']],
-                        // ['label' => Yii::t('app', 'Statuses'), 'url' => ['status/index']],
-                        // ['label' => Yii::t('app', 'Types'), 'url' => ['types/index']],
-                        // ['label' => Yii::t('app', 'User'), 'url' => ['../../frontend/web/site/signup']],
+                        [
+                            'label' => Yii::t('app', 'Profile'),
+                            'url' => ['/user/view', 'id' => Yii::$app->user->identity->id],
+                        ],
                         [
                             'label' => Yii::t('app', 'Logout'),
                             'url' => ['/site/logout'],
@@ -117,14 +117,14 @@ AppAsset::register($this);
 
         <div class="container">
             <p class="float-start">&copy; NFC <?= date('Y') ?></p>
-            &nbsp; Dev By Theerapong Khanta.
+            &nbsp; Created By SAM-IT
             <span>
                 <?= Html::a(Html::img('https://cdn.pixabay.com/photo/2013/07/12/17/58/thailand-152711_1280.png', ['width' => '20px']), Url::current(['language' => 'th-TH']), ['class' => (Yii::$app->request->cookies['language'] == 'th-TH' ? 'active' : '')]); ?>
                 <?= Html::a(Html::img('https://cdn.pixabay.com/photo/2015/11/06/13/29/union-jack-1027898_1280.jpg', ['width' => '20px']), Url::current(['language' => 'en-US']), ['class' => (Yii::$app->request->cookies['language'] == 'en-US' ? 'active' : '')]); ?>
 
             </span>
 
-            <p class="float-end">Version 1.0.0</p>
+            <p class="float-end">Version 1.0.1</p>
         </div>
     </footer>
 
