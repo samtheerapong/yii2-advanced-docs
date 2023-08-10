@@ -1,6 +1,7 @@
 <?php
 
 use backend\models\Categories;
+use backend\models\Occupier;
 use backend\models\Status;
 use backend\models\Types;
 use kartik\widgets\Select2;
@@ -42,7 +43,7 @@ use yii\helpers\Url;
                     <?= $form->field($model, 'description')->textarea(['rows' => 2]) ?>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <?= $form->field($model, 'expiration_date')->widget(
                         DatePicker::class,
                         [
@@ -59,12 +60,12 @@ use yii\helpers\Url;
                         ]
                     ); ?>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-6">
                     <?= $form->field($model, 'document_date')->textInput(['maxlength' => true]) ?>
                 </div>
 
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <?= $form->field($model, 'categories_id')->widget(Select2::class, [
                         'language' => 'th',
                         'data' => ArrayHelper::map(Categories::find()->all(), 'id', 'name'),
@@ -76,7 +77,19 @@ use yii\helpers\Url;
                     ?>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
+                    <?= $form->field($model, 'occupier_id')->widget(Select2::class, [
+                        'language' => 'th',
+                        'data' => ArrayHelper::map(Occupier::find()->all(), 'id', 'name'),
+                        // 'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]);
+                    ?>
+                </div>
+
+                <div class="col-md-3">
                     <?= $form->field($model, 'types_id')->widget(Select2::class, [
                         'language' => 'th',
                         'data' => ArrayHelper::map(Types::find()->all(), 'id', 'name'),
@@ -88,7 +101,7 @@ use yii\helpers\Url;
                     ?>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <?= $form->field($model, 'status_id')->widget(Select2::class, [
                         'language' => 'th',
                         'data' => ArrayHelper::map(Status::find()->all(), 'id', 'name'),

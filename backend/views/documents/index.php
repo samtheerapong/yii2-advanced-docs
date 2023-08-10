@@ -2,6 +2,7 @@
 
 use backend\models\Documents;
 use backend\models\Categories;
+use backend\models\Occupier;
 use backend\models\Status;
 use backend\models\Types;
 use yii\helpers\Html;
@@ -51,8 +52,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'numbers',
                             'format' => 'html',
-                            'options' => ['style' => 'width:auto;'],
-                            // 'contentOptions' => ['class' => 'text-center'],
+                            'options' => ['style' => 'width:150px;'],
+                            'contentOptions' => ['class' => 'text-center'],
                             'value' => function ($model) {
                                 return Html::a($model->numbers, ['view', 'id' => $model->id]);
                             },
@@ -61,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'title',
                             'format' => 'html',
-                            // 'options' => ['style' => 'width:50%'],
+                            'options' => ['style' => 'width:auto;'],
                             'value' => function ($model) {
                                 return Html::a($model->title, ['view', 'id' => $model->id]);
                             },
@@ -71,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'categories_id',
                             'format' => 'html',
                             'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
-                            // 'options' => ['style' => 'width:150px'],
+                            'options' => ['style' => 'width:120px;'],
                             'value' => function ($model) {
                                 return '<span class="badge" style="background-color:' . $model->categories->color . ';"><b>' . $model->categories->name . '</b></span>';
                             },
@@ -88,10 +89,30 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
 
                         [
+                            'attribute' => 'occupier_id',
+                            'format' => 'html',
+                            'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
+                            'options' => ['style' => 'width:100px;'],
+                            'value' => function ($model) {
+                                return '<span class="badge" style="background-color:' . $model->occupier->color . ';"><b>' . $model->occupier->name . '</b></span>';
+                            },
+                            'filter' => Select2::widget([
+                                'model' => $searchModel,
+                                'attribute' => 'occupier_id',
+                                'data' => ArrayHelper::map(Occupier::find()->all(), 'id', 'name'),
+                                'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                                'language' => 'th',
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ])
+                        ],
+
+                        [
                             'attribute' => 'types_id',
                             'format' => 'html',
                             'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
-                            // 'options' => ['style' => 'width:150px'],
+                            'options' => ['style' => 'width:100px;'],
                             'value' => function ($model) {
                                 return '<span class="badge" style="background-color:' . $model->types->color . ';"><b>' . $model->types->name . '</b></span>';
                             },
@@ -112,7 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'status_id',
                             'format' => 'html',
                             'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
-                            // 'options' => ['style' => 'width:120px'],
+                            'options' => ['style' => 'width:100px;'],
                             'value' => function ($model) {
                                 return '<span class="badge" style="background-color:' . $model->status->color . ';"><b>' . $model->status->name . '</b></span>';
                             },
@@ -134,29 +155,24 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'expiration_date',
                             'label' => Yii::t('app', 'Days left'),
-                            // 'options' => ['style' => 'width:100px'],
-                            'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
+                            'options' => ['style' => 'width:80px;'],
+                            'contentOptions' => ['class' => 'text-center'],
                             'format' => 'html',
                             'value' => function ($model) {
                                 $daysToExpiration = $model->getDaysToExpiration();
-                                // ตรวจสอบว่าค่าน้อยกว่า 60 หรือไม่ ถ้าใช่ให้กำหนด CSS background-color เป็นสีแดง
                                 $badgeColor = ($daysToExpiration < $model->document_date) ? '#FF1E00' : '#5BB318';
-                                $style = 'text-align: center; color:#fff; background-color: ' . $badgeColor . ';';
-
-                                $options = [
-                                    'class' => 'badge', // Change class to 'badge'
-                                    'style' => $style,
-                                ];
-
-                                return Html::tag('div', $daysToExpiration, $options); // Add 'days left' text to the badge
+                                $style = "text-align: center; color:#fff; background-color: $badgeColor;";
+                                $options = ['class' => 'badge', 'style' => $style];
+                                return Html::tag('div', $daysToExpiration, $options);
                             },
-                            'filter' => false, // Disable search for this column
+                            'filter' => false,
                         ],
+                        
                         [
                             // 'class' => ActionColumn::class,
                             'class' => 'kartik\grid\ActionColumn',
                             // 'header' => 'จัดการ',
-                            // 'headerOptions' => ['style' => 'width: 140px;'],
+                            'headerOptions' => ['style' => 'width: 140px;'],
                             'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
                             'buttonOptions' => ['class' => 'btn btn-sm btn-outline-primary btn-group'],
                             'urlCreator' => function ($action, Documents $model, $key, $index, $column) {
@@ -170,6 +186,5 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
-
 
 </div>

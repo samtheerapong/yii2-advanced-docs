@@ -9,7 +9,7 @@ $params = array_merge(
 return [
     'id' => 'app-backend',
     'name' => 'NFC',
-    // 'language' => 'th',
+    'language' => 'th',
     'timezone' => 'Asia/Bangkok',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',

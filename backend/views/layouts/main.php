@@ -64,15 +64,22 @@ AppAsset::register($this);
             $nameToDisplay = Yii::$app->user->identity->thai_name ? Yii::$app->user->identity->thai_name : Yii::$app->user->identity->username;
             $menuItems = [
 
-                ['label' => Yii::t('app', 'Categories'), 'url' => ['categories/index']],
-                ['label' => Yii::t('app', 'Types'), 'url' => ['types/index']],
-                ['label' => Yii::t('app', 'Statuses'), 'url' => ['status/index']],
-                ['label' => Yii::t('app', 'Users'), 'url' => ['user/index']],
+                [
+                    'label' => Yii::t('app', 'Configuration'),
+                    'items' => [
+                        ['label' => Yii::t('app', 'Categories'), 'url' => ['categories/index']],
+                        ['label' => Yii::t('app', 'Occupier'), 'url' => ['occupier/index']],
+                        ['label' => Yii::t('app', 'Types'), 'url' => ['types/index']],
+                        ['label' => Yii::t('app', 'Statuses'), 'url' => ['status/index']],
+                        ['label' => Yii::t('app', 'Users'), 'url' => ['user/index']],
+                    ],
+                ],
+
 
                 [
                     'label' => '( ' . $nameToDisplay . ' )',
                     'items' => [
-                        ['label' => Yii::t('app', 'Profile'), 'url' => [' ']],
+                        ['label' => Yii::t('app', 'Profile'), 'url' => ['/profile']],
                         // ['label' => Yii::t('app', 'Statuses'), 'url' => ['status/index']],
                         // ['label' => Yii::t('app', 'Types'), 'url' => ['types/index']],
                         // ['label' => Yii::t('app', 'User'), 'url' => ['../../frontend/web/site/signup']],

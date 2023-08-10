@@ -17,7 +17,7 @@ class DocumentsSearch extends Documents
     public function rules()
     {
         return [
-            [['id', 'created_by', 'updated_by', 'categories_id', 'types_id', 'status_id', 'expiration_date', 'document_date'], 'integer'],
+            [['id', 'created_by', 'updated_by', 'categories_id', 'occupier_id','types_id', 'status_id', 'document_date'], 'integer'],
             [['numbers', 'title', 'description', 'created_at', 'updated_at', 'ref', 'docs', 'expiration_date', 'document_date', 'notify_date'], 'safe'],
             // [['notify_date'], 'safe'],
         ];
@@ -71,6 +71,7 @@ class DocumentsSearch extends Documents
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
             'categories_id' => $this->categories_id,
+            'occupier_id' => $this->occupier_id,
             'types_id' => $this->types_id,
             'status_id' => $this->status_id,
             'document_date' => $this->document_date,

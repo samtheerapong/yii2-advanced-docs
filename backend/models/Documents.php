@@ -87,14 +87,15 @@ class Documents extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['numbers', 'title', 'categories_id', 'status_id','types_id'], 'required'],
+            [['numbers', 'title', 'categories_id', 'status_id', 'types_id', 'occupier_id'], 'required'],
             [['numbers'], 'autonumber', 'format' => date('Ym') . '-?'],
             [['description'], 'string'],
             [['created_at', 'updated_at', 'expiration_date'], 'safe'],
             // [['notify_date'], 'safe'],
-            [['created_by', 'updated_by', 'categories_id', 'status_id', 'document_date','types_id'], 'integer'],
+            [['created_by', 'updated_by', 'categories_id', 'status_id', 'document_date', 'types_id', 'occupier_id'], 'integer'],
             [['numbers', 'title', 'ref'], 'string', 'max' => 255],
             [['categories_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::class, 'targetAttribute' => ['categories_id' => 'id']],
+            [['occupier_id'], 'exist', 'skipOnError' => true, 'targetClass' => Occupier::class, 'targetAttribute' => ['occupier_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['status_id' => 'id']],
             [['types_id'], 'exist', 'skipOnError' => true, 'targetClass' => Types::class, 'targetAttribute' => ['types_id' => 'id']],
             // [['pdf_file'], 'file', 'skipOnEmpty' => true, 'on' => 'update', 'extensions' => 'pdf'],
@@ -118,6 +119,7 @@ class Documents extends \yii\db\ActiveRecord
             'created_by' => Yii::t('app', 'Created By'),
             'updated_by' => Yii::t('app', 'Updated By'),
             'categories_id' => Yii::t('app', 'Categories'),
+            'occupier_id' => Yii::t('app', 'Occupier'),
             'types_id' => Yii::t('app', 'Types'),
             'status_id' => Yii::t('app', 'Status'),
             'ref' => Yii::t('app', 'Ref'),
@@ -129,21 +131,16 @@ class Documents extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * Gets query for [[Categories]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
     public function getCategories()
     {
         return $this->hasOne(Categories::class, ['id' => 'categories_id']);
     }
 
-    /**
-     * Gets query for [[Status]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
+    public function getOccupier()
+    {
+        return $this->hasOne(Occupier::class, ['id' => 'occupier_id']);
+    }
+
     public function getStatus()
     {
         return $this->hasOne(Status::class, ['id' => 'status_id']);
@@ -163,7 +160,6 @@ class Documents extends \yii\db\ActiveRecord
     {
         return Url::base(true) . '/' . self::UPLOAD_FOLDER . '/';
     }
-
 
     public function listDownloadFiles($type)
     {
@@ -189,36 +185,10 @@ class Documents extends \yii\db\ActiveRecord
         return $docs_file;
     }
 
-    
-    // public function initialPreview($data, $field, $type = 'file')
-    // {
-    //     $initial = [];
-    //     $files = Json::decode($data);
-    //     if (is_array($files)) {
-    //         foreach ($files as $key => $value) {
-    //             if ($type == 'file') {
-    //                 $initial[] = "<div class='file-preview-other'><h2><i class='glyphicon glyphicon-file'></i></h2></div>";
-    //             } elseif ($type == 'config') {
-    //                 $initial[] = [
-    //                     'caption' => $value,
-    //                     'width'  => '120px',
-    //                     'url'    => Url::to(['/freelance/deletefile', 'id' => $this->id, 'fileName' => $key, 'field' => $field]),
-    //                     'key'    => $key
-    //                 ];
-    //             } else {
-    //                 $initial[] = Html::img(self::getUploadUrl() . $this->ref . '/' . $value, ['class' => 'file-preview-image', 'alt' => $this->file_name, 'title' => $this->file_name]);
-    //             }
-    //         }
-    //     }
-    //     return $initial;
-    // }
-
-
     public function isImage($filePath)
     {
         return @is_array(getimagesize($filePath)) ? true : false;
     }
-
 
     public function initialPreview($data, $field, $type = 'file')
     {
@@ -258,19 +228,18 @@ class Documents extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
-
-    // ฟังก์ชันคำนวณจำนวนวันที่เหลือจนถึงวันหมดอายุ
+    // ฟังก์ชันคำนวณจำนวนวันหมดอายุ
     public function getDaysToExpiration()
     {
-        $currentTimestamp = new DateTime();
-        $expirationTimestamp = new DateTime($this->expiration_date);
+        $currentDate = new DateTime(); // วันปัจจุบัน
+        $expiryDate = new DateTime($this->expiration_date); // วันหมดอายุ
+        // $expiryDate = new DateTime('2023-08-08'); // test
+        $interval = $currentDate->diff($expiryDate); // คำนวณความต่าง
 
-        // ตัวอย่าง: วันที่หมดอายุคือ 2023-08-15 และวันปัจจุบันคือ 2023-07-19
-        // วันที่หมดอายุ - วันปัจจุบัน = 27 วัน
-        $interval = $currentTimestamp->diff($expirationTimestamp);
-        $daysToExpiration = $interval->days;
+        $daysToExpiration = $interval->format('%r%a');
+        //%r%a เป็นรูปแบบการจัดรูปของตัวเลขที่ใช้ในฟังก์ชัน DateTime::format() ในภาษา PHP เพื่อแสดงผลลัพธ์จากการคำนวณระหว่างวันที่สองวัน โดย %r จะแสดงเครื่องหมายบวกหรือลบขึ้นอยู่กับว่าค่าที่คำนวณมาเป็นบวกหรือลบ และ %a จะแสดงจำนวนวันที่ผ่านมา.
 
-        return ($daysToExpiration >= 0) ? $daysToExpiration : 0;
+        return ($daysToExpiration <= 0) ? 0 : $daysToExpiration;
+
     }
-
 }

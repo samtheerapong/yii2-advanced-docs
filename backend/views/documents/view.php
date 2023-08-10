@@ -100,7 +100,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     //         return $user ? $model->createdBy->thai_name : $model->createdBy->username;
                     //     },
                     // ],
+
                     // 'categories_id',
+
                     [
                         'attribute' => 'categories_id',
                         'format' => 'html',
@@ -111,6 +113,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                 . ' </b></span>';
                         },
                     ],
+
+                    [
+                        'attribute' => 'occupier_id',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            return '<span class="badge" style="background-color:'
+                                . $model->occupier->color . ';"><b>'
+                                . $model->occupier->name
+                                . ' </b></span>';
+                        },
+                    ],
+
                     [
                         'attribute' => 'types_id',
                         'format' => 'html',
