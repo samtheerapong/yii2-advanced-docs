@@ -33,20 +33,15 @@ class UserController extends Controller
                 'ruleConfig' => [
                     'class' => Rule::class,
                 ],
-                'only' => ['index', 'view', 'create', 'update', 'delete'],
+                'only' => ['index', 'view', 'create', 'update', 'delete', 'download'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'download'],
                         'allow' => true,
                         'roles' => [
                             User::ROLE_ADMIN,
                             User::ROLE_MANAGER
                         ],
-                    ],
-                    [
-                        'actions' => ['view'],
-                        'allow' => true,
-                        'roles' => ''
                     ],
                 ],
             ],
@@ -120,11 +115,12 @@ class UserController extends Controller
         $oldPass = $model->password_hash;
 
         if ($this->request->isPost && $model->load($this->request->post())) {
-            if ($oldPass != $model->password_hash) { //กรณีเปลี่ยนรหัสผ่าน
+            if($oldPass!=$model->password_hash){ //กรณีเปลี่ยนรหัสผ่าน
                 $model->password_hash = Yii::$app->security->generatePasswordHash($model->password_hash);
                 //$user->auth_key = Yii::$app->Security->generateRandomString();
                 $model->save();
             }
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

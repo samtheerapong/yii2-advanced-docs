@@ -23,7 +23,6 @@
         "kartik-v/yii2-grid": "^3.5",
         "kartik-v/yii2-widget-select2": "dev-master",
         "mdmsoft/yii2-autonumber": "*",
-        "yii2mod/yii2-sweet-alert": "*",
         "kartik-v/yii2-icons": "^1.4",
         "dektrium/yii2-rbac": "1.0.0-alpha@dev",
         "mdmsoft/yii2-admin": "*",
