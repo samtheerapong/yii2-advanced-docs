@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 10, 2023 at 01:18 AM
+-- Generation Time: Aug 10, 2023 at 04:34 AM
 -- Server version: 5.7.39
 -- PHP Version: 7.4.9
 
@@ -101,8 +101,8 @@ CREATE TABLE `documents` (
 --
 
 INSERT INTO `documents` (`id`, `numbers`, `title`, `description`, `expiration_date`, `document_date`, `created_at`, `updated_at`, `created_by`, `updated_by`, `categories_id`, `occupier_id`, `types_id`, `status_id`, `ref`, `docs`) VALUES
-(6, '202307-005', 'ถั่วเหลือง Organic (อุ่มแสง)', '', '2024-01-11', 170, '2023-07-21 16:52:12', '2023-08-08 16:39:29', 3, 2, 4, 2, 1, 1, 'Mh2Q3vg4bBIVuEB64Joxb0', '{\"befc1fd021f4ecbf6e6620e02a3ffc29.pdf\":\"ถั่วเหลือง Organic - อุ่มแสง.pdf\"}'),
-(7, '202307-006', 'ถั่วเหลือง Organic Fairtrade (อุ่มแสง)', '', '2021-05-31', 1, '2023-07-22 08:54:08', '2023-08-08 16:39:42', 3, 2, 4, 2, 1, 3, 'EuL6CpCXtrijFWTXmEkdya', '{\"735854d45a4faf0cf656d0522e1bae23.pdf\":\"ถั่วเหลือง Organic FT. - อุ่มแสง.pdf\"}'),
+(6, '202307-005', 'ถั่วเหลือง Organic (อุ่มแสง)', '', '2024-01-11', 60, '2023-07-21 16:52:12', '2023-08-10 10:13:39', 3, 1, 4, 2, 1, 1, 'Mh2Q3vg4bBIVuEB64Joxb0', '{\"befc1fd021f4ecbf6e6620e02a3ffc29.pdf\":\"ถั่วเหลือง Organic - อุ่มแสง.pdf\"}'),
+(7, '202307-006', 'ถั่วเหลือง Organic Fairtrade (อุ่มแสง)', '', '2021-05-31', 30, '2023-07-22 08:54:08', '2023-08-10 10:15:10', 3, 1, 4, 2, 1, 3, 'EuL6CpCXtrijFWTXmEkdya', '{\"735854d45a4faf0cf656d0522e1bae23.pdf\":\"ถั่วเหลือง Organic FT. - อุ่มแสง.pdf\"}'),
 (8, '202307-007', 'ถั่วเหลือง Organic Fairtrade (Gebana)', '', '2023-12-31', 60, '2023-07-22 09:09:40', '2023-07-22 10:15:40', 3, 3, 4, 1, 1, 1, 'GebU-zdiovR_5XoDiylaAj', '{\"18bd120b62fa910d2a721b7f5a55ba46.pdf\":\"Organic Soybean Fairtrade - Gebana.pdf\"}'),
 (9, '202307-008', 'ถั่วเหลือง (ชาญ บรรณมาศ)', '', '2023-11-09', 60, '2023-07-22 09:26:50', '2023-07-22 10:15:52', 3, 3, 4, 1, 1, 1, 'gUnyjNevFJMU7rZQ3M4XsY', '{\"69008dceb176053607d173bfc58f22f7.pdf\":\"ถั่วเหลือง - ชาญ บรรณมาศ.pdf\"}'),
 (10, '202307-009', 'ข้าวสาลี (Blue Point)', '', '2022-02-23', 60, '2023-07-22 09:49:32', '2023-08-08 16:40:37', 3, 2, 7, 1, 2, 3, '8AfVcCcTixDY_ckM4-pro8', '{\"23555e50f9f5a3105fcc7a076b7a0ed8.pdf\":\"ข้าวสาลี - Blue Point.pdf\"}'),
@@ -237,15 +237,18 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `thai_name`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `verification_token`, `role`) VALUES
-(1, 'admin', 'ผู้ดูแลระบบ', '2tzscTHLNpS0rJlIJx_Uz1qZnvi6yS_q', '$2y$13$HwJ0Osagp4BHhcjKJMS.Su1kte.bpcDMCIusYWpu088FzQai9YqC6', NULL, 'admin@admin.com', 10, 1689666356, 1689666356, 'SA3gozOob2BBbQR0Ue5t4mJQpoyb0gcp_1689666356', 10),
+(1, 'admin', 'ผู้ดูแลระบบ', '2tzscTHLNpS0rJlIJx_Uz1qZnvi6yS_q', '$2y$13$HwJ0Osagp4BHhcjKJMS.Su1kte.bpcDMCIusYWpu088FzQai9YqC6', NULL, 'admin@admin.com', 10, 1689666356, 1691635667, 'SA3gozOob2BBbQR0Ue5t4mJQpoyb0gcp_1689666356', 10),
 (2, 'demo', 'ธีรพงศ์ ขันตา', 'lJsMEFiO-XjqJrVhH2aDcjXyrP0oC0vy', '$2y$13$9cR6h5aFzqkDiaIYP4DQYuywLj.cgAyUBuIexfQNZCqaJQ.T/Zxfi', NULL, 'demo@demo.com', 10, 1689756005, 1689756005, 'sfLH5psKTa0wMf7dH-kiSrkNcSPqn9OD_1689756005', 5),
 (3, 'onanong', 'อรอนงค์ ชมภู', '2bj5VmZ1PEwJDerqRsj3fhE8i2zvsVZq', '$2y$13$08zXpjOdJu83tT84JNqebe3SMFVctXSfynLDfss3sFMiveC7tPEUS', NULL, 'onanong@nfc.com', 10, 1689759317, 1689759317, '9NqfkSJcx8KkIodMLNCeH9HLqhOUmcxw_1689759317', 10),
 (4, 'supanna', 'สุพรรณา พันธ์ภู่', 'yJwBMulOJv3IDmDkCXrdYZ-VMEw_zwLZ', '$2y$13$O4m3JByeXwarBQx8Na5aXuqT8v0WqaRJakqletAVt/p8XffgPvcau', NULL, 'supanna@nfc.com', 10, 1689759339, 1689759339, '4Zgy1uVGJvXg2nZOAHcFCSj0NK0Ll3Ze_1689759339', 9),
 (5, 'prakaiwan', 'ประกายวรรณ เทพมณี', 'y2RYhV3E1NG68CUaa8svzBknRdbCTO79', '$2y$13$GkUZhR.dM5CJdm9MCnTYp.Ij9eya2sBVX.9CaRP/nlJq92WAQ7y02', NULL, 'prakaiwan@nfc.com', 10, 1689759362, 1689759362, '2qNZk71gb01_K-bdCiscD38z36G9exZH_1689759362', 9),
 (6, 'sale', 'ฝ่ายขาย', 'EHSvx6uElywR8fG2XRQ_xKE4sups-8cO', '$2y$13$fOXl5gCyOYl4NxlvgBJ85O7wQvWcVNYnzg4IGDNkIkX6hl2d7aMbO', NULL, 'sale@nfc.com', 10, 1689759388, 1689759388, '9ZnxmSRzPpvLgxD0MPSamdokpcp_eMul_1689759388', 8),
-(7, 'planning', 'ฝ่ายวางแผน', 'JWT4BgIkYF4TIN62mLaKv5iL0uLMn7C9', '$2y$13$g08zQ7xjXISzs99kS2yApuOCRcV6QpMOfdzNAwYY8fP9N96pEuAye', NULL, 'planning@nfc.com', 10, 1689759413, 1689759413, '7xCjBXE9xNLx1gWqKX2LaVex2ah0IWt4_1689759413', 1),
-(8, 'production', 'ฝ่ายผลิต', 'FjE8vrSWJ1uVTanpvQJDnpq_OiUySrzg', '$2y$13$Oa3U4rEqDwN8W0ytkDHCjuPw8CW4d44l9tEWbi3N3myBogr4mmzBy', NULL, 'production@nfc.com', 10, 1689759430, 1689759430, 'qNJ-e9RkWlfqvHqmvmSsItU1rlpb_D3j_1689759430', 1),
-(9, 'user01', NULL, 'dzN9G2A9mWZAsQ3vCDQ-fURVTYtv3aeL', '$2y$13$a0Q5.RSeVw/46V/J.HfkWO3e7nSxbmyaZiJQyHq2pbOxukM2320Ei', NULL, 'user01@user.com', 10, 1690430330, 1690430330, 't1iesBNA9TNHWotQHvGzbLCVhrK6LF9O_1690430330', 1);
+(7, 'planning', 'ฝ่ายวางแผน', 'JWT4BgIkYF4TIN62mLaKv5iL0uLMn7C9', '$2y$13$g08zQ7xjXISzs99kS2yApuOCRcV6QpMOfdzNAwYY8fP9N96pEuAye', NULL, 'planning@nfc.com', 9, 1689759413, 1691634989, '7xCjBXE9xNLx1gWqKX2LaVex2ah0IWt4_1689759413', 1),
+(8, 'production', 'ฝ่ายผลิต', 'FjE8vrSWJ1uVTanpvQJDnpq_OiUySrzg', '$2y$13$Oa3U4rEqDwN8W0ytkDHCjuPw8CW4d44l9tEWbi3N3myBogr4mmzBy', NULL, 'production@nfc.com', 9, 1689759430, 1689759430, 'qNJ-e9RkWlfqvHqmvmSsItU1rlpb_D3j_1689759430', 1),
+(9, 'user', 'ผู้ใช้งาน', 'XEPSPmb7Bt0oI_tklPUc5Uh4Jq4HM4Ig', '$2y$13$Cnpq/RL3WMS2iCp5aceVpOtAEuq.LIilfbVNr4uJiBDNwswJhKkuq', NULL, 'user@local.com', 10, 1690430330, 1691639715, 't1iesBNA9TNHWotQHvGzbLCVhrK6LF9O_1690430330', 1),
+(10, 'somsak', 'สมศักดิ์ ชาญเกียรติก้อง', '3tiUcswenYgRTZTfuvfv_Tv4V7BXwAcn', '$2y$13$RaVMZpvieW5IfdwpInG4JejNTn8rb7rTCluwPUDO6R8kAJBj1l7D.', NULL, 'somsak@northernfoodcomplex.com', 10, 1691631165, 1691636446, 'Pj5G3y6R8VeykAb0cyXVIHChtnlpquo9_1691631165', 8),
+(11, 'peeranai', 'พีรนัย โสทรทวีพงศ์', 'G3b3XCgv3uFzzly7jDX0cJXzNm45qoUV', '$2y$13$5gM/232mFQdlLwbqiQOdE.n2zbN3cLuDGdhIsTK0USk.ASVILRPZy', NULL, 'peeranai@northernfoodcomplex.com', 10, 1691631423, 1691631423, 'HmjAFfcWByo3VbwpZDD9qeBA-shqds8q_1691631423', 8),
+(12, 'theerapong', 'ธีรพงศ์ ขันตา', 'tWXwJZ5JEXbWCN0M-0zpCouAUJcL5BwZ', '$2y$13$WG5mTZIZ4ZcL3BoA/vA/7urFzlU2xQ2g4NU29gJegyCCcIte0TCP.', NULL, 'sam47290800@gmail.com', 10, 1691639318, 1691639449, NULL, 10);
 
 --
 -- Indexes for dumped tables
@@ -342,7 +345,7 @@ ALTER TABLE `types`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
