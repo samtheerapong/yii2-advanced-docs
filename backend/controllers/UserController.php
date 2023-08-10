@@ -46,9 +46,7 @@ class UserController extends Controller
                     [
                         'actions' => ['view'],
                         'allow' => true,
-                        'roles' => [
-                            User::ROLE_USER,
-                        ],
+                        'roles' => ''
                     ],
                 ],
             ],
