@@ -43,6 +43,17 @@ class UserController extends Controller
                             User::ROLE_MANAGER
                         ],
                     ],
+                    [
+                        'actions' => ['view'],
+                        'allow' => true,
+                        'roles' => [
+                            User::ROLE_ADMIN,
+                            User::ROLE_MANAGER,
+                            User::ROLE_QA,
+                            User::ROLE_SALE,
+                            User::ROLE_USER
+                        ],
+                    ],
                 ],
             ],
         ];
