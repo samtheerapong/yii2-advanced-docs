@@ -115,7 +115,7 @@ class Documents extends \yii\db\ActiveRecord
             'description' => Yii::t('app', 'Description'),
             'expiration_date' => Yii::t('app', 'Expiration Date'),
             'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Udated At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
             'created_by' => Yii::t('app', 'Created By'),
             'updated_by' => Yii::t('app', 'Updated By'),
             'categories_id' => Yii::t('app', 'Categories'),
