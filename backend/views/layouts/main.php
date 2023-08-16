@@ -43,11 +43,11 @@ AppAsset::register($this);
                 // 'linkOptions' => ['class' => 'logout-link'],
                 'url' => ['/documents/index']
             ],
-            [
-                'label' => Yii::t('app', 'Product Spec'),
-                // 'linkOptions' => ['class' => 'logout-link'],
-                'url' => ['/product/product-spec/index']
-            ],
+            // [
+            //     'label' => Yii::t('app', 'Product Spec'),
+            //     // 'linkOptions' => ['class' => 'logout-link'],
+            //     'url' => ['/product/product-spec/index']
+            // ],
         ];
 
         echo Nav::widget([
