@@ -41,7 +41,12 @@ AppAsset::register($this);
             [
                 'label' => Yii::t('app', 'Documents Center'),
                 // 'linkOptions' => ['class' => 'logout-link'],
-                'url' => ['documents/index']
+                'url' => ['/documents/index']
+            ],
+            [
+                'label' => Yii::t('app', 'Product Spec'),
+                // 'linkOptions' => ['class' => 'logout-link'],
+                'url' => ['/product/product-spec/index']
             ],
         ];
 
@@ -67,11 +72,11 @@ AppAsset::register($this);
                 [
                     'label' => Yii::t('app', 'Configuration'),
                     'items' => [
-                        ['label' => Yii::t('app', 'Categories'), 'url' => ['categories/index']],
-                        ['label' => Yii::t('app', 'Occupier'), 'url' => ['occupier/index']],
-                        ['label' => Yii::t('app', 'Types'), 'url' => ['types/index']],
-                        ['label' => Yii::t('app', 'Statuses'), 'url' => ['status/index']],
-                        ['label' => Yii::t('app', 'Users'), 'url' => ['user/index']],
+                        ['label' => Yii::t('app', 'Categories'), 'url' => ['/categories/index']],
+                        ['label' => Yii::t('app', 'Occupier'), 'url' => ['/occupier/index']],
+                        ['label' => Yii::t('app', 'Types'), 'url' => ['/types/index']],
+                        ['label' => Yii::t('app', 'Statuses'), 'url' => ['/status/index']],
+                        ['label' => Yii::t('app', 'Users'), 'url' => ['/user/index']],
                     ],
                 ],
 

@@ -21,6 +21,9 @@ return [
         ]
     ],
     'modules' => [
+        'product' => [
+            'class' => 'backend\modules\product\Module',
+        ],
         // kartik gridview
         'gridview' =>  [
             'class' => '\kartik\grid\Module'
