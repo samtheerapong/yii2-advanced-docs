@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 16, 2023 at 11:49 AM
+-- Generation Time: Aug 17, 2023 at 01:07 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.32
 
@@ -205,6 +205,36 @@ INSERT INTO `occupier` (`id`, `name`, `details`, `color`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `product_spec`
+--
+
+CREATE TABLE `product_spec` (
+  `id` int(11) NOT NULL,
+  `product_number` varchar(50) DEFAULT NULL,
+  `revision` varchar(50) DEFAULT NULL,
+  `title` varchar(200) DEFAULT NULL,
+  `description` text,
+  `files` text,
+  `spec` text COMMENT 'สเปค',
+  `fda` text COMMENT 'อย.',
+  `nutrition` text COMMENT 'Nutrition Label',
+  `iso_cert` text,
+  `created_at` varchar(50) DEFAULT NULL,
+  `updated_at` varchar(50) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `product_spec`
+--
+
+INSERT INTO `product_spec` (`id`, `product_number`, `revision`, `title`, `description`, `files`, `spec`, `fda`, `nutrition`, `iso_cert`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+(1, NULL, NULL, '', NULL, 'c56275fe-scan-Halal 2565-2566.pdf', 'ca876545-ถั่วเหลือง Organic - ST-Lawrence Beans.pdf', 'c33e61ec-ถั่วเหลือง Organic - อุ่มแสง.pdf', 'ca981619-Workshop Yii2-meeting install.docx', NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `status`
 --
 
@@ -330,6 +360,12 @@ ALTER TABLE `occupier`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `product_spec`
+--
+ALTER TABLE `product_spec`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `status`
 --
 ALTER TABLE `status`
@@ -371,6 +407,12 @@ ALTER TABLE `documents`
 --
 ALTER TABLE `occupier`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `product_spec`
+--
+ALTER TABLE `product_spec`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `status`
