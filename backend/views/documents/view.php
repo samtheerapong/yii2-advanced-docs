@@ -69,6 +69,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '<tr><th style="width: 160px;">{label}</th><td> {value}</td></tr>',
                 'attributes' => [
                     // 'id',
+                    [
+                        'attribute' => 'status_id',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            return '<span class="badge" style="background-color:'
+                                . $model->status->color . ';"><b>'
+                                . $model->status->name
+                                . ' </b></span>';
+                        },
+                    ],
+                    'status_details',
                     'numbers',
                     'title',
                     'description:ntext',
@@ -104,6 +115,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'categories_id',
 
                     [
+                        'attribute' => 'raw_material',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            return '<span class="badge" style="background-color:'
+                                . $model->rawMaterial->color . ';"><b>'
+                                . $model->rawMaterial->name
+                                . ' </b></span>';
+                        },
+                    ],
+
+
+                    [
                         'attribute' => 'categories_id',
                         'format' => 'html',
                         'value' => function ($model) {
@@ -136,16 +159,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                     ],
                     // 'status_id',
-                    [
-                        'attribute' => 'status_id',
-                        'format' => 'html',
-                        'value' => function ($model) {
-                            return '<span class="badge" style="background-color:'
-                                . $model->status->color . ';"><b>'
-                                . $model->status->name
-                                . ' </b></span>';
-                        },
-                    ],
+                   
                     // 'ref',
                     // 'files:ntext',
                     [
