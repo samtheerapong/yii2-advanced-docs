@@ -31,10 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
             // 'id',
             'title',
-            // 'files:ntext',
+            // 'process_flow:ntext',
             // 'spec:ntext',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, ProductSpec $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }

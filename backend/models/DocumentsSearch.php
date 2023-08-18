@@ -17,8 +17,8 @@ class DocumentsSearch extends Documents
     public function rules()
     {
         return [
-            [['id', 'created_by', 'updated_by', 'categories_id', 'occupier_id','types_id', 'status_id', 'document_date'], 'integer'],
-            [['numbers', 'title', 'description', 'created_at', 'updated_at', 'ref', 'docs', 'expiration_date', 'document_date', 'notify_date'], 'safe'],
+            [['id', 'created_by', 'updated_by', 'categories_id', 'occupier_id', 'types_id', 'status_id', 'document_date', 'raw_material'], 'integer'],
+            [['numbers', 'title', 'description', 'created_at', 'updated_at', 'ref', 'docs', 'expiration_date', 'document_date', 'notify_date', 'supplier_name'], 'safe'],
             // [['notify_date'], 'safe'],
         ];
     }
@@ -49,7 +49,8 @@ class DocumentsSearch extends Documents
             'query' => $query,
             // เรียงล่าสุดก่อน จาก id
             'sort' => ['defaultOrder' => [
-                'id' => 'DESC'
+                // 'id' => 'DESC'
+                'status_id' => SORT_DESC,
             ]]
         ]);
 
@@ -70,6 +71,7 @@ class DocumentsSearch extends Documents
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
+            'raw_material' => $this->raw_material,
             'categories_id' => $this->categories_id,
             'occupier_id' => $this->occupier_id,
             'types_id' => $this->types_id,
@@ -81,6 +83,7 @@ class DocumentsSearch extends Documents
             ->andFilterWhere(['like', 'expiration_date', $this->expiration_date])
             ->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'supplier_name', $this->supplier_name])
             ->andFilterWhere(['like', 'ref', $this->ref])
             ->andFilterWhere(['like', 'docs', $this->docs]);
 

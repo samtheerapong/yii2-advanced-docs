@@ -43,11 +43,16 @@ AppAsset::register($this);
                 // 'linkOptions' => ['class' => 'logout-link'],
                 'url' => ['/documents/index']
             ],
-            // [
-            //     'label' => Yii::t('app', 'Product Spec'),
-            //     // 'linkOptions' => ['class' => 'logout-link'],
-            //     'url' => ['/product/product-spec/index']
-            // ],
+            [
+                'label' => Yii::t('app', 'Product Spec'),
+                // 'linkOptions' => ['class' => 'logout-link'],
+                'url' => ['/product/product-spec/index']
+            ],
+            [
+                'label' => Yii::t('app', 'Raw Material'),
+                // 'linkOptions' => ['class' => 'logout-link'],
+                'url' => ['/product/raw-material/index']
+            ],
         ];
 
         echo Nav::widget([
@@ -129,7 +134,7 @@ AppAsset::register($this);
 
             </span>
 
-            <p class="float-end">Version 1.0.1</p>
+            <p class="float-end">Version 1.1.0</p>s
         </div>
     </footer>
 

@@ -18,7 +18,7 @@ class ProductSpecSearch extends ProductSpec
     {
         return [
             [['id'], 'integer'],
-            [['title', 'files'], 'safe'],
+            [['title', 'process'], 'safe'],
         ];
     }
 
@@ -62,7 +62,7 @@ class ProductSpecSearch extends ProductSpec
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'files', $this->files]);
+            ->andFilterWhere(['like', 'process', $this->process]);
 
         return $dataProvider;
     }

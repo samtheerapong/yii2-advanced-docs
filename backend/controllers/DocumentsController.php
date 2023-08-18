@@ -106,9 +106,9 @@ class DocumentsController extends Controller
         $searchModel = new DocumentsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        $dataProvider->pagination = [
-            'pageSize' => 15, // Number of items per page
-        ];
+        // $dataProvider->pagination = [
+        //     'pageSize' => 15, // Number of items per page
+        // ];
 
         return $this->render('index', [
             'searchModel' => $searchModel,

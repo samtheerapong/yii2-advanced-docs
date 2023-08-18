@@ -42,6 +42,9 @@ return [
     'Expiration' => 'วันหมดอายุเอกสาร',
     'Notify Date' => 'กำหนดเตือน(วัน)',
     'Days left' => 'วันที่เหลือ',
+    'Status Details' => 'รายละเอียดสถานะ',
+    'Raw Material' => 'วัตถุดิบ',
+    'Supplier Name' => 'ชื่อผู้ขาย',
 
     // User
     'Users' => 'สมาชิก',
@@ -55,4 +58,10 @@ return [
     'Inactive' => 'ไม่ได้ใช้งาน',
     // Profile
     'Profile' => 'โปรไฟล์',
+
+    // Product Spec
+    'Product Spec' => 'รายละเอียดสินค้า',
+
+    // Raw Material
+    'Raw Material' => 'วัตถุดิบ',
 ];

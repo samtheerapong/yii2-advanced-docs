@@ -87,17 +87,19 @@ class Documents extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['numbers', 'title', 'categories_id', 'status_id', 'types_id', 'occupier_id'], 'required'],
+            [['numbers', 'title', 'categories_id', 'status_id', 'types_id', 'occupier_id', 'raw_material'], 'required'],
             [['numbers'], 'autonumber', 'format' => date('Ym') . '-?'],
             [['description'], 'string'],
             [['created_at', 'updated_at', 'expiration_date'], 'safe'],
             // [['notify_date'], 'safe'],
-            [['created_by', 'updated_by', 'categories_id', 'status_id', 'document_date', 'types_id', 'occupier_id'], 'integer'],
-            [['numbers', 'title', 'ref'], 'string', 'max' => 255],
+            [['created_by', 'updated_by', 'categories_id', 'status_id', 'document_date', 'types_id', 'occupier_id', 'raw_material'], 'integer'],
+            [['status_details'], 'string'],
+            [['numbers', 'title', 'ref', 'status_details', 'supplier_name'], 'string', 'max' => 255],
             [['categories_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::class, 'targetAttribute' => ['categories_id' => 'id']],
             [['occupier_id'], 'exist', 'skipOnError' => true, 'targetClass' => Occupier::class, 'targetAttribute' => ['occupier_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['status_id' => 'id']],
             [['types_id'], 'exist', 'skipOnError' => true, 'targetClass' => Types::class, 'targetAttribute' => ['types_id' => 'id']],
+            [['raw_material'], 'exist', 'skipOnError' => true, 'targetClass' => RawMaterial::class, 'targetAttribute' => ['raw_material' => 'id']],
             // [['pdf_file'], 'file', 'skipOnEmpty' => true, 'on' => 'update', 'extensions' => 'pdf'],
             [['docs'], 'file', 'maxFiles' => 10, 'skipOnEmpty' => true]
         ];
@@ -113,15 +115,18 @@ class Documents extends \yii\db\ActiveRecord
             'numbers' => Yii::t('app', 'DocumentID'),
             'title' => Yii::t('app', 'Title'),
             'description' => Yii::t('app', 'Description'),
+            'supplier_name' => Yii::t('app', 'Supplier Name'),
             'expiration_date' => Yii::t('app', 'Expiration Date'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
             'created_by' => Yii::t('app', 'Created By'),
             'updated_by' => Yii::t('app', 'Updated By'),
+            'raw_material' => Yii::t('app', 'Raw Material'),
             'categories_id' => Yii::t('app', 'Categories'),
             'occupier_id' => Yii::t('app', 'Occupier'),
             'types_id' => Yii::t('app', 'Types'),
             'status_id' => Yii::t('app', 'Status'),
+            'status_details' => Yii::t('app', 'Status Details'),
             'ref' => Yii::t('app', 'Ref'),
             'docs' => Yii::t('app', 'Docs'),
             'expiration' => Yii::t('app', 'Expiration'),
@@ -134,6 +139,11 @@ class Documents extends \yii\db\ActiveRecord
     public function getCategories()
     {
         return $this->hasOne(Categories::class, ['id' => 'categories_id']);
+    }
+
+    public function getRawMaterial()
+    {
+        return $this->hasOne(RawMaterial::class, ['id' => 'raw_material']);
     }
 
     public function getOccupier()
@@ -239,7 +249,32 @@ class Documents extends \yii\db\ActiveRecord
         $daysToExpiration = $interval->format('%r%a');
         //%r%a เป็นรูปแบบการจัดรูปของตัวเลขที่ใช้ในฟังก์ชัน DateTime::format() ในภาษา PHP เพื่อแสดงผลลัพธ์จากการคำนวณระหว่างวันที่สองวัน โดย %r จะแสดงเครื่องหมายบวกหรือลบขึ้นอยู่กับว่าค่าที่คำนวณมาเป็นบวกหรือลบ และ %a จะแสดงจำนวนวันที่ผ่านมา.
 
-        return ($daysToExpiration <= 0) ? 0 : $daysToExpiration;
+        // return ($daysToExpiration <= 0) ? 0 : $daysToExpiration;
+        return $daysToExpiration;
+    }
 
+    public function getDaysToExpirationValue()
+    {
+        $daysToExpiration = $this->getDaysToExpiration();
+        $style = '';
+
+        if ($daysToExpiration < 1) {
+            $badgeColor = '#FF1E00'; // Background color for less than 0 days
+            $blinkStyle = 'animation: blinker 1s step-start infinite;';
+            $style = "text-align: center; color:#fff; background-color: $badgeColor; $blinkStyle";
+        } elseif ($daysToExpiration >= 0 && $daysToExpiration <= 30) {
+            $badgeColor = '#F94C10'; // Background color for 1 to 30 days
+            $style = "text-align: center; color:#fff; background-color: $badgeColor;";
+        } elseif ($daysToExpiration > 30 && $daysToExpiration <= 60) {
+            $badgeColor = '#614BC3'; // Background color for 31 to 60 days
+            $style = "text-align: center; color:#fff; background-color: $badgeColor;";
+        } elseif ($daysToExpiration > 60) {
+            $badgeColor = '#5BB318'; // Background color for more than 60 days
+            $style = "text-align: center; color:#fff; background-color: $badgeColor;";
+        }
+
+        $options = ['class' => 'badge', 'style' => $style];
+
+        return Html::tag('div', $daysToExpiration, $options);
     }
 }

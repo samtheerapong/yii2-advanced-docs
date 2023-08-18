@@ -12,9 +12,10 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
+    <?= $form->field($model, 'product_number')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'files[]')->fileInput(['multiple' => true]) ?>
+    <?= $form->field($model, 'process[]')->fileInput(['multiple' => true]) ?>
     <?= $form->field($model, 'spec[]')->fileInput(['multiple' => true]) ?>
     <?= $form->field($model, 'fda[]')->fileInput(['multiple' => true]) ?>
     <?= $form->field($model, 'nutrition[]')->fileInput(['multiple' => true]) ?>
