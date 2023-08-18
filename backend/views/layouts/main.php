@@ -81,6 +81,7 @@ AppAsset::register($this);
                         ['label' => Yii::t('app', 'Occupier'), 'url' => ['/occupier/index']],
                         ['label' => Yii::t('app', 'Types'), 'url' => ['/types/index']],
                         ['label' => Yii::t('app', 'Statuses'), 'url' => ['/status/index']],
+                        ['label' => Yii::t('app', 'Raw Material'), 'url' => ['/raw-material/index']],
                         ['label' => Yii::t('app', 'Users'), 'url' => ['/user/index']],
                     ],
                 ],

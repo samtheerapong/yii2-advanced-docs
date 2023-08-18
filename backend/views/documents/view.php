@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
+use yii2assets\printthis\PrintThis;
 
 /** @var yii\web\View $this */
 /** @var backend\models\Documents $model */
@@ -22,6 +23,31 @@ $this->params['breadcrumbs'][] = $this->title;
         </p>
 
         <p style="text-align: right;">
+
+            <?php
+            echo PrintThis::widget([
+                'htmlOptions' => [
+                    'id' => 'PrintThis',
+                    'btnClass' => 'btn btn-info',
+                    'btnId' => 'btnPrintThis',
+                    'btnText' => 'พิมพ์หน้านี้',
+                    'btnIcon' => 'fa fa-print'
+                ],
+                'options' => [
+                    'debug' => false,
+                    'importCSS' => true,
+                    'importStyle' => false,
+                    'loadCSS' => "path/to/my.css",
+                    'pageTitle' => "",
+                    'removeInline' => false,
+                    'printDelay' => 333,
+                    'header' => null,
+                    'formValues' => true,
+                ]
+            ]);
+            ?>
+
+
             <?= Html::a('<i class="fas fa-edit"></i> ' . Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
 
             <?= Html::a('<i class="fas fa-trash"></i> ' . Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
@@ -51,6 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
             document.body.removeChild(textArea);
         });
     </script>
+
 
     <div class="card border-secondary">
         <div class="card-header text-white bg-secondary">
@@ -87,8 +114,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'expiration_date',
                         'format' => 'html',
-                        'value' => Yii::$app->formatter->asDate($model->expiration_date, 'php:d M Y') .
-                            ' <span class="badge" style="background-color: ' . ($model->getDaysToExpiration() < $model->document_date ? 'red' : 'green') . ';">' . $model->getDaysToExpiration() . ' days left</span>'
+                        'value' => function ($model) {
+                            return Yii::$app->formatter->asDate($model->expiration_date, 'php:d M Y') .
+                                ' <span class="badge" style="background-color: ' . ($model->getDaysToExpiration() < $model->document_date ? 'red' : 'green') . ';">' . $model->getDaysToExpiration() . ' days left</span>';
+                        },
                     ],
                     'document_date',
                     'created_at:date',
@@ -159,7 +188,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                     ],
                     // 'status_id',
-                   
+
                     // 'ref',
                     // 'files:ntext',
                     [
