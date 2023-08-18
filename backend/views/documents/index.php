@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div style="display: flex; justify-content: space-between;">
         <div class="mb-3"> <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('app', 'Create Data'), ['create'], ['class' => 'btn btn-danger']) ?></div>
         <div class="mb-3" style="text-align: right;">
+       
             <?php
             echo ExportMenu::widget([
                 'dataProvider' => $dataProvider,
@@ -64,10 +65,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => 'html',
                         'value' => function ($model) {
                             return Yii::$app->formatter->asDate($model->expiration_date, 'php:d M Y') .
-                            ' <span class="badge" style="background-color: ' . ($model->getDaysToExpiration() < $model->document_date ? 'red' : 'green') . ';">' . $model->getDaysToExpiration() . ' days left</span>';
-                        },   
-                     ],
-                     [
+                                ' <span class="badge" style="background-color: ' . ($model->getDaysToExpiration() < $model->document_date ? 'red' : 'green') . ';">' . $model->getDaysToExpiration() . ' days left</span>';
+                        },
+                    ],
+                    [
                         'attribute' => 'raw_material',
                         'format' => 'html',
                         'value' => function ($model) {

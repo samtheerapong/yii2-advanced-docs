@@ -18,7 +18,7 @@ use Exception;
 use yii\filters\AccessControl;
 use yii\helpers\BaseFileHelper;
 
-
+use kartik\mpdf\Pdf;
 
 /**
  * DocumentsController implements the CRUD actions for Documents model.
@@ -326,4 +326,42 @@ class DocumentsController extends Controller
             $this->redirect(['/documents/view', 'id' => $id]);
         }
     }
+
+    public function actionViewPdf($id)
+    {
+        $model = $this->findModel($id);
+
+        // Generate PDF content using kartik-v/yii2-mpdf
+        $content = $this->renderPartial('pdfTemplate', ['model' => $model]); // Create a view file 'pdfTemplate.php'
+
+        // Setup mPDF with Thai font
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            // A4 paper format
+            'format' => Pdf::FORMAT_A4,
+            // portrait orientation
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            // stream to browser inline
+            'destination' => Pdf::DEST_BROWSER,
+            // your html content input
+            'content' => $content,
+            // format content from your own css file if needed or use the
+            // enhanced bootstrap css built by Krajee for mPDF formatting
+            // 'cssFile' => '@backend/web/css/pdf.css',
+            // any css to be embedded if required
+            'cssInline' => '.bd{border:1.5px solid; text-align: center;} .ar{text-align:right} .imgbd{border:1px solid}',
+            // set mPDF properties on the fly
+            'options' => ['title' => 'Preview Report Case: ' . $id],
+            // call mPDF methods on the fly
+            'methods' => [
+                //'SetHeader'=>[''],
+                //'SetFooter'=>['{PAGENO}'],
+            ]
+        ]);
+
+        // Return the PDF as a download
+        return $pdf->render();
+    }
+
+    
 }

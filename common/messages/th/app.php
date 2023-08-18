@@ -26,6 +26,7 @@ return [
     'Save' => 'บันทึก',
     'Created Successfully' => 'เพิ่มข้อมูลสำเร็จ',
     'Updated Successfully' => 'ปรับปรุงข้อมูลสำเร็จ',
+    'Days' => 'วัน',
     
     // documents
     'DocumentID' => 'รหัสเอกสาร',
@@ -45,6 +46,8 @@ return [
     'Status Details' => 'รายละเอียดสถานะ',
     'Raw Material' => 'วัตถุดิบ',
     'Supplier Name' => 'ชื่อผู้ขาย',
+    'This document has expired.' => 'เอกสารนี้หมดอายุไปแล้ว',
+    'This document will expire in' => 'เอกสารนี้จะหมดอายุในอีก',
 
     // User
     'Users' => 'สมาชิก',

@@ -47,6 +47,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
             ?>
 
+            <?= Html::a(
+                '<i class="fas fa-file"></i> ' . Yii::t('app', 'PDF'),
+                ['view-pdf', 'id' => $model->id],
+                ['class' => 'btn btn-warning', 'target' => '_blank']
+            ) ?>
 
             <?= Html::a('<i class="fas fa-edit"></i> ' . Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
 
@@ -86,12 +91,16 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <div id="PrintThis">
-            
+
             <div class="card-body">
 
                 <div class="col-md-12">
-                    <div class="<?= $model->getDaysToExpiration() < $model->document_date ? 'alert alert-danger' : 'alert alert-success' ?>">
-                        เอกสารนี้จะหมดอายุในอีก: <?= $model->getDaysToExpiration() ?> วัน
+                    <div class="<?= $model->getDaysToExpiration() <= 0 ? 'alert alert-danger' : 'alert alert-success' ?>">
+                        <?php if ($model->getDaysToExpiration() <= 0) : ?>
+                        <?= Yii::t('app', 'This document has expired.') ?>  <?= $model->getDaysToExpiration() ?>  <?= Yii::t('app', 'Days') ?> 
+                        <?php else : ?>
+                        <?= Yii::t('app', 'This document will expire in') ?> <?= $model->getDaysToExpiration() ?> <?= Yii::t('app', 'Days') ?> 
+                        <?php endif; ?>
                     </div>
                 </div>
 
