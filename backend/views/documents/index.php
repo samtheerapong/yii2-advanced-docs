@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div style="display: flex; justify-content: space-between;">
         <div class="mb-3"> <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('app', 'Create Data'), ['create'], ['class' => 'btn btn-danger']) ?></div>
         <div class="mb-3" style="text-align: right;">
-       
+
             <?php
             echo ExportMenu::widget([
                 'dataProvider' => $dataProvider,
@@ -132,11 +132,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
-                    'panel' => [
-                        'before' => ' ',
-                        // 'heading' => '<div class="card-header text-white bg-secondary">' . Html::encode($this->title) . '</div>',
-                        // 'options' => ['class' => 'card'], // Apply the card theme class
-                    ],
+                    // 'panel' => [
+                    //     'before' => ' ',
+                    //     // 'heading' => '<div class="card-header text-white bg-secondary">' . Html::encode($this->title) . '</div>',
+                    //     // 'options' => ['class' => 'card'], // Apply the card theme class
+                    // ],
                     'pager' => [
                         'class' => LinkPager::class,
                         // 'prevPageLabel' => 'Previous',

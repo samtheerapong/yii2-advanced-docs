@@ -15,10 +15,13 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\UploadedFile;
 use Exception;
+use kartik\mpdf\Pdf;
 use yii\filters\AccessControl;
 use yii\helpers\BaseFileHelper;
 
-use kartik\mpdf\Pdf;
+// use kartik\mpdf\Pdf;
+use Mpdf\Config\ConfigVariables;
+use Mpdf\Config\FontVariables;
 
 /**
  * DocumentsController implements the CRUD actions for Documents model.
@@ -331,37 +334,41 @@ class DocumentsController extends Controller
     {
         $model = $this->findModel($id);
 
-        // Generate PDF content using kartik-v/yii2-mpdf
         $content = $this->renderPartial('pdfTemplate', ['model' => $model]); // Create a view file 'pdfTemplate.php'
-
-        // Setup mPDF with Thai font
         $pdf = new Pdf([
             'mode' => Pdf::MODE_UTF8,
-            // A4 paper format
             'format' => Pdf::FORMAT_A4,
-            // portrait orientation
             'orientation' => Pdf::ORIENT_PORTRAIT,
-            // stream to browser inline
             'destination' => Pdf::DEST_BROWSER,
-            // your html content input
             'content' => $content,
-            // format content from your own css file if needed or use the
-            // enhanced bootstrap css built by Krajee for mPDF formatting
-            // 'cssFile' => '@backend/web/css/pdf.css',
-            // any css to be embedded if required
             'cssInline' => '.bd{border:1.5px solid; text-align: center;} .ar{text-align:right} .imgbd{border:1px solid}',
-            // set mPDF properties on the fly
             'options' => ['title' => 'Preview Report Case: ' . $id],
-            // call mPDF methods on the fly
-            'methods' => [
-                //'SetHeader'=>[''],
-                //'SetFooter'=>['{PAGENO}'],
-            ]
+            'methods' => [],
+            'marginLeft' => 10,
+            'marginRight' => 10,
+            'marginTop' => 10,
+            'marginBottom' => 10,
+            'marginFooter' => 5
         ]);
 
-        // Return the PDF as a download
+        $defaultConfig = (new ConfigVariables())->getDefaults();
+        $fontDirs = $defaultConfig['fontDir'];
+        $defaultFontConfig = (new FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+
+        $pdf->options['fontDir'] = array_merge($fontDirs, [
+            Yii::getAlias('@webroot') . '/fonts'
+        ]);
+        
+        $pdf->options['fontdata'] = $fontData + [
+            'sarabun' => [
+                'R' => 'THSarabunNew.ttf',
+                'I' => 'THSarabunNew-Italic.ttf',
+                'B' => 'THSarabunNew-Bold.ttf',
+                'BI' => 'THSarabunNew-BoldItalic.ttf',
+            ],
+            'default_font' => 'sarabun',
+        ];
         return $pdf->render();
     }
-
-    
 }
