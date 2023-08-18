@@ -72,7 +72,7 @@ class ProductSpecController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 
-                $model->files = $model->uploadFiles();
+                $model->process = $model->uploadFilesProcess();
                 $model->spec = $model->uploadFilesSpec();
                 $model->fda = $model->uploadFilesFda();
                 $model->nutrition = $model->uploadFilesNutrition();

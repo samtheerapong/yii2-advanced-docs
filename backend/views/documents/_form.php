@@ -2,6 +2,7 @@
 
 use backend\models\Categories;
 use backend\models\Occupier;
+use backend\models\RawMaterial;
 use backend\models\Status;
 use backend\models\Types;
 use kartik\widgets\Select2;
@@ -31,19 +32,20 @@ use yii\helpers\Url;
 
                 <?= $form->field($model, 'ref')->hiddenInput()->label(false); ?>
 
-                <div class="col-md-12" style="display: none;">
+                <div class="col-md-12 mt-2" style="display: none;">
                     <?= $form->field($model, 'numbers')->textInput(['maxlength' => true, 'disabled' => true]) ?>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 mt-2">
                     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 mt-2">
                     <?= $form->field($model, 'description')->textarea(['rows' => 2]) ?>
                 </div>
+               
 
-                <div class="col-md-6">
+                <div class="col-md-4 mt-2">
                     <?= $form->field($model, 'expiration_date')->widget(
                         DatePicker::class,
                         [
@@ -60,16 +62,33 @@ use yii\helpers\Url;
                         ]
                     ); ?>
                 </div>
-                <div class="col-md-6">
+
+
+                <!-- <div class="col-md-6 mt-2">
                     <?= $form->field($model, 'document_date')->textInput(['maxlength' => true]) ?>
+                </div> -->
+
+                <div class="col-md-3 mt-2">
+                    <?= $form->field($model, 'raw_material')->widget(Select2::class, [
+                        'language' => 'th',
+                        'data' => ArrayHelper::map(RawMaterial::find()->all(), 'id', 'name'),
+                        'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]);
+                    ?>
                 </div>
 
+                <div class="col-md-5 mt-2">
+                    <?= $form->field($model, 'supplier_name')->textInput(['maxlength' => true]) ?>
+                </div>
 
-                <div class="col-md-3">
+                <div class="col-md-3 mt-2">
                     <?= $form->field($model, 'categories_id')->widget(Select2::class, [
                         'language' => 'th',
                         'data' => ArrayHelper::map(Categories::find()->all(), 'id', 'name'),
-                        // 'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                        'options' => ['placeholder' => Yii::t('app', 'Select...')],
                         'pluginOptions' => [
                             'allowClear' => true
                         ],
@@ -77,11 +96,11 @@ use yii\helpers\Url;
                     ?>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-3 mt-2">
                     <?= $form->field($model, 'occupier_id')->widget(Select2::class, [
                         'language' => 'th',
                         'data' => ArrayHelper::map(Occupier::find()->all(), 'id', 'name'),
-                        // 'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                        'options' => ['placeholder' => Yii::t('app', 'Select...')],
                         'pluginOptions' => [
                             'allowClear' => true
                         ],
@@ -89,11 +108,11 @@ use yii\helpers\Url;
                     ?>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-3 mt-2">
                     <?= $form->field($model, 'types_id')->widget(Select2::class, [
                         'language' => 'th',
                         'data' => ArrayHelper::map(Types::find()->all(), 'id', 'name'),
-                        // 'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                        'options' => ['placeholder' => Yii::t('app', 'Select...')],
                         'pluginOptions' => [
                             'allowClear' => true
                         ],
@@ -101,11 +120,11 @@ use yii\helpers\Url;
                     ?>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-3 mt-2">
                     <?= $form->field($model, 'status_id')->widget(Select2::class, [
                         'language' => 'th',
                         'data' => ArrayHelper::map(Status::find()->all(), 'id', 'name'),
-                        // 'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                        'options' => ['placeholder' => Yii::t('app', 'Select...')],
                         'pluginOptions' => [
                             'allowClear' => true
                         ],
@@ -113,7 +132,11 @@ use yii\helpers\Url;
                     ?>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 mt-2">
+                    <?= $form->field($model, 'status_details')->textarea(['rows' => 2]) ?>
+                </div>
+
+                <div class="col-md-12 mt-2">
                     <?= $form->field($model, 'docs[]')->widget(FileInput::class, [
                         'options' => [
                             'multiple' => true
