@@ -74,6 +74,7 @@ AppAsset::register($this);
             $nameToDisplay = Yii::$app->user->identity->thai_name ? Yii::$app->user->identity->thai_name : Yii::$app->user->identity->username;
             $menuItems = [
 
+
                 [
                     'label' => Yii::t('app', 'Configuration'),
                     'items' => [
@@ -86,6 +87,11 @@ AppAsset::register($this);
                     ],
                 ],
 
+                [
+                    'label' => Yii::$app->language == 'th-TH' ? 'EN' : 'TH',
+                    'url' => Url::current(['language' => Yii::$app->language == 'th-TH' ? 'en-US' : 'th-TH']),
+                    'linkOptions' => ['class' => 'active'],
+                ],
 
                 [
                     'label' => '( ' . $nameToDisplay . ' )',
@@ -101,6 +107,8 @@ AppAsset::register($this);
                         ],
                     ],
                 ],
+
+
             ];
 
             echo Nav::widget([

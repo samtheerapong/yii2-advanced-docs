@@ -119,7 +119,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     . ' </b></span>';
                             },
                         ],
-                        'status_details',
+                        'status_details:ntext',
                         'numbers',
                         'title',
                         'description:ntext',
