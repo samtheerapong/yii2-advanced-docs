@@ -79,126 +79,131 @@ $this->params['breadcrumbs'][] = $this->title;
     </script>
 
 
+
     <div class="card border-secondary">
         <div class="card-header text-white bg-secondary">
             <?= Html::encode($this->title) ?>
         </div>
-        <div class="card-body">
 
-            <div class="col-md-12">
-                <div class="<?= $model->getDaysToExpiration() < $model->document_date ? 'alert alert-danger' : 'alert alert-success' ?>">
-                    เอกสารนี้จะหมดอายุในอีก: <?= $model->getDaysToExpiration() ?> วัน
+        <div id="PrintThis">
+            
+            <div class="card-body">
+
+                <div class="col-md-12">
+                    <div class="<?= $model->getDaysToExpiration() < $model->document_date ? 'alert alert-danger' : 'alert alert-success' ?>">
+                        เอกสารนี้จะหมดอายุในอีก: <?= $model->getDaysToExpiration() ?> วัน
+                    </div>
                 </div>
+
+                <?= DetailView::widget([
+                    'model' => $model,
+                    'template' => '<tr><th style="width: 160px;">{label}</th><td> {value}</td></tr>',
+                    'attributes' => [
+                        // 'id',
+                        [
+                            'attribute' => 'status_id',
+                            'format' => 'html',
+                            'value' => function ($model) {
+                                return '<span class="badge" style="background-color:'
+                                    . $model->status->color . ';"><b>'
+                                    . $model->status->name
+                                    . ' </b></span>';
+                            },
+                        ],
+                        'status_details',
+                        'numbers',
+                        'title',
+                        'description:ntext',
+                        // 'expiration_date:date',
+                        [
+                            'attribute' => 'expiration_date',
+                            'format' => 'html',
+                            'value' => function ($model) {
+                                return Yii::$app->formatter->asDate($model->expiration_date, 'php:d M Y') .
+                                    ' <span class="badge" style="background-color: ' . ($model->getDaysToExpiration() < $model->document_date ? 'red' : 'green') . ';">' . $model->getDaysToExpiration() . ' days left</span>';
+                            },
+                        ],
+                        'document_date',
+                        'created_at:date',
+                        'updated_at:date',
+                        // 'created_by',
+                        [
+                            'attribute' => 'created_by',
+                            'format' => 'html',
+                            'value' => function ($model) {
+                                $user = $model->createdBy->thai_name;
+                                return $user ? $model->createdBy->thai_name : $model->createdBy->username;
+                            },
+                        ],
+                        // 'updated_by',
+                        // [
+                        //     'attribute' => 'updated_by',
+                        //     'format' => 'html',
+                        //     'value' => function ($model) {
+                        //         $user = $model->createdBy->thai_name;
+                        //         return $user ? $model->createdBy->thai_name : $model->createdBy->username;
+                        //     },
+                        // ],
+
+                        // 'categories_id',
+
+                        [
+                            'attribute' => 'raw_material',
+                            'format' => 'html',
+                            'value' => function ($model) {
+                                return '<span class="badge" style="background-color:'
+                                    . $model->rawMaterial->color . ';"><b>'
+                                    . $model->rawMaterial->name
+                                    . ' </b></span>';
+                            },
+                        ],
+
+
+                        [
+                            'attribute' => 'categories_id',
+                            'format' => 'html',
+                            'value' => function ($model) {
+                                return '<span class="badge" style="background-color:'
+                                    . $model->categories->color . ';"><b>'
+                                    . $model->categories->name
+                                    . ' </b></span>';
+                            },
+                        ],
+
+                        [
+                            'attribute' => 'occupier_id',
+                            'format' => 'html',
+                            'value' => function ($model) {
+                                return '<span class="badge" style="background-color:'
+                                    . $model->occupier->color . ';"><b>'
+                                    . $model->occupier->name
+                                    . ' </b></span>';
+                            },
+                        ],
+
+                        [
+                            'attribute' => 'types_id',
+                            'format' => 'html',
+                            'value' => function ($model) {
+                                return '<span class="badge" style="background-color:'
+                                    . $model->types->color . ';"><b>'
+                                    . $model->types->name
+                                    . ' </b></span>';
+                            },
+                        ],
+                        // 'status_id',
+
+                        // 'ref',
+                        // 'files:ntext',
+                        [
+                            'attribute' => 'docs',
+                            'format' => 'html',
+                            'value' => $model->listDownloadFiles('docs')
+                        ],
+                    ],
+                ]) ?>
+
             </div>
-
-            <?= DetailView::widget([
-                'model' => $model,
-                'template' => '<tr><th style="width: 160px;">{label}</th><td> {value}</td></tr>',
-                'attributes' => [
-                    // 'id',
-                    [
-                        'attribute' => 'status_id',
-                        'format' => 'html',
-                        'value' => function ($model) {
-                            return '<span class="badge" style="background-color:'
-                                . $model->status->color . ';"><b>'
-                                . $model->status->name
-                                . ' </b></span>';
-                        },
-                    ],
-                    'status_details',
-                    'numbers',
-                    'title',
-                    'description:ntext',
-                    // 'expiration_date:date',
-                    [
-                        'attribute' => 'expiration_date',
-                        'format' => 'html',
-                        'value' => function ($model) {
-                            return Yii::$app->formatter->asDate($model->expiration_date, 'php:d M Y') .
-                                ' <span class="badge" style="background-color: ' . ($model->getDaysToExpiration() < $model->document_date ? 'red' : 'green') . ';">' . $model->getDaysToExpiration() . ' days left</span>';
-                        },
-                    ],
-                    'document_date',
-                    'created_at:date',
-                    'updated_at:date',
-                    // 'created_by',
-                    [
-                        'attribute' => 'created_by',
-                        'format' => 'html',
-                        'value' => function ($model) {
-                            $user = $model->createdBy->thai_name;
-                            return $user ? $model->createdBy->thai_name : $model->createdBy->username;
-                        },
-                    ],
-                    // 'updated_by',
-                    // [
-                    //     'attribute' => 'updated_by',
-                    //     'format' => 'html',
-                    //     'value' => function ($model) {
-                    //         $user = $model->createdBy->thai_name;
-                    //         return $user ? $model->createdBy->thai_name : $model->createdBy->username;
-                    //     },
-                    // ],
-
-                    // 'categories_id',
-
-                    [
-                        'attribute' => 'raw_material',
-                        'format' => 'html',
-                        'value' => function ($model) {
-                            return '<span class="badge" style="background-color:'
-                                . $model->rawMaterial->color . ';"><b>'
-                                . $model->rawMaterial->name
-                                . ' </b></span>';
-                        },
-                    ],
-
-
-                    [
-                        'attribute' => 'categories_id',
-                        'format' => 'html',
-                        'value' => function ($model) {
-                            return '<span class="badge" style="background-color:'
-                                . $model->categories->color . ';"><b>'
-                                . $model->categories->name
-                                . ' </b></span>';
-                        },
-                    ],
-
-                    [
-                        'attribute' => 'occupier_id',
-                        'format' => 'html',
-                        'value' => function ($model) {
-                            return '<span class="badge" style="background-color:'
-                                . $model->occupier->color . ';"><b>'
-                                . $model->occupier->name
-                                . ' </b></span>';
-                        },
-                    ],
-
-                    [
-                        'attribute' => 'types_id',
-                        'format' => 'html',
-                        'value' => function ($model) {
-                            return '<span class="badge" style="background-color:'
-                                . $model->types->color . ';"><b>'
-                                . $model->types->name
-                                . ' </b></span>';
-                        },
-                    ],
-                    // 'status_id',
-
-                    // 'ref',
-                    // 'files:ntext',
-                    [
-                        'attribute' => 'docs',
-                        'format' => 'html',
-                        'value' => $model->listDownloadFiles('docs')
-                    ],
-                ],
-            ]) ?>
-
         </div>
     </div>
 </div>
