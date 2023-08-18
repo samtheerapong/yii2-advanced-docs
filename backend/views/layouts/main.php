@@ -134,7 +134,7 @@ AppAsset::register($this);
 
             </span>
 
-            <p class="float-end">Version 1.1.0</p>s
+            <p class="float-end">Version 1.1.0</p>
         </div>
     </footer>
 
