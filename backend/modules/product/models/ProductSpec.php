@@ -36,7 +36,7 @@ class ProductSpec extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'revised_date', 'spec_expiration', 'process_expiration', 'fda_expiration', 'nutrition_expiration'], 'safe'],
             [['created_by', 'updated_by'], 'integer'],
             [['product_number', 'revision', 'title', 'description', 'iso_cert'], 'string'],
             [['title'], 'string', 'max' => 200],
@@ -50,12 +50,17 @@ class ProductSpec extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'product_number' => Yii::t('app', 'Product Number'),
             'revision' => Yii::t('app', 'Revision'),
+            'revised_date' => Yii::t('app', 'Revised Date'),
             'title' => Yii::t('app', 'Title'),
             'description' => Yii::t('app', 'Description'),
             'spec' => Yii::t('app', 'Product Specification'),
+            'spec_expiration' => Yii::t('app', 'Spec Expiration'),
             'process' => Yii::t('app', 'Process Flow'),
+            'process_expiration' => Yii::t('app', 'Process Expiration'),
             'fda' => Yii::t('app', 'FDA'),
+            'fda_expiration' => Yii::t('app', 'Fda Expiration'),
             'nutrition' => Yii::t('app', 'Nutrition Label'),
+            'nutrition_expiration' => Yii::t('app', 'Nutrition Expiration'),
             'iso_cert' => Yii::t('app', 'ISO Certificate'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
@@ -72,7 +77,7 @@ class ProductSpec extends \yii\db\ActiveRecord
         if ($this->validate() && $files) {
             foreach ($files as $file) {
                 // $fileName = md5(rand(1, 1000) . time()) . '-' . $file->baseName . '.' . $file->extension;
-                $fileName = $this->product_number . $this->revision . '-' . substr(md5($file->baseName . time()), 0, 8) . '.' . $file->extension;
+                $fileName = $this->product_number . '-' . $file->baseName . '.' . $file->extension;
                 $file->saveAs(Yii::getAlias('@webroot') . '/' . $this->uploadFolders[$attribute] . '/' . $fileName);
                 $filesName[] = $fileName;
             }
