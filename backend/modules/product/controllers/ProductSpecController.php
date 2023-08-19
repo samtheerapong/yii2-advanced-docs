@@ -4,6 +4,7 @@ namespace backend\modules\product\controllers;
 
 use backend\modules\product\models\ProductSpec;
 use backend\modules\product\models\ProductSpecSearch;
+use mdm\autonumber\AutoNumber;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -68,10 +69,13 @@ class ProductSpecController extends Controller
     public function actionCreate()
     {
         $model = new ProductSpec();
-        
+        $model->revision = 1;
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                
+
+                $model->product_number = AutoNumber::generate('P' . date('Ym') . '-???');
+
                 $model->process = $model->uploadFilesProcess();
                 $model->spec = $model->uploadFilesSpec();
                 $model->fda = $model->uploadFilesFda();
@@ -100,7 +104,14 @@ class ProductSpecController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+
+            $model->process = $model->uploadFilesProcess();
+            $model->spec = $model->uploadFilesSpec();
+            $model->fda = $model->uploadFilesFda();
+            $model->nutrition = $model->uploadFilesNutrition();
+
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

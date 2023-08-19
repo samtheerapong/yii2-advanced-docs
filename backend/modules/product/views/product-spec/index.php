@@ -21,23 +21,45 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a(Yii::t('app', 'Create Product Spec'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            // 'id',
-            'title',
-            // 'process_flow:ntext',
-            // 'spec:ntext',
+            
+            [
+                'attribute' => 'product_number',
+                'format' => 'html',
+                'options' => ['style' => 'width:200px;'],
+                'value' => function ($model) {
+                    return Html::a($model->product_number, ['view', 'id' => $model->id]);
+                },
+            ],
+            [
+                'attribute' => 'revision',
+                'format' => 'html',
+                'options' => ['style' => 'width:50px;'],
+                'value' => function ($model) {
+                    return Html::a($model->revision, ['view', 'id' => $model->id]);
+                },
+            ],
+            [
+                'attribute' => 'title',
+                'format' => 'html',
+                'options' => ['style' => 'width:auto;'],
+                'value' => function ($model) {
+                    return Html::a($model->title, ['view', 'id' => $model->id]);
+                },
+            ],
+            'iso_cert',
             [
                 'class' => ActionColumn::class,
                 'urlCreator' => function ($action, ProductSpec $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                }
             ],
         ],
     ]); ?>

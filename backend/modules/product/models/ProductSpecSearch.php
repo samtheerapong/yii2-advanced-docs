@@ -17,8 +17,25 @@ class ProductSpecSearch extends ProductSpec
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['title', 'process'], 'safe'],
+            [['id', 'revision'], 'integer'],
+            [[
+                'title',
+                'product_number',
+                'revised_date',
+                'spec',
+                'spec_expiration',
+                'process',
+                'process_expiration',
+                'fda',
+                'fda_expiration',
+                'nutrition',
+                'nutrition_expiration',
+                'created_at',
+                'updated_at',
+                'created_by',
+                'updated_by',
+                'iso_cert',
+            ], 'safe'],
         ];
     }
 
@@ -59,10 +76,26 @@ class ProductSpecSearch extends ProductSpec
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'revision' => $this->revision,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'process', $this->process]);
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'product_number', $this->product_number])
+            ->andFilterWhere(['like', 'revised_date', $this->revised_date])
+            ->andFilterWhere(['like', 'iso_cert', $this->iso_cert])
+            ->andFilterWhere(['like', 'spec', $this->spec])
+            ->andFilterWhere(['like', 'spec_expiration', $this->spec_expiration])
+            ->andFilterWhere(['like', 'process', $this->process])
+            ->andFilterWhere(['like', 'process_expiration', $this->product_number])
+            ->andFilterWhere(['like', 'fda', $this->fda])
+            ->andFilterWhere(['like', 'fda_expiration', $this->fda_expiration])
+            ->andFilterWhere(['like', 'nutrition', $this->nutrition])
+            ->andFilterWhere(['like', 'nutrition_expiration', $this->nutrition_expiration])
+            ->andFilterWhere(['like', 'created_at', $this->created_at])
+            ->andFilterWhere(['like', 'updated_at', $this->updated_at])
+            ->andFilterWhere(['like', 'created_by', $this->created_by])
+            ->andFilterWhere(['like', 'updated_by', $this->updated_by]);
 
         return $dataProvider;
     }
