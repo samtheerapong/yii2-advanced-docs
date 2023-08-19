@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\DocumentsSearch;
 use common\models\LoginForm;
 use Yii;
 use yii\filters\VerbFilter;
@@ -24,7 +25,7 @@ class SiteController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['login', 'error','logout', 'index'],
+                        'actions' => ['login', 'error', 'logout', 'index'],
                         'allow' => true,
                     ],
                     // [
@@ -62,7 +63,81 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+
+        $searchModelDocuments = new DocumentsSearch();
+        $dataProviderDocuments = $searchModelDocuments->search(Yii::$app->request->queryParams);
+        $dataProviderDocuments->pagination = [
+            'pageSize' => 10, // Number of items per page
+        ];
+
+        // **************** report graphStatus ********************
+        $sqlstatus = "SELECT COUNT(m.id) AS count, r.name
+         FROM documents m
+         LEFT JOIN status r 
+         ON r.id = m.status_id
+         GROUP BY m.status_id";
+        $datastatus = Yii::$app->db->createCommand($sqlstatus)->queryAll();
+        $graphstatus = [];
+        foreach ($datastatus as $d) {
+            $graphstatus[] = [
+                'name' => $d['name'],
+                'y' => intval($d['count']),
+            ];
+        }
+
+        // **************** report graphrawmaterial ********************
+        $sqlrawmaterial = "SELECT COUNT(m.id) AS count, r.name
+         FROM documents m
+         LEFT JOIN raw_material r 
+         ON r.id = m.raw_material
+         GROUP BY m.raw_material";
+        $datarawmaterial = Yii::$app->db->createCommand($sqlrawmaterial)->queryAll();
+        $graphrawmaterial = [];
+        foreach ($datarawmaterial as $d) {
+            $graphrawmaterial[] = [
+                'name' => $d['name'],
+                'y' => intval($d['count']),
+            ];
+        }
+
+         // **************** report graphtypes ********************
+         $sqltypes = "SELECT COUNT(m.id) AS count, r.name
+         FROM documents m
+         LEFT JOIN types r 
+         ON r.id = m.types_id
+         GROUP BY m.types_id";
+        $datatypes = Yii::$app->db->createCommand($sqltypes)->queryAll();
+        $graphtypes = [];
+        foreach ($datatypes as $d) {
+            $graphtypes[] = [
+                'name' => $d['name'],
+                'y' => intval($d['count']),
+            ];
+        }
+
+        // **************** report graphcategories ********************
+        $sqlcategories = "SELECT COUNT(m.id) AS count, r.name
+         FROM documents m
+         LEFT JOIN categories r 
+         ON r.id = m.categories_id
+         GROUP BY m.categories_id";
+        $datacategories = Yii::$app->db->createCommand($sqlcategories)->queryAll();
+        $graphcategories = [];
+        foreach ($datacategories as $d) {
+            $graphcategories[] = [
+                'name' => $d['name'],
+                'y' => intval($d['count']),
+            ];
+        }
+
+        return $this->render('index', [
+            'searchModelDocuments' => $searchModelDocuments, //table Requester
+            'dataProviderDocuments' => $dataProviderDocuments, //table Requester
+            'graphcategories' => $graphcategories, 
+            'graphrawmaterial' => $graphrawmaterial, 
+            'graphtypes' => $graphtypes, 
+            'graphstatus' => $graphstatus,
+        ]);
     }
 
     /**

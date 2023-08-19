@@ -29,6 +29,7 @@
         "dektrium/yii2-user": "0.9.*@dev",
         "kartik-v/yii2-export": "*",
         "kartik-v/yii2-bootstrap5-dropdown": "^1.0",
+        "miloschuman/yii2-highcharts-widget": "*",
         "yii2assets/yii2-printthis": "^1.0",
         "kartik-v/yii2-mpdf": "^1.0"
     },
