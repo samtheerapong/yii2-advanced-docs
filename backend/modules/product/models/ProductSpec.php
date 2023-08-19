@@ -2,6 +2,7 @@
 
 namespace backend\modules\product\models;
 
+use common\models\User;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -144,5 +145,15 @@ class ProductSpec extends \yii\db\ActiveRecord
         return implode('<br />', array_map(function ($value) use ($folder) {
             return Html::a($value, Url::to(Yii::getAlias('@web') . '/' . $folder . '/' . $value), ['target' => '_blank']);
         }, $this->{"getFiles" . ucfirst($attribute)}()));
+    }
+
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(User::class, ['id' => 'updated_by']);
+    }
+
+    public function getCreatedBy()
+    {
+        return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 }

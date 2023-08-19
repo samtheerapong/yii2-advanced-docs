@@ -8,57 +8,109 @@ use yii\widgets\DetailView;
 /** @var backend\modules\product\models\ProductSpec $model */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Product Specs'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Product Spec'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 
 <div class="product-spec-view">
+    <div style="display: flex; justify-content: space-between;">
+        <p>
+            <?= Html::a('<i class="fas fa-chevron-left"></i> ' . Yii::t('app', 'Go Back'), ['index'], ['class' => 'btn btn-primary']) ?>
+        </p>
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <p style="text-align: right;">
+            <?= Html::a('<i class="fas fa-edit"></i> ' . Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+            <?= Html::a('<i class="fas fa-trash"></i> ' . Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                    'method' => 'post',
+                ],
+            ]) ?>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'product_number',
-            'revision',
-            'title',
-            'description',
-            // 'files:ntext',
+        </p>
+    </div>
 
-            [
-                'attribute' => 'spec',
-                'format' => 'raw',
-                'value' => $model->generateFileLinks('spec'),
-            ],
-            [
-                'attribute' => 'process',
-                'format' => 'raw',
-                'value' => $model->generateFileLinks('process'),
-            ],
-            [
-                'attribute' => 'fda',
-                'format' => 'raw',
-                'value' => $model->generateFileLinks('fda'),
-            ],
-            [
-                'attribute' => 'nutrition',
-                'format' => 'raw',
-                'value' => $model->generateFileLinks('nutrition'),
-            ],
-        ],
-    ]) ?>
+    <div class="card border-secondary">
+        <div class="card-header text-white bg-secondary">
+            <?= Html::encode($this->title) ?>
+        </div>
+        <div class="card-body">
+            <?= DetailView::widget([
+                'model' => $model,
+                'template' => '<tr><th style="width: 30%;">{label}</th><td> {value}</td></tr>',
+                'attributes' => [
+                    // 'id',
+                    // 'product_number',
+                    [
+                        'attribute' => 'product_number',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            return $model->product_number . '<b> Rev.  </b>' . $model->revision;
+                        },
+                    ],
 
+                    [
+                        'attribute' => 'revised_date',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            return Yii::$app->formatter->asDate($model->revised_date, 'php:d M Y');
+                        },
+                    ],
+                    'title',
+                    'description',
+                    'iso_cert',
+                    [
+                        'attribute' => 'spec',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return  $model->generateFileLinks('spec') . '<br> <b>วันหมดอายุ : </b>' .  Yii::$app->formatter->asDate($model->spec_expiration, 'php:d M Y');
+                        },
+                    ],
+                    [
+                        'attribute' => 'process',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return  $model->generateFileLinks('process') . '<br> <b>วันหมดอายุ : </b>' . Yii::$app->formatter->asDate($model->process_expiration, 'php:d M Y');
+                        },
+                    ],
+                    [
+                        'attribute' => 'fda',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return  $model->generateFileLinks('fda') . '<br> <b>วันหมดอายุ : </b>' . Yii::$app->formatter->asDate($model->fda_expiration, 'php:d M Y');
+                        },
+                    ],
+                    [
+                        'attribute' => 'nutrition',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return  $model->generateFileLinks('nutrition') . '<br> <b>วันหมดอายุ : </b>' . Yii::$app->formatter->asDate($model->nutrition_expiration, 'php:d M Y');
+                        },
+                    ],
+                    'created_at:date',
+                    'updated_at:date',
+                    [
+                        'attribute' => 'created_by',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            $user = $model->createdBy->thai_name;
+                            return $user ? $model->createdBy->thai_name : $model->createdBy->username;
+                        },
+                    ],
+                    [
+                        'attribute' => 'updated_by',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            $user = $model->createdBy->thai_name;
+                            return $user ? $model->createdBy->thai_name : $model->createdBy->username;
+                        },
+                    ],
+                ],
+            ]) ?>
+
+        </div>
+    </div>
 </div>
