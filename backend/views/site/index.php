@@ -20,8 +20,8 @@ $this->title = Yii::t('app', 'Dashboard');
 
     <div class="row">
         <div class="col-md-6 mt-2">
-            <div class="card border-dark">
-                <div class="card-header text-white bg-dark">
+            <div class="card border-secondary">
+                <div class="card-header text-white bg-secondary">
                     <?= Yii::t('app', 'Categories') ?>
                 </div>
                 <div class="card-body">
@@ -55,8 +55,8 @@ $this->title = Yii::t('app', 'Dashboard');
         </div>
 
         <div class="col-md-6 mt-2">
-            <div class="card border-dark">
-                <div class="card-header text-white bg-dark">
+            <div class="card border-secondary">
+                <div class="card-header text-white bg-secondary">
                     <?= Yii::t('app', 'Raw Material') ?>
                 </div>
                 <div class="card-body">
@@ -90,8 +90,8 @@ $this->title = Yii::t('app', 'Dashboard');
         </div>
 
         <div class="col-md-6 mt-2">
-            <div class="card border-dark">
-                <div class="card-header text-white bg-dark">
+            <div class="card border-secondary">
+                <div class="card-header text-white bg-secondary">
                     <?= Yii::t('app', 'Types') ?>
                 </div>
                 <div class="card-body">
@@ -125,8 +125,8 @@ $this->title = Yii::t('app', 'Dashboard');
         </div>
 
         <div class="col-md-6 mt-2">
-            <div class="card border-dark">
-                <div class="card-header text-white bg-dark">
+            <div class="card border-secondary">
+                <div class="card-header text-white bg-secondary">
                     <?= Yii::t('app', 'Status') ?>
                 </div>
                 <div class="card-body">
