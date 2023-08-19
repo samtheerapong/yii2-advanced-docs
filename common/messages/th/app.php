@@ -46,8 +46,8 @@ return [
     'Status Details' => 'รายละเอียดสถานะ',
     'Raw Material' => 'วัตถุดิบ',
     'Supplier Name' => 'ชื่อผู้ขาย',
-    'This document has expired.' => 'เอกสารนี้หมดอายุไปแล้ว',
-    'This document will expire in' => 'เอกสารนี้จะหมดอายุในอีก',
+    'This document has expired.' => 'เอกสารหมดอายุไปแล้ว',
+    'This document will expire in' => 'เอกสารจะหมดอายุในอีก',
 
     // User
     'Users' => 'สมาชิก',

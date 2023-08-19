@@ -341,16 +341,26 @@ class DocumentsController extends Controller
             'orientation' => Pdf::ORIENT_PORTRAIT,
             'destination' => Pdf::DEST_BROWSER,
             'content' => $content,
-            'cssInline' => '.bd{border:1.5px solid; text-align: center;} .ar{text-align:right} .imgbd{border:1px solid}',
-            'options' => ['title' => 'Preview Report Case: ' . $id],
+            'cssInline' => 'body{font-family:chakrapetch;font-size:14px;}',
+            // 'cssInline' => 'body{font-family:sarabun;font-size:20px;}',
+            // 'cssFile' => '@backend/web/css/bootstrap.css',
             'methods' => [],
-            'marginLeft' => 10,
-            'marginRight' => 10,
-            'marginTop' => 10,
-            'marginBottom' => 10,
-            'marginFooter' => 5
+            // 'marginLeft' => 10,
+            // 'marginRight' => 10,
+            // 'marginTop' => 10,
+            // 'marginBottom' => 10,
+            // 'marginFooter' => 5,
+            'methods' => [
+                'SetHeader' => ['Export : '.date('d-m-Y')],
+                'SetFooter' => ['{PAGENO}']
+            ],
+            'options' => [
+               
+            ],
+            
         ]);
-
+        
+        
         $defaultConfig = (new ConfigVariables())->getDefaults();
         $fontDirs = $defaultConfig['fontDir'];
         $defaultFontConfig = (new FontVariables())->getDefaults();
@@ -367,8 +377,18 @@ class DocumentsController extends Controller
                 'B' => 'THSarabunNew-Bold.ttf',
                 'BI' => 'THSarabunNew-BoldItalic.ttf',
             ],
-            'default_font' => 'sarabun',
         ];
+
+        $pdf->options['fontdata'] = $fontData + [
+            'chakrapetch' => [
+                'R' => 'ChakraPetch-Regular.ttf',
+                'I' => 'ChakraPetch-Italic.ttf',
+                'B' => 'ChakraPetch-Bold.ttf',
+                'BI' => 'ChakraPetch-BoldItalic.ttf',
+            ],
+            'default_font' => 'chakrapetch',
+        ];
+        
         return $pdf->render();
     }
 }

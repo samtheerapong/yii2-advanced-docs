@@ -216,16 +216,16 @@
         },
         {
             "name": "components/flag-icon-css",
-            "version": "v6.9.3",
+            "version": "v6.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lipis/flag-icons.git",
-                "reference": "62400998b943dd3a5ee22b180050cc9cbb27ee15"
+                "reference": "20abcf34eaecc2adac6cb290f8cecf52fa7ad8b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lipis/flag-icons/zipball/62400998b943dd3a5ee22b180050cc9cbb27ee15",
-                "reference": "62400998b943dd3a5ee22b180050cc9cbb27ee15",
+                "url": "https://api.github.com/repos/lipis/flag-icons/zipball/20abcf34eaecc2adac6cb290f8cecf52fa7ad8b7",
+                "reference": "20abcf34eaecc2adac6cb290f8cecf52fa7ad8b7",
                 "shasum": ""
             },
             "type": "library",
@@ -251,9 +251,9 @@
             ],
             "support": {
                 "issues": "https://github.com/lipis/flag-icons/issues",
-                "source": "https://github.com/lipis/flag-icons/tree/v6.9.3"
+                "source": "https://github.com/lipis/flag-icons/tree/v6.10.0"
             },
-            "time": "2023-08-03T20:23:30+00:00"
+            "time": "2023-08-17T08:00:52+00:00"
         },
         {
             "name": "dektrium/yii2-rbac",
