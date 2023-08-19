@@ -189,6 +189,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                     . ' </b></span>';
                             },
                         ],
+                        
+                        'supplier_name',
 
                         [
                             'attribute' => 'types_id',
