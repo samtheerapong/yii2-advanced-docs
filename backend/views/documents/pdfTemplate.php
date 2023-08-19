@@ -28,6 +28,16 @@ use yii\widgets\DetailView;
                     },
                 ],
                 'status_details',
+                [
+                    'attribute' => 'occupier_id',
+                    'format' => 'html',
+                    'value' => function ($model) {
+                        return $model->occupier->name;
+                    },
+                ],
+
+                'supplier_name',
+
                 'numbers',
                 'title',
                 'description:ntext',
@@ -75,13 +85,6 @@ use yii\widgets\DetailView;
                     },
                 ],
 
-                [
-                    'attribute' => 'occupier_id',
-                    'format' => 'html',
-                    'value' => function ($model) {
-                        return $model->occupier->name;
-                    },
-                ],
 
                 [
                     'attribute' => 'types_id',
