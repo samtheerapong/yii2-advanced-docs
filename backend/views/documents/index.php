@@ -8,8 +8,6 @@ use backend\models\Status;
 use backend\models\Types;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
-// use yii\grid\GridView;
 use kartik\grid\GridView;
 use kartik\select2\Select2;
 use yii\bootstrap5\LinkPager;
@@ -24,7 +22,6 @@ use kartik\export\ExportMenu;
 $this->title = Yii::t('app', 'Documents');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<!-- Add the following meta tag to refresh the page every 1 minute -->
 <meta http-equiv="refresh" content="360">
 <div class="documents-index">
 
@@ -34,13 +31,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php
             echo ExportMenu::widget([
+                'exportConfig' => [
+                    ExportMenu::FORMAT_TEXT => false,
+                    ExportMenu::FORMAT_PDF => false,
+                    ExportMenu::FORMAT_HTML => false,
+                    ExportMenu::FORMAT_EXCEL => false,
+                    ExportMenu::FORMAT_EXCEL_X => false,
+                ],
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     'id',
                     [
                         'attribute' => 'categories_id',
                         'format' => 'html',
-                        'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
+                        'contentOptions' => ['class' => 'text-center'],
                         'options' => ['style' => 'width:120px;'],
                         'value' => function ($model) {
                             return '<span class="badge" style="background-color:' . $model->categories->color . ';"><b>' . $model->categories->name . '</b></span>';
@@ -99,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 . ' </b></span>';
                         },
                     ],
-
+                    'supplier_name',
                     [
                         'attribute' => 'types_id',
                         'format' => 'html',
@@ -112,13 +116,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
 
                 ],
-                'exportConfig' => [
-                    ExportMenu::FORMAT_TEXT => false,
-                    ExportMenu::FORMAT_PDF => false,
-                    ExportMenu::FORMAT_HTML => false,
-                    ExportMenu::FORMAT_EXCEL => false,
-                    ExportMenu::FORMAT_EXCEL_X => false,
-                ],
+
             ]); ?>
         </div>
     </div>
@@ -132,35 +130,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
-                    // 'panel' => [
-                    //     'before' => ' ',
-                    //     // 'heading' => '<div class="card-header text-white bg-secondary">' . Html::encode($this->title) . '</div>',
-                    //     // 'options' => ['class' => 'card'], // Apply the card theme class
-                    // ],
                     'pager' => [
                         'class' => LinkPager::class,
-                        // 'prevPageLabel' => 'Previous',
-                        // 'nextPageLabel' => 'Next',
-                        'options' => ['class' => 'pagination justify-content-center m-1'], // Adjust this class to center the pagination.
+                        'options' => ['class' => 'pagination justify-content-center m-1'],
                         'linkContainerOptions' => ['class' => 'page-item'],
                         'linkOptions' => ['class' => 'page-link'],
                     ],
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                        // [
-                        //     'attribute' => 'numbers',
-                        //     'format' => 'html',
-                        //     'options' => ['style' => 'width:150px;'],
-                        //     'contentOptions' => ['class' => 'text-center'],
-                        //     'value' => function ($model) {
-                        //         return Html::a($model->numbers, ['view', 'id' => $model->id]);
-                        //     },
-                        // ],
 
                         [
                             'attribute' => 'categories_id',
                             'format' => 'html',
-                            'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
+                            'contentOptions' => ['class' => 'text-center'],
                             'options' => ['style' => 'width:120px;'],
                             'value' => function ($model) {
                                 return '<span class="badge" style="background-color:' . $model->categories->color . ';"><b>' . $model->categories->name . '</b></span>';
@@ -176,7 +158,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ])
                         ],
-                        // 'title',
                         [
                             'attribute' => 'title',
                             'format' => 'html',
@@ -184,22 +165,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => function ($model) {
                                 return Html::a($model->title, ['view', 'id' => $model->id]);
                             },
-                            // 'filter' => Select2::widget([
-                            //     'model' => $searchModel,
-                            //     'attribute' => 'title',
-                            //     'data' => ArrayHelper::map(Documents::find()->all(), 'title', 'title'),
-                            //     'options' => ['placeholder' => Yii::t('app', 'Select...')],
-                            //     'language' => 'th',
-                            //     'pluginOptions' => [
-                            //         'allowClear' => true
-                            //     ],
-                            // ])
+
                         ],
 
                         [
                             'attribute' => 'occupier_id',
                             'format' => 'html',
-                            'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
+                            'contentOptions' => ['class' => 'text-center'],
                             'options' => ['style' => 'width:80px;'],
                             'value' => function ($model) {
                                 return '<span class="badge" style="background-color:' . $model->occupier->color . ';"><b>' . $model->occupier->name . '</b></span>';
@@ -215,14 +187,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ])
                         ],
-
-                        // 'supplier_name',
                         [
                             'attribute' => 'supplier_name',
                             'format' => 'html',
-                            // 'options' => ['style' => 'width:200px;'],
                             'value' => function ($model) {
-                                // return Html::a($model->supplier_name, ['view', 'id' => $model->id]);
                                 return $model->supplier_name;
                             },
                             'filter' => Select2::widget([
@@ -240,7 +208,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'raw_material',
                             'format' => 'html',
-                            'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
+                            'contentOptions' => ['class' => 'text-center'],
                             'options' => ['style' => 'width:120px;'],
                             'value' => function ($model) {
                                 return '<span class="badge" style="background-color:' . $model->rawMaterial->color . ';"><b>' . $model->rawMaterial->name . '</b></span>';
@@ -260,7 +228,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'types_id',
                             'format' => 'html',
-                            'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
+                            'contentOptions' => ['class' => 'text-center'],
                             'options' => ['style' => 'width:100px;'],
                             'value' => function ($model) {
                                 return '<span class="badge" style="background-color:' . $model->types->color . ';"><b>' . $model->types->name . '</b></span>';
@@ -276,22 +244,24 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ])
                         ],
-                        // 'status_id',
-
                         [
                             'attribute' => 'status_id',
                             'format' => 'html',
-                            'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
-                            'options' => ['style' => 'width:100px;'],
+                            'contentOptions' => ['class' => 'text-center'],
                             'value' => function ($model) {
-                                return '<span class="badge" style="background-color:' . $model->status->color . ';"><b>' . $model->status->name . '</b></span>';
+                                $badge = '<span class="badge badge-tooltip" data-bs-toggle="tooltip" data-bs-placement="right" title="' . $model->status_details . '" style="background-color:'
+                                    . $model->status->color . '; color: white;"><b>'
+                                    . $model->status->name
+                                    . ' </b></span>';
+
+                                $link = Html::a($badge, ['view', 'id' => $model->id]);
+
+                                return $link;
                             },
                             'filter' => Select2::widget([
                                 'model' => $searchModel,
                                 'attribute' => 'status_id',
                                 'data' => ArrayHelper::map(Status::find()->all(), 'id', 'name'),
-                                // 'theme' => Select2::THEME_DEFAULT,
-                                // 'theme' => Select2::THEME_KRAJEE,
                                 'options' => ['placeholder' => Yii::t('app', 'Select...')],
                                 'language' => 'th',
                                 'pluginOptions' => [
@@ -299,8 +269,25 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ])
                         ],
-                        //'ref',
-                        // 'files:ntext',
+                        // [
+                        //     'attribute' => 'status_id',
+                        //     'format' => 'html',
+                        //     'contentOptions' => ['class' => 'text-center'],
+                        //     'options' => ['style' => 'width:100px;'],
+                        //     'value' => function ($model) {
+                        //         return '<span class="badge" style="background-color:' . $model->status->color . ';"><b>' . $model->status->name . '</b></span>';
+                        //     },
+                        //     'filter' => Select2::widget([
+                        //         'model' => $searchModel,
+                        //         'attribute' => 'status_id',
+                        //         'data' => ArrayHelper::map(Status::find()->all(), 'id', 'name'),
+                        //         'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                        //         'language' => 'th',
+                        //         'pluginOptions' => [
+                        //             'allowClear' => true
+                        //         ],
+                        //     ])
+                        // ],
                         [
                             'attribute' => 'expiration_date',
                             'label' => Yii::t('app', 'Days left'),
@@ -314,11 +301,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
 
                         [
-                            // 'class' => ActionColumn::class,
                             'class' => 'kartik\grid\ActionColumn',
-                            // 'header' => 'จัดการ',
                             'headerOptions' => ['style' => 'width: 140px;'],
-                            'contentOptions' => ['class' => 'text-center'], // จัดตรงกลาง
+                            'contentOptions' => ['class' => 'text-center'],
                             'buttonOptions' => ['class' => 'btn btn-sm btn-outline-primary btn-group'],
                             'urlCreator' => function ($action, Documents $model, $key, $index, $column) {
                                 return Url::toRoute([$action, 'id' => $model->id]);
@@ -329,7 +314,3 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
             </div>
-            <!-- </div>
-</div>
-
-</div> -->
