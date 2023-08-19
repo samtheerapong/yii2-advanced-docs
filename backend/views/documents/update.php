@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var backend\models\Documents $model */
 
-$this->title = Yii::t('app', 'Update : {numbers}', [
-    'numbers' => $model->numbers,
+$this->title = Yii::t('app', '{name}', [
+    'name' => $model->numbers,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Documents'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->numbers, 'url' => ['view', 'id' => $model->id]];
