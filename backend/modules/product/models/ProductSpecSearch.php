@@ -17,7 +17,7 @@ class ProductSpecSearch extends ProductSpec
     public function rules()
     {
         return [
-            [['id', 'revision'], 'integer'],
+            [['id', 'revision', 'product_status'], 'integer'],
             [[
                 'title',
                 'product_number',
@@ -77,6 +77,7 @@ class ProductSpecSearch extends ProductSpec
         $query->andFilterWhere([
             'id' => $this->id,
             'revision' => $this->revision,
+            'product_status' => $this->product_status,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])

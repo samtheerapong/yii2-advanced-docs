@@ -1,7 +1,10 @@
 <?php
 
+use backend\models\Status;
 use kartik\widgets\DatePicker;
 use kartik\widgets\FileInput;
+use kartik\widgets\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -22,10 +25,10 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'product_number')->hiddenInput()->label(false); ?>
 
             <div class="row">
-                <div class="col-md-6 mb-2">
+                <div class="col-md-7 mb-2">
                     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
                 </div>
-                <div class="col-md-2 mb-2">
+                <div class="col-md-1 mb-2">
                     <?= $form->field($model, 'revision')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-md-4 mb-2">
@@ -48,9 +51,21 @@ use yii\widgets\ActiveForm;
                 <div class="col-md-12 mb-2">
                     <?= $form->field($model, 'description')->textarea(['rows' => 2]) ?>
                 </div>
-                <div class="col-md-12 mb-2">
+                <div class="col-md-10 mb-2">
                     <?= $form->field($model, 'iso_cert')->textInput(['maxlength' => true]) ?>
                 </div>
+                <div class="col-md-2 mb-2">
+                <?= $form->field($model, 'product_status')->widget(Select2::class, [
+                        'language' => 'th',
+                        'data' => ArrayHelper::map(Status::find()->all(), 'id', 'name'),
+                        // 'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]);
+                    ?>
+                </div>
+
             </div>
         </div>
 

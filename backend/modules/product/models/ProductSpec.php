@@ -2,6 +2,7 @@
 
 namespace backend\modules\product\models;
 
+use backend\models\Status;
 use common\models\User;
 use Yii;
 use yii\behaviors\BlameableBehavior;
@@ -42,6 +43,8 @@ class ProductSpec extends \yii\db\ActiveRecord
             [['product_number', 'revision', 'title', 'description', 'iso_cert'], 'string'],
             [['title'], 'string', 'max' => 200],
             [['product_number', 'revision'], 'string', 'max' => 50],
+            [['product_status'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['product_status' => 'id']],
+
         ];
     }
 
@@ -63,6 +66,7 @@ class ProductSpec extends \yii\db\ActiveRecord
             'nutrition' => Yii::t('app', 'Nutrition Label'),
             'nutrition_expiration' => Yii::t('app', 'Nutrition Expiration'),
             'iso_cert' => Yii::t('app', 'ISO Certificate'),
+            'product_status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
             'created_by' => Yii::t('app', 'Created By'),
@@ -155,5 +159,10 @@ class ProductSpec extends \yii\db\ActiveRecord
     public function getCreatedBy()
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
+    }
+
+    public function getProductStatus()
+    {
+        return $this->hasOne(Status::class, ['id' => 'product_status']);
     }
 }

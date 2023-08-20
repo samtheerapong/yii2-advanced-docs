@@ -94,7 +94,7 @@ class Documents extends \yii\db\ActiveRecord
             // [['notify_date'], 'safe'],
             [['created_by', 'updated_by', 'categories_id', 'status_id', 'document_date', 'types_id', 'occupier_id', 'raw_material'], 'integer'],
             [['status_details'], 'string'],
-            [['numbers', 'title', 'ref', 'status_details', 'supplier_name'], 'string', 'max' => 255],
+            [['numbers', 'title', 'ref', 'supplier_name'], 'string', 'max' => 255],
             [['categories_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::class, 'targetAttribute' => ['categories_id' => 'id']],
             [['occupier_id'], 'exist', 'skipOnError' => true, 'targetClass' => Occupier::class, 'targetAttribute' => ['occupier_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['status_id' => 'id']],

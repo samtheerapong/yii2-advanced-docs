@@ -45,6 +45,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'id',
                     // 'product_number',
                     [
+                        'attribute' => 'product_status',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            return '<span class="badge" style="background-color:'
+                                . $model->productStatus->color . ';"><b>'
+                                . $model->productStatus->name
+                                . ' </b></span>';
+                        },
+                    ],
+                    [
                         'attribute' => 'product_number',
                         'format' => 'html',
                         'value' => function ($model) {
@@ -92,22 +102,22 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'created_at:date',
                     'updated_at:date',
-                    [
-                        'attribute' => 'created_by',
-                        'format' => 'html',
-                        'value' => function ($model) {
-                            $user = $model->createdBy->thai_name;
-                            return $user ? $model->createdBy->thai_name : $model->createdBy->username;
-                        },
-                    ],
-                    [
-                        'attribute' => 'updated_by',
-                        'format' => 'html',
-                        'value' => function ($model) {
-                            $user = $model->createdBy->thai_name;
-                            return $user ? $model->createdBy->thai_name : $model->createdBy->username;
-                        },
-                    ],
+                    // [
+                    //     'attribute' => 'created_by',
+                    //     'format' => 'html',
+                    //     'value' => function ($model) {
+                    //         $user = $model->createdBy->thai_name;
+                    //         return $user ? $model->createdBy->thai_name : $model->createdBy->username;
+                    //     },
+                    // ],
+                    // [
+                    //     'attribute' => 'updated_by',
+                    //     'format' => 'html',
+                    //     'value' => function ($model) {
+                    //         $user = $model->createdBy->thai_name;
+                    //         return $user ? $model->createdBy->thai_name : $model->createdBy->username;
+                    //     },
+                    // ],
                 ],
             ]) ?>
 
