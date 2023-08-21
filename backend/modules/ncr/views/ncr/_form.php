@@ -75,10 +75,14 @@ use kartik\widgets\Select2;
                         DatePicker::class,
                         [
                             'language' => 'th',
-                            'options' => ['placeholder' => Yii::t('app', 'Please Select...')],
+                            'options' => [
+                                'placeholder' => Yii::t('app', 'Select...'),
+                                'required' => true,
+                            ],
                             'pluginOptions' => [
                                 'format' => 'yyyy-mm-dd',
-                                'todayHighlight' => true
+                                'todayHighlight' => true,
+                                'autoclose' => true,
                             ]
                         ]
                     ); ?>
@@ -115,7 +119,8 @@ use kartik\widgets\Select2;
                             'options' => ['placeholder' => Yii::t('app', 'Please Select...')],
                             'pluginOptions' => [
                                 'format' => 'yyyy-mm-dd',
-                                'todayHighlight' => true
+                                'todayHighlight' => true,
+                                'autoclose' => true,
                             ]
                         ]
                     ); ?>
