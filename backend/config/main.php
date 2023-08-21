@@ -21,6 +21,14 @@ return [
         ]
     ],
     'modules' => [
+        'ex' => [
+            'class' => 'backend\modules\ex\Module',
+        ],
+
+        'ncr' => [
+            'class' => 'backend\modules\ncr\Module',
+        ],
+
         'product' => [
             'class' => 'backend\modules\product\Module',
         ],
@@ -31,6 +39,10 @@ return [
         ],
     ],
     'components' => [
+        'image' => [
+            'class' => 'yii\image\ImageDriver',
+            'driver' => 'GD',  //GD or Imagick
+        ],
 
         'request' => [
             'csrfParam' => '_csrf-backend',

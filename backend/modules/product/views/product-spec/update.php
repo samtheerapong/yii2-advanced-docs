@@ -13,11 +13,13 @@ $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'i
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="product-spec-update">
-<p>
+    <p>
         <?= Html::a('<i class="fa fa-chevron-left"></i> ' . Yii::t('app', 'Go Back'), ['index'], ['class' => 'btn btn-primary']) ?>
     </p>
     <?= $this->render('_form', [
         'model' => $model,
+        'initialPreview' => [],
+        'initialPreviewConfig' => []
     ]) ?>
 
 </div>

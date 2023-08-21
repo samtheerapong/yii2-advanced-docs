@@ -3,6 +3,7 @@
 namespace backend\modules\product\models;
 
 use backend\models\Status;
+use backend\modules\product\models\ProductSpec as ModelsProductSpec;
 use common\models\User;
 use Yii;
 use yii\behaviors\BlameableBehavior;
@@ -74,35 +75,23 @@ class ProductSpec extends \yii\db\ActiveRecord
         ];
     }
 
-    private function uploadFiles($attribute)
+    //****** Relationship
+    public function getUpdatedBy()
     {
-        $filesName = [];
-        $files = UploadedFile::getInstances($this, $attribute);
-
-        if ($this->validate() && $files) {
-            foreach ($files as $file) {
-                // $fileName = md5(rand(1, 1000) . time()) . '-' . $file->baseName . '.' . $file->extension;
-                $fileName = $this->product_number . '-' . $file->baseName . '.' . $file->extension;
-                $file->saveAs(Yii::getAlias('@webroot') . '/' . $this->uploadFolders[$attribute] . '/' . $fileName);
-                $filesName[] = $fileName;
-            }
-
-            if (!$this->isNewRecord) {
-                $oldFiles = explode(',', $this->{$attribute});
-                $filesName = ArrayHelper::merge($filesName, $oldFiles);
-            }
-
-            return implode(',', $filesName);
-        }
-
-        return $this->isNewRecord ? false : $this->{$attribute};
+        return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
 
-    private function getFiles($attribute)
+    public function getCreatedBy()
     {
-        return explode(',', $this->{$attribute});
+        return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
+    public function getProductStatus()
+    {
+        return $this->hasOne(Status::class, ['id' => 'product_status']);
+    }
+
+    //****** Create Upload
     public function uploadFilesSpec()
     {
         return $this->uploadFiles('spec');
@@ -143,6 +132,29 @@ class ProductSpec extends \yii\db\ActiveRecord
         return $this->getFiles('nutrition');
     }
 
+
+    //****** getFilesUrls
+    public function getSpecUrls()
+    {
+        return $this->getFilesUrls('spec');
+    }
+
+    public function getProcessUrls()
+    {
+        return $this->getFilesUrls('process');
+    }
+
+    public function getFdaUrls()
+    {
+        return $this->getFilesUrls('fda');
+    }
+
+    public function getNutritionUrls()
+    {
+        return $this->getFilesUrls('nutrition');
+    }
+
+    //****** getFilesLinks
     public function generateFileLinks($attribute)
     {
         $folder = $this->uploadFolders[$attribute];
@@ -151,18 +163,78 @@ class ProductSpec extends \yii\db\ActiveRecord
         }, $this->{"getFiles" . ucfirst($attribute)}()));
     }
 
-    public function getUpdatedBy()
+    public function getInitialPreview($attribute)
     {
-        return $this->hasOne(User::class, ['id' => 'updated_by']);
+        $folder = $this->uploadFolders[$attribute];
+        $files = $this->getFiles($attribute);
+
+        $initialPreview = [];
+        $initialPreviewConfig = [];
+
+        foreach ($files as $fileName) {
+            $initialPreview[] = Yii::getAlias('@web') . '/' . $folder . '/' . $fileName;
+            $initialPreviewConfig[] = [
+                'caption' => $fileName,
+                'width' => '120px',
+                'url' => Url::to(['/product/product-spec/delete-ajax', 'id' => $this->id, 'fileName' => $fileName]),
+                'key' => $fileName,
+            ];
+        }
+
+        return [$initialPreview, $initialPreviewConfig];
     }
 
-    public function getCreatedBy()
+
+    //****** uploadFiles
+    private function uploadFiles($attribute)
     {
-        return $this->hasOne(User::class, ['id' => 'created_by']);
+        $filesName = [];
+        $files = UploadedFile::getInstances($this, $attribute);
+
+        if ($this->validate() && $files) {
+            foreach ($files as $file) {
+                $fileName = $this->product_number . '-' . $file->baseName . '.' . $file->extension;
+                $file->saveAs(Yii::getAlias('@webroot') . '/' . $this->uploadFolders[$attribute] . '/' . $fileName);
+                $filesName[] = $fileName;
+            }
+
+            if (!$this->isNewRecord) {
+                $oldFiles = explode(',', $this->{$attribute});
+                $filesName = ArrayHelper::merge($filesName, $oldFiles);
+            }
+
+            return implode(',', $filesName);
+        }
+
+        return $this->isNewRecord ? false : $this->{$attribute};
     }
 
-    public function getProductStatus()
+
+
+    private function getFiles($attribute)
     {
-        return $this->hasOne(Status::class, ['id' => 'product_status']);
+        return explode(',', $this->{$attribute});
+    }
+
+    public function getFilesUrls($attribute)
+    {
+
+        $folder = $this->uploadFolders[$attribute];
+        $files = $this->getFiles($attribute);
+
+        return array_map(fn ($fileName) => Yii::getAlias('@web') . '/' . $folder . '/' . $fileName, $files);
+    }
+
+    //********** InitialPreviewConfig
+    public function getInitialPreviewConfig($attribute)
+    {
+        $files = $this->getFiles($attribute);
+        $initialPreviewConfig = array_map(fn ($fileName) => [
+            'type' => 'pdf',
+            'url' => Url::to(['delete-file', 'id' => $this->id, 'fileName' => $fileName]),
+            'key' => $fileName,
+        ], $files);
+
+        return $initialPreviewConfig;
     }
 }

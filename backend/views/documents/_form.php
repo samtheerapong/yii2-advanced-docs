@@ -12,6 +12,7 @@ use kartik\widgets\FileInput;
 use kartik\widgets\DatePicker;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use kartik\pdf\PdfJsViewer;
 
 /** @var yii\web\View $this */
 /** @var backend\models\Documents $model */
@@ -43,7 +44,7 @@ use yii\helpers\Url;
                 <div class="col-md-12 mt-2">
                     <?= $form->field($model, 'description')->textarea(['rows' => 2]) ?>
                 </div>
-               
+
 
                 <div class="col-md-4 mt-2">
                     <?= $form->field($model, 'expiration_date')->widget(
@@ -142,6 +143,7 @@ use yii\helpers\Url;
                             'multiple' => true
                         ],
                         'pluginOptions' => [
+                            // 'initialPreview' => $model->listDownloadFiles('docs'),
                             'initialPreview' => $model->initialPreview($model->docs, 'docs', 'file'),
                             'initialPreviewConfig' => $model->initialPreview($model->docs, 'docs', 'config'),
                             'allowedFileExtensions' => ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'odt', 'ods', 'jpg', 'png', 'jpeg'],
@@ -149,8 +151,8 @@ use yii\helpers\Url;
                             'showCaption' => true,
                             'showRemove' => true,
                             'showUpload' => false,
-                            'overwriteInitial' => false
-                        ]
+                            'overwriteInitial' => false,
+                        ],
                     ]); ?>
                 </div>
             </div>

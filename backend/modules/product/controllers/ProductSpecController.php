@@ -2,12 +2,15 @@
 
 namespace backend\modules\product\controllers;
 
+use backend\modules\product\models\Iso;
 use backend\modules\product\models\ProductSpec;
 use backend\modules\product\models\ProductSpecSearch;
 use mdm\autonumber\AutoNumber;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * ProductSpecController implements the CRUD actions for ProductSpec model.
@@ -81,6 +84,7 @@ class ProductSpecController extends Controller
                 $model->fda = $model->uploadFilesFda();
                 $model->nutrition = $model->uploadFilesNutrition();
 
+
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -149,4 +153,5 @@ class ProductSpecController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+
 }
