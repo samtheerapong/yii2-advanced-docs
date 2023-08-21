@@ -54,6 +54,11 @@ AppAsset::register($this);
                 // 'linkOptions' => ['class' => 'logout-link'],
                 'url' => ['/product/raw-material/index']
             ],
+            [
+                'label' => Yii::t('app', 'NCR'),
+                // 'linkOptions' => ['class' => 'logout-link'],
+                'url' => ['/ncr/ncr/index']
+            ],
         ];
 
         echo Nav::widget([

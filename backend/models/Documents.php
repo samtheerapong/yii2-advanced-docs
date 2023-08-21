@@ -14,6 +14,7 @@ use yii\db\BaseActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\helpers\Url;
+use yii2assets\pdfjs\PdfJs;
 
 /**
  * This is the model class for table "documents".
@@ -94,7 +95,7 @@ class Documents extends \yii\db\ActiveRecord
             // [['notify_date'], 'safe'],
             [['created_by', 'updated_by', 'categories_id', 'status_id', 'document_date', 'types_id', 'occupier_id', 'raw_material'], 'integer'],
             [['status_details'], 'string'],
-            [['numbers', 'title', 'ref', 'status_details', 'supplier_name'], 'string', 'max' => 255],
+            [['numbers', 'title', 'ref', 'supplier_name'], 'string', 'max' => 255],
             [['categories_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::class, 'targetAttribute' => ['categories_id' => 'id']],
             [['occupier_id'], 'exist', 'skipOnError' => true, 'targetClass' => Occupier::class, 'targetAttribute' => ['occupier_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['status_id' => 'id']],
@@ -195,10 +196,87 @@ class Documents extends \yii\db\ActiveRecord
         return $docs_file;
     }
 
+    // public function listDownloadFiles($type)
+    // {
+    //     $docs_file = '';
+    //     if (in_array($type, ['docs'])) {
+    //         $data = $type === 'docs' ? $this->docs : '';
+    //         $files = Json::decode($data);
+    //         if (is_array($files)) {
+    //             $docs_file = '<ul>';
+    //             foreach ($files as $key => $value) {
+    //                 // ตรวจสอบชนิดของไฟล์
+    //                 if (strpos($value, '.pdf') !== false) {
+    //                     // แสดง PdfJsViewer สำหรับไฟล์ PDF
+    //                     $pdfViewer = \yii2assets\pdfjs\PdfJs::widget([
+    //                         'url' => Url::to(['/documents/download', 'id' => $this->id, 'file' => $key, 'fullname' => $value]),
+    //                     ]);
+    //                     $docs_file .= '<li>' . $pdfViewer . '</li>';
+    //                 } else {
+    //                     // แสดงลิงก์สำหรับดาวน์โหลดไฟล์อื่นๆ
+    //                     $docs_file .= '<li>' . Html::a($value, ['/documents/download', 'id' => $this->id, 'file' => $key, 'fullname' => $value]) . '</li>';
+    //                 }
+    //             }
+    //             $docs_file .= '</ul>';
+    //         }
+    //     }
+
+    //     return $docs_file;
+    // }
+
+
     public function isImage($filePath)
     {
         return @is_array(getimagesize($filePath)) ? true : false;
     }
+
+
+    // public function generatePdfPreview($filePath)
+    // {
+    //     $viewer = new PdfJsViewer([
+    //         'height' => '500px', // Customize the viewer height
+    //         'options' => [
+    //             'url' => $filePath,
+    //         ],
+    //     ]);
+
+    //     return $viewer->render();
+    // }
+
+    // public function initialPreview($data, $field, $type = 'file')
+    // {
+    //     $initial = [];
+    //     $files = Json::decode($data);
+    //     if (is_array($files)) {
+    //         foreach ($files as $key => $value) {
+    //             $filePath = self::getUploadUrl() . $this->ref . '/' . $value;
+    //             $isImage = $this->isImage($filePath);
+
+    //             if ($type == 'file') {
+    //                 $initial[] = "<div class='file-preview-other'><h2><i class='glyphicon glyphicon-file'></i></h2></div>";
+    //             } elseif ($type == 'config') {
+    //                 $initial[] = [
+    //                     'caption' => $value,
+    //                     'width'  => '120px',
+    //                     'url'    => Url::to(['documents/deletefile', 'id' => $this->id, 'fileName' => $key, 'field' => $field]),
+    //                     'key'    => $key
+    //                 ];
+    //             } else {
+    //                 if ($isImage) {
+    //                     $file = Html::img($filePath, ['class' => 'file-preview-image', 'alt' => $this->file_name, 'title' => $this->file_name]);
+    //                 } else {
+    //                     // Render PDF preview using PdfJsViewer
+    //                     $pdfViewer = PdfJs::widget([
+    //                         'url' => $filePath,
+    //                     ]);
+    //                     $file = '<div class="pdf-preview">' . $pdfViewer . '</div>';
+    //                 }
+    //                 $initial[] = $file;
+    //             }
+    //         }
+    //     }
+    //     return $initial;
+    // }
 
     public function initialPreview($data, $field, $type = 'file')
     {
@@ -232,6 +310,8 @@ class Documents extends \yii\db\ActiveRecord
         }
         return $initial;
     }
+
+
 
     public function getCreatedBy()
     {

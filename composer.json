@@ -31,7 +31,12 @@
         "kartik-v/yii2-bootstrap5-dropdown": "^1.0",
         "miloschuman/yii2-highcharts-widget": "*",
         "yii2assets/yii2-printthis": "^1.0",
-        "kartik-v/yii2-mpdf": "^1.0"
+        "kartik-v/yii2-mpdf": "^1.0",
+        "yii2assets/yii2-pdfjs": ">=1.0",
+        "unclead/yii2-multiple-input": "^2.27",
+        "wbraganca/yii2-dynamicform": "^2.0",
+        "yurkinx/yii2-image": "dev-master",
+        "2amigos/yii2-gallery-widget": "^1.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

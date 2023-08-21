@@ -1,8 +1,14 @@
 <?php
 
+use backend\models\Documents;
+use backend\models\Status;
+use backend\modules\product\models\Iso;
 use kartik\widgets\DatePicker;
 use kartik\widgets\FileInput;
+use kartik\widgets\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
@@ -22,10 +28,10 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'product_number')->hiddenInput()->label(false); ?>
 
             <div class="row">
-                <div class="col-md-6 mb-2">
+                <div class="col-md-7 mb-2">
                     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
                 </div>
-                <div class="col-md-2 mb-2">
+                <div class="col-md-1 mb-2">
                     <?= $form->field($model, 'revision')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-md-4 mb-2">
@@ -48,9 +54,33 @@ use yii\widgets\ActiveForm;
                 <div class="col-md-12 mb-2">
                     <?= $form->field($model, 'description')->textarea(['rows' => 2]) ?>
                 </div>
-                <div class="col-md-12 mb-2">
-                    <?= $form->field($model, 'iso_cert')->textInput(['maxlength' => true]) ?>
+
+                <!-- <div class="col-md-10 mb-2">
+                    <?= $form->field($model, 'iso_cert')->widget(Select2::class, [
+                        'language' => 'th',
+                        'data' => ArrayHelper::map(Iso::find()->all(), 'id', 'iso_name'),
+                        'options' => [
+                            'multiple' => true,
+                            'placeholder' => Yii::t('app', 'Please Select...')
+                        ],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]); ?>
+
+                </div> -->
+                <div class="col-md-2 mb-2">
+                    <?= $form->field($model, 'product_status')->widget(Select2::class, [
+                        'language' => 'th',
+                        'data' => ArrayHelper::map(Status::find()->all(), 'id', 'name'),
+                        // 'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]);
+                    ?>
                 </div>
+
             </div>
         </div>
 
@@ -59,15 +89,17 @@ use yii\widgets\ActiveForm;
             <?= Yii::t('app', 'Uploads') ?>
         </div>
         <div class="card-body">
+
             <div class="row">
                 <div class="col-md-8 mb-2">
                     <?= $form->field($model, 'spec[]')->widget(FileInput::class, [
                         'options' => [
-                            'multiple' => true
+                            'multiple' => true,
                         ],
                         'pluginOptions' => [
-                            'showPreview' => false,
-                        ]
+                            'initialPreview' => $model->getInitialPreview('spec')[0],
+                            'initialPreviewConfig' => $model->getInitialPreview('spec')[1],
+                        ],
                     ]); ?>
                 </div>
                 <div class="col-md-4 mb-2">
@@ -87,14 +119,27 @@ use yii\widgets\ActiveForm;
                         ]
                     ); ?>
                 </div>
+            </div>
+            <hr>
 
+            <div class="row">
                 <div class="col-md-8 mb-2">
                     <?= $form->field($model, 'process[]')->widget(FileInput::class, [
                         'options' => [
                             'multiple' => true
                         ],
                         'pluginOptions' => [
-                            'showPreview' => false,
+                            'overwriteInitial' => false,
+                            'initialPreviewShowDelete' => true,
+                            // 'initialPreview' => $model->getSpecUrls(), 
+                            // 'initialPreviewConfig' => $model->getInitialPreviewConfig('spec'), 
+                            // 'initialPreview' => $initialPreview,
+                            // 'initialPreviewConfig' => $initialPreviewConfig,
+                            'uploadUrl' => Url::to(['/product/product-spec/upload-ajax']),
+                            'uploadExtraData' => [
+                                'id' => $model->id,
+                            ],
+                            'maxFileCount' => 10,
                         ]
                     ]); ?>
                 </div>
@@ -115,14 +160,25 @@ use yii\widgets\ActiveForm;
                         ]
                     ); ?>
                 </div>
+            </div>
 
+            <hr>
+            <div class="row">
                 <div class="col-md-8 mb-2">
                     <?= $form->field($model, 'fda[]')->widget(FileInput::class, [
                         'options' => [
                             'multiple' => true
                         ],
                         'pluginOptions' => [
-                            'showPreview' => false,
+                            'overwriteInitial' => false,
+                            'initialPreviewShowDelete' => true,
+                            // 'initialPreview' => $initialPreview,
+                            // 'initialPreviewConfig' => $initialPreviewConfig,
+                            'uploadUrl' => Url::to(['/product/product-spec/upload-ajax']),
+                            'uploadExtraData' => [
+                                'id' => $model->id,
+                            ],
+                            'maxFileCount' => 10,
                         ]
                     ]); ?>
                 </div>
@@ -143,15 +199,24 @@ use yii\widgets\ActiveForm;
                         ]
                     ); ?>
                 </div>
-
+            </div>
+            <hr>
+            <div class="row">
                 <div class="col-md-8 mb-2">
                     <?= $form->field($model, 'nutrition[]')->widget(FileInput::class, [
                         'options' => [
                             'multiple' => true
                         ],
                         'pluginOptions' => [
-                            'showPreview' => false,
-
+                            'overwriteInitial' => false,
+                            'initialPreviewShowDelete' => true,
+                            // 'initialPreview' => $initialPreview,
+                            // 'initialPreviewConfig' => $initialPreviewConfig,
+                            'uploadUrl' => Url::to(['/product/product-spec/upload-ajax']),
+                            'uploadExtraData' => [
+                                'id' => $model->id,
+                            ],
+                            'maxFileCount' => 10,
                         ]
                     ]); ?>
                 </div>
