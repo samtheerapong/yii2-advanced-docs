@@ -191,7 +191,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'supplier_name',
                             'format' => 'html',
                             'value' => function ($model) {
-                                return $model->supplier_name;
+                                $truncatedSupplierName = mb_substr($model->supplier_name, 0, 50, 'UTF-8');
+                                if (mb_strlen($model->supplier_name, 'UTF-8') > 50) {
+                                    $truncatedSupplierName .= '...';
+                                }
+                                return $truncatedSupplierName;
+                                
                             },
                             'filter' => Select2::widget([
                                 'model' => $searchModel,
