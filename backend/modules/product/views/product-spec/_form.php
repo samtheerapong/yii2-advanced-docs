@@ -58,6 +58,7 @@ use yii\widgets\ActiveForm;
                 <div class="col-md-10 mb-2">
                     <?= $form->field($model, 'iso')->widget(Select2::class, [
                         'language' => 'th',
+                        'theme' => Select2::THEME_KRAJEE_BS5,
                         'data' => ArrayHelper::map(Iso::find()->all(), 'id', 'name'),
                         'options' => [
                             'multiple' => true,
