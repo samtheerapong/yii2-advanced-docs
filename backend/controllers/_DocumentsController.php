@@ -143,12 +143,22 @@ class DocumentsController extends Controller
         $model->document_date = 60;
         $ref = substr(Yii::$app->getSecurity()->generateRandomString(), 10);
 
+
         if ($model->load(Yii::$app->request->post())) {
+            //  Auto Number
             $AutoNumber = AutoNumber::generate(date('Ym') . '-???');
             $model->numbers = $AutoNumber;
+
+            // uploadfile
             $this->CreateDir($model->ref);
             $model->docs = $this->uploadMultipleFile($model);
+
+
             if ($model->save()) {
+
+                // Yii::$app->session->setFlash('success', Yii::t('app', 'Created Successfully'));
+
+
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -170,13 +180,18 @@ class DocumentsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
         $tempDocs = $model->docs;
 
         if ($this->request->isPost && $model->load($this->request->post())) {
+
             $this->CreateDir($model->ref);
             $model->docs = $this->uploadMultipleFile($model, $tempDocs);
+
             $model->save();
+
             Yii::$app->session->setFlash('success', Yii::t('app', 'Updated Successfully'));
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -195,9 +210,15 @@ class DocumentsController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
+        //remove upload file & data
         $this->removeUploadDir($model->ref);
+        // Uploads::deleteAll(['ref' => $model->ref]);
+
         $model->delete();
+
         return $this->redirect(['index']);
+        // $this->findModel($id)->delete();
+        // return $this->redirect(['index']);
     }
 
 
@@ -237,6 +258,7 @@ class DocumentsController extends Controller
         echo json_encode($status);
     }
 
+
     /***************** deleteFile ******************/
     private function deleteFile($type = 'file', $ref, $fileName)
     {
@@ -252,6 +274,7 @@ class DocumentsController extends Controller
             return false;
         }
     }
+
 
     /***************** upload MultipleFile ******************/
     private function uploadMultipleFile($model, $tempFile = null)
@@ -307,7 +330,6 @@ class DocumentsController extends Controller
         }
     }
 
-     /***************** View PDF ******************/
     public function actionViewPdf($id)
     {
         $model = $this->findModel($id);
@@ -329,13 +351,16 @@ class DocumentsController extends Controller
             // 'marginBottom' => 10,
             // 'marginFooter' => 5,
             'methods' => [
-                'SetHeader' => ['Export : ' . date('d-m-Y')],
+                'SetHeader' => ['Export : '.date('d-m-Y')],
                 'SetFooter' => ['{PAGENO}']
             ],
-            'options' => [],
-
+            'options' => [
+               
+            ],
+            
         ]);
-
+        
+        
         $defaultConfig = (new ConfigVariables())->getDefaults();
         $fontDirs = $defaultConfig['fontDir'];
         $defaultFontConfig = (new FontVariables())->getDefaults();
@@ -344,7 +369,7 @@ class DocumentsController extends Controller
         $pdf->options['fontDir'] = array_merge($fontDirs, [
             Yii::getAlias('@webroot') . '/fonts'
         ]);
-
+        
         $pdf->options['fontdata'] = $fontData + [
             'sarabun' => [
                 'R' => 'THSarabunNew.ttf',
@@ -363,7 +388,7 @@ class DocumentsController extends Controller
             ],
             'default_font' => 'chakrapetch',
         ];
-
+        
         return $pdf->render();
     }
 }

@@ -3,7 +3,6 @@
 namespace backend\modules\product\models;
 
 use backend\models\Status;
-use backend\modules\product\models\ProductSpec as ModelsProductSpec;
 use common\models\User;
 use Yii;
 use yii\behaviors\AttributeBehavior;
@@ -11,7 +10,6 @@ use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\bootstrap5\Html;
 use yii\db\ActiveRecord;
-use yii\db\BaseActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\UploadedFile;
@@ -62,7 +60,6 @@ class ProductSpec extends \yii\db\ActiveRecord
             [['title'], 'string', 'max' => 200],
             [['product_number', 'revision'], 'string', 'max' => 50],
             [['product_status'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['product_status' => 'id']],
-
         ];
     }
 
@@ -148,7 +145,6 @@ class ProductSpec extends \yii\db\ActiveRecord
     {
         return $this->getFiles('nutrition');
     }
-
 
     //****** getFilesUrls
     public function getSpecUrls()

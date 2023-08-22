@@ -41,6 +41,10 @@ class Documents extends \yii\db\ActiveRecord
 
     const UPLOAD_FOLDER = 'uploads';
 
+    // public $notify_date;
+    // public $pdf_file;
+
+
     public function behaviors()
     {
         return [
@@ -132,8 +136,6 @@ class Documents extends \yii\db\ActiveRecord
         ];
     }
 
-
-    //********** Relation database */
     public function getCategories()
     {
         return $this->hasOne(Categories::class, ['id' => 'categories_id']);
@@ -159,13 +161,6 @@ class Documents extends \yii\db\ActiveRecord
         return $this->hasOne(Types::class, ['id' => 'types_id']);
     }
 
-    public function getCreatedBy()
-    {
-        return $this->hasOne(User::class, ['id' => 'created_by']);
-    }
-
-
-    //********** Upload Path*/
     public static function getUploadPath()
     {
         return Yii::getAlias('@webroot') . '/' . self::UPLOAD_FOLDER . '/';
@@ -176,7 +171,6 @@ class Documents extends \yii\db\ActiveRecord
         return Url::base(true) . '/' . self::UPLOAD_FOLDER . '/';
     }
 
-    //********** List Downloads */
     public function listDownloadFiles($type)
     {
         $docs_file = '';
@@ -201,7 +195,6 @@ class Documents extends \yii\db\ActiveRecord
         return $docs_file;
     }
 
-    //********** initialPreview */    
     public function isImage($filePath)
     {
         return @is_array(getimagesize($filePath)) ? true : false;
@@ -240,6 +233,10 @@ class Documents extends \yii\db\ActiveRecord
         return $initial;
     }
 
+    public function getCreatedBy()
+    {
+        return $this->hasOne(User::class, ['id' => 'created_by']);
+    }
 
     //**********  ฟังก์ชันคำนวณจำนวนวันหมดอายุ
     public function getDaysToExpiration()
@@ -267,21 +264,29 @@ class Documents extends \yii\db\ActiveRecord
     public function getDaysToExpirationValue()
     {
         $daysToExpiration = $this->getDaysToExpiration();
-        $badgeColor = '';
-        $setClass = 'badge';
+        $style = '';
 
         if ($daysToExpiration < 1) {
-            $badgeColor = '#FF1E00';
+            $badgeColor = '#FF1E00'; // Background color for less than 0 days
+            $style = "text-align: center; color:#fff; background-color: $badgeColor;";
+            $setStatus = 'badge ';
         } elseif ($daysToExpiration >= 0 && $daysToExpiration <= 30) {
-            $badgeColor = '#FF8551';
-            $setClass .= ' blink';
+            $badgeColor = '#FF8551'; // Background color for 1 to 30 days
+            $style = "text-align: center; color:#fff; background-color: $badgeColor;";
+            $setStatus = 'badge blink';
         } elseif ($daysToExpiration > 30 && $daysToExpiration <= 60) {
-            $badgeColor = '#614BC3';
+            $badgeColor = '#614BC3'; // Background color for 31 to 60 days
+            $style = "text-align: center; color:#fff; background-color: $badgeColor;";
+            $setStatus = 'badge';
         } elseif ($daysToExpiration > 60) {
-            $badgeColor = '#5BB318';
+            $badgeColor = '#5BB318'; // Background color for more than 60 days
+            $style = "text-align: center; color:#fff; background-color: $badgeColor;";
+            $setStatus = 'badge';
         }
 
-        $options = ['class' => $setClass, 'style' => "text-align: center; color:#fff; background-color: $badgeColor;"];
-        return Html::tag('div', $daysToExpiration, $options);
+        // กำหนด style และ การกระพริบตามเงื่อนไข ('class' => 'badge blink')
+        $options = ['class' => $setStatus, 'style' => $style];
+
+        return Html::tag('div', $daysToExpiration, $options,);
     }
 }

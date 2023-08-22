@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a(
                 '<i class="fas fa-file"></i> ' . Yii::t('app', 'PDF'),
                 ['view-pdf', 'id' => $model->id],
-                ['class' => 'btn btn-warning', 'target' => '_blank']
+                ['class' => 'btn btn-primary', 'target' => '_blank']
             ) ?>
 
             <?= Html::a('<i class="fas fa-edit"></i> ' . Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
