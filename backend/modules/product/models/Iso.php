@@ -8,10 +8,10 @@ use Yii;
  * This is the model class for table "iso".
  *
  * @property int $id
- * @property string $iso_name
- * @property string $iso_files
- * @property string $iso_exp
- * @property int $product_spec_id
+ * @property string|null $name
+ * @property string|null $files
+ * @property string|null $exp
+ * @property int|null $product_spec_id
  */
 class Iso extends \yii\db\ActiveRecord
 {
@@ -29,11 +29,10 @@ class Iso extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['iso_name', 'iso_files', 'iso_exp', 'product_spec_id'], 'required'],
-            [['iso_files'], 'string'],
-            [['iso_exp'], 'safe'],
+            [['files'], 'string'],
+            [['exp'], 'safe'],
             [['product_spec_id'], 'integer'],
-            [['iso_name'], 'string', 'max' => 200],
+            [['name'], 'string', 'max' => 200],
         ];
     }
 
@@ -44,9 +43,9 @@ class Iso extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'iso_name' => Yii::t('app', 'Iso Name'),
-            'iso_files' => Yii::t('app', 'Iso Files'),
-            'iso_exp' => Yii::t('app', 'Iso Exp'),
+            'name' => Yii::t('app', 'Name'),
+            'files' => Yii::t('app', 'Files'),
+            'exp' => Yii::t('app', 'Exp'),
             'product_spec_id' => Yii::t('app', 'Product Spec ID'),
         ];
     }

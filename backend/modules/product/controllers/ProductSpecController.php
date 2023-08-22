@@ -2,7 +2,6 @@
 
 namespace backend\modules\product\controllers;
 
-use backend\modules\product\models\Iso;
 use backend\modules\product\models\ProductSpec;
 use backend\modules\product\models\ProductSpecSearch;
 use common\components\Rule;
@@ -126,6 +125,7 @@ class ProductSpecController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->isoToArray();
 
         if ($this->request->isPost && $model->load($this->request->post())) {
 

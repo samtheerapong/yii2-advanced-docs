@@ -6,9 +6,11 @@ use backend\models\Status;
 use backend\modules\product\models\ProductSpec as ModelsProductSpec;
 use common\models\User;
 use Yii;
+use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\bootstrap5\Html;
+use yii\db\ActiveRecord;
 use yii\db\BaseActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
@@ -28,6 +30,21 @@ class ProductSpec extends \yii\db\ActiveRecord
         return [
             TimestampBehavior::class,
             BlameableBehavior::class,
+            $this->getAttributeBehavior('iso'),
+        ];
+    }
+
+    protected function getAttributeBehavior($attributeName)
+    {
+        return [
+            'class' => AttributeBehavior::class,
+            'attributes' => [
+                ActiveRecord::EVENT_BEFORE_INSERT => $attributeName,
+                ActiveRecord::EVENT_BEFORE_UPDATE => $attributeName,
+            ],
+            'value' => function ($event) use ($attributeName) {
+                return implode(',', $this->{$attributeName});
+            },
         ];
     }
 
@@ -39,9 +56,9 @@ class ProductSpec extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['created_at', 'updated_at', 'revised_date', 'spec_expiration', 'process_expiration', 'fda_expiration', 'nutrition_expiration'], 'safe'],
+            [['created_at', 'updated_at', 'revised_date', 'spec_expiration', 'process_expiration', 'fda_expiration', 'nutrition_expiration', 'iso'], 'safe'],
             [['created_by', 'updated_by'], 'integer'],
-            [['product_number', 'revision', 'title', 'description', 'iso_cert'], 'string'],
+            [['product_number', 'revision', 'title', 'description'], 'string'],
             [['title'], 'string', 'max' => 200],
             [['product_number', 'revision'], 'string', 'max' => 50],
             [['product_status'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['product_status' => 'id']],
@@ -66,7 +83,7 @@ class ProductSpec extends \yii\db\ActiveRecord
             'fda_expiration' => Yii::t('app', 'Fda Expiration'),
             'nutrition' => Yii::t('app', 'Nutrition Label'),
             'nutrition_expiration' => Yii::t('app', 'Nutrition Expiration'),
-            'iso_cert' => Yii::t('app', 'ISO Certificate'),
+            'iso' => Yii::t('app', 'ISO Certificate'),
             'product_status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
@@ -236,5 +253,39 @@ class ProductSpec extends \yii\db\ActiveRecord
         ], $files);
 
         return $initialPreviewConfig;
+    }
+
+    //********** ISO Array **********//
+    // Relationship Iso Model อย่าลืม Use Model ด้วย
+    public function getIso()
+    {
+        return $this->hasOne(Iso::class, ['id' => 'iso']);
+    }
+
+    public function isoToArray()
+    {
+        return $this->iso = explode(',', $this->iso);
+        /*  อย่าลืมไปใส่ที่ actionUpdate
+            $model->isoToArray();
+        */
+    }
+
+    public function getIsoNameArray()
+    {
+        return implode(', ', $this->getIsoNames('iso'));
+    }
+
+    protected function getIsoNames()
+    {
+        $datas = ArrayHelper::map(Iso::find()->all(), 'id', 'name');
+        $explodeDatas = explode(',', $this->iso);
+        $selectDataNames = [];
+
+        foreach ($datas as $key => $data) {
+            if (in_array((int) $key, $explodeDatas)) {
+                $selectDataNames[] = $data;
+            }
+        }
+        return $selectDataNames;
     }
 }
