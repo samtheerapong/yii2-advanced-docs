@@ -55,10 +55,10 @@ use yii\widgets\ActiveForm;
                     <?= $form->field($model, 'description')->textarea(['rows' => 2]) ?>
                 </div>
 
-                <!-- <div class="col-md-10 mb-2">
-                    <?= $form->field($model, 'iso_cert')->widget(Select2::class, [
+                <div class="col-md-10 mb-2">
+                    <?= $form->field($model, 'iso')->widget(Select2::class, [
                         'language' => 'th',
-                        'data' => ArrayHelper::map(Iso::find()->all(), 'id', 'iso_name'),
+                        'data' => ArrayHelper::map(Iso::find()->all(), 'id', 'name'),
                         'options' => [
                             'multiple' => true,
                             'placeholder' => Yii::t('app', 'Please Select...')
@@ -68,7 +68,7 @@ use yii\widgets\ActiveForm;
                         ],
                     ]); ?>
 
-                </div> -->
+                </div>
                 <div class="col-md-2 mb-2">
                     <?= $form->field($model, 'product_status')->widget(Select2::class, [
                         'language' => 'th',

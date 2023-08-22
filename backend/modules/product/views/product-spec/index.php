@@ -1,6 +1,7 @@
 <?php
 
 use backend\models\Status;
+use backend\modules\product\models\Iso;
 use backend\modules\product\models\ProductSpec;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -55,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'product_number',
                             'format' => 'html',
-                            'options' => ['style' => 'width:200px;'],
+                            'options' => ['style' => 'width:150px;'],
                             'value' => function ($model) {
                                 return Html::a($model->product_number, ['view', 'id' => $model->id]);
                             },
@@ -63,9 +64,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'revision',
                             'format' => 'html',
+                            'contentOptions' => ['class' => 'text-center'],
                             'options' => ['style' => 'width:50px;'],
                             'value' => function ($model) {
-                                return Html::a($model->revision, ['view', 'id' => $model->id]);
+                                return $model->revision;
                             },
                         ],
                         [
@@ -76,13 +78,30 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Html::a($model->title, ['view', 'id' => $model->id]);
                             },
                         ],
-                        'iso_cert',
+                        [
+                            'attribute' => 'iso',
+                            'format' => 'html',
+                            'options' => ['style' => 'width:400px;'],
+                            'value' => function ($model) {
+                                return $model->isoNameArray;
+                            },
+                            'filter' => Select2::widget([
+                                'model' => $searchModel,
+                                'attribute' => 'iso',
+                                'data' => ArrayHelper::map(Iso::find()->all(), 'id', 'name'),
+                                'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                                'language' => 'th',
+                                'pluginOptions' => [
+                                    'allowClear' => true
+                                ],
+                            ])
+                        ],
                         [
                             'attribute' => 'product_status',
                             'format' => 'html',
                             'contentOptions' => ['class' => 'text-center'],
+                            'options' => ['style' => 'width:100px;'],
                             'value' => function ($model) {
-                                // var_dump($model->productStatus); // Debugging statement
                                 return '<span class="badge" style="background-color:' . $model->productStatus->color . ';"><b>' . $model->productStatus->name . '</b></span>';
                             },
                             'filter' => Select2::widget([

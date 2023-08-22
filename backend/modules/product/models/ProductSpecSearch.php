@@ -34,7 +34,7 @@ class ProductSpecSearch extends ProductSpec
                 'updated_at',
                 'created_by',
                 'updated_by',
-                'iso_cert',
+                'iso',
             ], 'safe'],
         ];
     }
@@ -84,7 +84,7 @@ class ProductSpecSearch extends ProductSpec
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'product_number', $this->product_number])
             ->andFilterWhere(['like', 'revised_date', $this->revised_date])
-            ->andFilterWhere(['like', 'iso_cert', $this->iso_cert])
+            ->andFilterWhere(['like', 'iso', $this->iso])
             ->andFilterWhere(['like', 'spec', $this->spec])
             ->andFilterWhere(['like', 'spec_expiration', $this->spec_expiration])
             ->andFilterWhere(['like', 'process', $this->process])

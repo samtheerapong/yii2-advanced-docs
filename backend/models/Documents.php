@@ -6,6 +6,7 @@ use backend\models\Categories;
 use backend\models\Types;
 use backend\models\Status;
 use common\models\User;
+use DateInterval;
 use DateTime;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -329,8 +330,14 @@ class Documents extends \yii\db\ActiveRecord
         $daysToExpiration = $interval->format('%r%a');
         //%r%a เป็นรูปแบบการจัดรูปของตัวเลขที่ใช้ในฟังก์ชัน DateTime::format() ในภาษา PHP เพื่อแสดงผลลัพธ์จากการคำนวณระหว่างวันที่สองวัน โดย %r จะแสดงเครื่องหมายบวกหรือลบขึ้นอยู่กับว่าค่าที่คำนวณมาเป็นบวกหรือลบ และ %a จะแสดงจำนวนวันที่ผ่านมา.
 
-        // return ($daysToExpiration <= 0) ? 0 : $daysToExpiration;
-        return $daysToExpiration;
+        // เพิ่มวันที่ให้กับ $expiryDate
+        $expiryDate->add(new DateInterval('P1D'));
+
+        // คำนวณความต่างใหม่
+        $newInterval = $currentDate->diff($expiryDate);
+        $newDaysToExpiration = $newInterval->format('%r%a');
+
+        return $newDaysToExpiration;
     }
 
     public function getDaysToExpirationValue()

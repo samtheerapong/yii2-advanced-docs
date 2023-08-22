@@ -6,6 +6,8 @@ use Yii;
 use backend\modules\ncr\models\Uploads;
 use backend\modules\ncr\models\Ncr;
 use backend\modules\ncr\models\NcrSearch;
+use common\components\Rule;
+use common\models\User;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -17,6 +19,7 @@ use yii\helpers\BaseFileHelper;
 
 //
 use mdm\autonumber\AutoNumber;
+use yii\filters\AccessControl;
 
 class NcrController extends Controller
 {
@@ -27,6 +30,25 @@ class NcrController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::class,
+                'ruleConfig' => [
+                    'class' => Rule::class,
+                ],
+                'only' => ['index', 'view', 'create', 'update', 'delete', 'download'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'download'],
+                        'allow' => true,
+                        'roles' => [
+                            User::ROLE_ADMIN,
+                            User::ROLE_MANAGER,
+                         
+                        ],
+                    ],
+                    
                 ],
             ],
         ];
@@ -190,7 +212,7 @@ class NcrController extends Controller
             array_push($initialPreviewConfig, [
                 'caption' => $value->file_name,
                 'width'  => '120px',
-                'url'    => Url::to(['/sam/ncr/deletefile-ajax']),
+                'url'    => Url::to(['/ncr/ncr/deletefile-ajax']),
                 'key'    => $value->upload_id
             ]);
         }
@@ -207,7 +229,7 @@ class NcrController extends Controller
         $filePath = Ncr::getUploadUrl() . $model->ref . '/thumbnail/' . $model->real_filename;
         $isImage  = $this->isImage($filePath);
         if ($isImage) {
-            $file = Html::img($filePath, ['class' => 'file-preview-image', 'alt' => $model->file_name, 'title' => $model->file_name]);
+            $file = Html::img($filePath, ['class' => 'file-preview-image', 'alt' => $model->file_name, 'title' => $model->file_name,]);
         } else {
             $file =  "<div class='file-preview-other'> " .
                 "<h2><i class='glyphicon glyphicon-file'></i></h2>" .

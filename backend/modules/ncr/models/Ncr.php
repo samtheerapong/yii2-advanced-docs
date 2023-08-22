@@ -13,7 +13,7 @@ use backend\modules\ncr\models\NcrStatus;
 use yii\helpers\ArrayHelper;
 use backend\modules\ncr\models\Department;
 use backend\modules\ncr\models\Problem;
-
+use common\models\User;
 //
 use yii\behaviors\AttributeBehavior;
 use yii\db\ActiveRecord;
@@ -64,12 +64,12 @@ class Ncr extends \yii\db\ActiveRecord
             [['event_name'], 'autonumber', 'format' => 'NCR-' . date('ym') . '/?'],
             [['detail', 'recheck'], 'string'],
             [['ref', 'production_date'], 'string', 'max' => 50],
-            [['event_name', 'location', 'from_department', 'product_name', 'lot'], 'string', 'max' => 255],
-            [['customer_name', 'notify_by'], 'string', 'max' => 150],
+            [['event_name', 'location', 'product_name', 'lot'], 'string', 'max' => 255],
+            [['customer_name'], 'string', 'max' => 150],
             [['customer_mobile_phone'], 'string', 'max' => 20],
             [['ref'], 'unique'],
             // [['status'], 'integer'],
-            [['product_name', 'from_department'], 'required'],
+            [['product_name', 'from_department','notify_by'], 'required'],
             [['status'], 'exist', 'skipOnError' => true, 'targetClass' => NcrStatus::class, 'targetAttribute' => ['status' => 'id']],
             [['start_date', 'end_date', 'proplem_date', 'created_at', 'updated_at', 'to_department', 'problem'], 'safe'],
         ];
@@ -125,6 +125,11 @@ class Ncr extends \yii\db\ActiveRecord
     public function getProblem()
     {
         return $this->hasOne(Problem::class, ['problem_id' => 'problem']);
+    }
+
+    public function getNotifyby()
+    {
+        return $this->hasOne(User::class, ['id' => 'notify_by']);
     }
 
 

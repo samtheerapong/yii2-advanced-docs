@@ -2,11 +2,13 @@
 
 namespace backend\modules\product\controllers;
 
-use backend\modules\product\models\Iso;
 use backend\modules\product\models\ProductSpec;
 use backend\modules\product\models\ProductSpecSearch;
+use common\components\Rule;
+use common\models\User;
 use mdm\autonumber\AutoNumber;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -22,17 +24,33 @@ class ProductSpecController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
+        return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['post'],
                 ],
-            ]
-        );
+            ],
+            'access' => [
+                'class' => AccessControl::class,
+                'ruleConfig' => [
+                    'class' => Rule::class,
+                ],
+                'only' => ['index', 'view', 'create', 'update', 'delete', 'download'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'download'],
+                        'allow' => true,
+                        'roles' => [
+                            User::ROLE_ADMIN,
+                            User::ROLE_MANAGER,
+                         
+                        ],
+                    ],
+                    
+                ],
+            ],
+        ];
     }
 
     /**
@@ -107,6 +125,7 @@ class ProductSpecController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->isoToArray();
 
         if ($this->request->isPost && $model->load($this->request->post())) {
 

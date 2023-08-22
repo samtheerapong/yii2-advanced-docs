@@ -71,7 +71,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'title',
                     'description',
-                    'iso_cert',
+                    // 'iso',
+                    [
+                        'attribute' => 'iso',
+                        'value' => function ($model) {
+                            return $model->isoNameArray;
+                        }
+                    ],
                     [
                         'attribute' => 'spec',
                         'format' => 'raw',
