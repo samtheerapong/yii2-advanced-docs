@@ -4,6 +4,7 @@ namespace backend\modules\product\models;
 
 use backend\models\Status;
 use common\models\User;
+use Exception;
 use Yii;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
@@ -11,17 +12,22 @@ use yii\behaviors\TimestampBehavior;
 use yii\bootstrap5\Html;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
+use yii\helpers\BaseFileHelper;
+use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\UploadedFile;
 
 class ProductSpec extends \yii\db\ActiveRecord
 {
-    public $uploadFolders = [
-        'spec'              => 'products/specs',
-        'process'           => 'products/process',
-        'fda'               => 'products/fdas',
-        'nutrition'         => 'products/nutritions',
-    ];
+
+    const UPLOAD_FOLDER = 'products/specs';
+
+    // public $uploadFolders = [
+    //     'spec'              => 'products/specs',
+    //     'process'           => 'products/process',
+    //     'fda'               => 'products/fdas',
+    //     'nutrition'         => 'products/nutritions',
+    // ];
 
     public function behaviors()
     {
@@ -54,6 +60,7 @@ class ProductSpec extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['iso'], 'required'],
             [['created_at', 'updated_at', 'revised_date', 'spec_expiration', 'process_expiration', 'fda_expiration', 'nutrition_expiration', 'iso'], 'safe'],
             [['created_by', 'updated_by'], 'integer'],
             [['product_number', 'revision', 'title', 'description'], 'string'],
@@ -105,152 +112,6 @@ class ProductSpec extends \yii\db\ActiveRecord
         return $this->hasOne(Status::class, ['id' => 'product_status']);
     }
 
-    //****** Create Upload
-    public function uploadFilesSpec()
-    {
-        return $this->uploadFiles('spec');
-    }
-
-    public function getFilesSpec()
-    {
-        return $this->getFiles('spec');
-    }
-
-    public function uploadFilesProcess()
-    {
-        return $this->uploadFiles('process');
-    }
-
-    public function getFilesProcess()
-    {
-        return $this->getFiles('process');
-    }
-
-    public function uploadFilesFda()
-    {
-        return $this->uploadFiles('fda');
-    }
-
-    public function getFilesFda()
-    {
-        return $this->getFiles('fda');
-    }
-
-    public function uploadFilesNutrition()
-    {
-        return $this->uploadFiles('nutrition');
-    }
-
-    public function getFilesNutrition()
-    {
-        return $this->getFiles('nutrition');
-    }
-
-    //****** getFilesUrls
-    public function getSpecUrls()
-    {
-        return $this->getFilesUrls('spec');
-    }
-
-    public function getProcessUrls()
-    {
-        return $this->getFilesUrls('process');
-    }
-
-    public function getFdaUrls()
-    {
-        return $this->getFilesUrls('fda');
-    }
-
-    public function getNutritionUrls()
-    {
-        return $this->getFilesUrls('nutrition');
-    }
-
-    //****** getFilesLinks
-    public function generateFileLinks($attribute)
-    {
-        $folder = $this->uploadFolders[$attribute];
-        return implode('<br />', array_map(function ($value) use ($folder) {
-            return Html::a($value, Url::to(Yii::getAlias('@web') . '/' . $folder . '/' . $value), ['target' => '_blank']);
-        }, $this->{"getFiles" . ucfirst($attribute)}()));
-    }
-
-    public function getInitialPreview($attribute)
-    {
-        $folder = $this->uploadFolders[$attribute];
-        $files = $this->getFiles($attribute);
-
-        $initialPreview = [];
-        $initialPreviewConfig = [];
-
-        foreach ($files as $fileName) {
-            $initialPreview[] = Yii::getAlias('@web') . '/' . $folder . '/' . $fileName;
-            $initialPreviewConfig[] = [
-                'caption' => $fileName,
-                'width' => '120px',
-                'url' => Url::to(['/product/product-spec/delete-ajax', 'id' => $this->id, 'fileName' => $fileName]),
-                'key' => $fileName,
-            ];
-        }
-
-        return [$initialPreview, $initialPreviewConfig];
-    }
-
-
-    //****** uploadFiles
-    private function uploadFiles($attribute)
-    {
-        $filesName = [];
-        $files = UploadedFile::getInstances($this, $attribute);
-
-        if ($this->validate() && $files) {
-            foreach ($files as $file) {
-                $fileName = $this->product_number . '-' . $file->baseName . '.' . $file->extension;
-                $file->saveAs(Yii::getAlias('@webroot') . '/' . $this->uploadFolders[$attribute] . '/' . $fileName);
-                $filesName[] = $fileName;
-            }
-
-            if (!$this->isNewRecord) {
-                $oldFiles = explode(',', $this->{$attribute});
-                $filesName = ArrayHelper::merge($filesName, $oldFiles);
-            }
-
-            return implode(',', $filesName);
-        }
-
-        return $this->isNewRecord ? false : $this->{$attribute};
-    }
-
-
-
-    private function getFiles($attribute)
-    {
-        return explode(',', $this->{$attribute});
-    }
-
-    public function getFilesUrls($attribute)
-    {
-
-        $folder = $this->uploadFolders[$attribute];
-        $files = $this->getFiles($attribute);
-
-        return array_map(fn ($fileName) => Yii::getAlias('@web') . '/' . $folder . '/' . $fileName, $files);
-    }
-
-    //********** InitialPreviewConfig
-    public function getInitialPreviewConfig($attribute)
-    {
-        $files = $this->getFiles($attribute);
-        $initialPreviewConfig = array_map(fn ($fileName) => [
-            'type' => 'pdf',
-            'url' => Url::to(['delete-file', 'id' => $this->id, 'fileName' => $fileName]),
-            'key' => $fileName,
-        ], $files);
-
-        return $initialPreviewConfig;
-    }
-
     //********** ISO Array **********//
     // Relationship Iso Model อย่าลืม Use Model ด้วย
     public function getIso()
@@ -283,5 +144,80 @@ class ProductSpec extends \yii\db\ActiveRecord
             }
         }
         return $selectDataNames;
+    }
+
+
+
+    /**************** Upload docs ********************/
+    public static function getUploadPath()
+    {
+        return Yii::getAlias('@webroot') . '/' . self::UPLOAD_FOLDER . '/';
+    }
+
+    public static function getUploadUrl()
+    {
+        return Url::base(true) . '/' . self::UPLOAD_FOLDER . '/';
+    }
+
+    public function listDownloadFiles($type)
+    {
+        $docs_file = '';
+        if (in_array($type, ['spec'])) {
+            $data = $type === 'spec' ? $this->spec : '';
+            $files = Json::decode($data);
+            if (is_array($files)) {
+                $docs_file = '<ul>';
+                foreach ($files as $key => $value) {
+                    if (strpos($value, '.jpg') !== false || strpos($value, '.jpeg') !== false || strpos($value, '.png') !== false || strpos($value, '.gif') !== false) {
+                        $thumbnail = Html::img(['/product/product-spec/download', 'id' => $this->id, 'file' => $key, 'fullname' => $value], ['class' => 'img-thumbnail', 'alt' => 'Image', 'style' => 'width: 150px']);
+                        $fullSize = Html::a($thumbnail, ['/product/product-spec/download', 'id' => $this->id, 'file' => $key, 'fullname' => $value], ['target' => '_blank']);
+                        $docs_file .= '<li>' . $fullSize . '</li>';
+                    } else {
+                        $docs_file .= '<li>' . Html::a($value, ['/product/product-spec/download', 'id' => $this->id, 'file' => $key, 'fullname' => $value]) . '</li>';
+                    }
+                }
+                $docs_file .= '</ul>';
+            }
+        }
+
+        return $docs_file;
+    }
+
+    public function isImage($filePath)
+    {
+        return @is_array(getimagesize($filePath)) ? true : false;
+    }
+
+    public function initialPreview($data, $field, $type = 'file')
+    {
+        $initial = [];
+        $files = Json::decode($data);
+        if (is_array($files)) {
+            foreach ($files as $key => $value) {
+                $filePath = self::getUploadUrl() . $this->ref . '/' . $value;
+                $filePathDownload = self::getUploadUrl() . $this->ref . '/' . $value;
+
+                $isImage = $this->isImage($filePath);
+
+                if ($type == 'file') {
+                    $initial[] = "<div class='file-preview-other'><h2><i class='glyphicon glyphicon-file'></i></h2></div>";
+                } elseif ($type == 'config') {
+                    $initial[] = [
+                        'caption' => $value,
+                        'width'  => '120px',
+                        'url'    => Url::to(['product-spec/deletefile', 'id' => $this->id, 'fileName' => $key, 'field' => $field]),
+                        'key'    => $key
+                    ];
+                } else {
+                    if ($isImage) {
+                        $file = Html::img($filePath, ['class' => 'file-preview-image', 'alt' => $this->file_name, 'title' => $this->file_name]);
+                    } else {
+                        $file = Html::a('View File', $filePathDownload, ['target' => '_blank']);
+                    }
+                    $initial[] = $file;
+                }
+            }
+        }
+        return $initial;
     }
 }

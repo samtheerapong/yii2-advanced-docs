@@ -77,7 +77,7 @@ class NcrController extends Controller
         $model = new Ncr();
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->event_name = AutoNumber::generate('NCR-' . date('ym') . '/?');
+            $model->ncr_number = AutoNumber::generate('NCR-' . date('ym') . '/?');
             $model->status = 1;
             $this->Uploads(false);
             if ($model->save()) {

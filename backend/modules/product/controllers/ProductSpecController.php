@@ -6,13 +6,18 @@ use backend\modules\product\models\ProductSpec;
 use backend\modules\product\models\ProductSpecSearch;
 use common\components\Rule;
 use common\models\User;
+use Exception;
 use mdm\autonumber\AutoNumber;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use yii\helpers\BaseFileHelper;
+use yii\helpers\Json;
 use yii\web\Response;
+use yii\web\UploadedFile;
 
 /**
  * ProductSpecController implements the CRUD actions for ProductSpec model.
@@ -44,10 +49,10 @@ class ProductSpecController extends Controller
                         'roles' => [
                             User::ROLE_ADMIN,
                             User::ROLE_MANAGER,
-                         
+
                         ],
                     ],
-                    
+
                 ],
             ],
         ];
@@ -92,23 +97,26 @@ class ProductSpecController extends Controller
         $model = new ProductSpec();
         $model->revision = 1;
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
+        if ($model->load(Yii::$app->request->post())) {
 
-                $model->product_number = AutoNumber::generate('P' . date('Ym') . '-???');
+            $model->product_number = AutoNumber::generate('P' . date('Ym') . '-???');
 
-                $model->process = $model->uploadFilesProcess();
-                $model->spec = $model->uploadFilesSpec();
-                $model->fda = $model->uploadFilesFda();
-                $model->nutrition = $model->uploadFilesNutrition();
+            $model->ref = substr(Yii::$app->getSecurity()->generateRandomString(), 10);
+            $this->CreateDir($model->ref);
+            $model->spec = $this->uploadMultipleFile($model);
 
+            // $model->process = $model->uploadFilesProcess();
+            // $model->spec = $model->uploadFilesSpec();
+            // $model->fda = $model->uploadFilesFda();
+            // $model->nutrition = $model->uploadFilesNutrition();
 
-                $model->save();
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
+            $model->save();
+
+            Yii::$app->session->setFlash('success', Yii::t('app', 'Created Successfully'));
+
+            return $this->redirect(['view', 'id' => $model->id]);
         }
+
 
         return $this->render('create', [
             'model' => $model,
@@ -126,15 +134,21 @@ class ProductSpecController extends Controller
     {
         $model = $this->findModel($id);
         $model->isoToArray();
+        $tempspec     = $model->spec;
 
-        if ($this->request->isPost && $model->load($this->request->post())) {
+        if ($model->load(Yii::$app->request->post())) {
 
-            $model->process = $model->uploadFilesProcess();
-            $model->spec = $model->uploadFilesSpec();
-            $model->fda = $model->uploadFilesFda();
-            $model->nutrition = $model->uploadFilesNutrition();
+            $this->CreateDir($model->ref);
+            $model->spec = $this->uploadMultipleFile($model, $tempspec);
 
+            // $model->process = $model->uploadFilesProcess();
+            // $model->spec = $model->uploadFilesSpec();
+            // $model->fda = $model->uploadFilesFda();
+            // $model->nutrition = $model->uploadFilesNutrition();
             $model->save();
+
+            Yii::$app->session->setFlash('success', Yii::t('app', 'Updated Successfully'));
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -152,7 +166,12 @@ class ProductSpecController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        //remove upload file & data
+        $this->removeUploadDir($model->ref);
+        ProductSpec::deleteAll(['ref' => $model->ref]);
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }
@@ -173,4 +192,99 @@ class ProductSpecController extends Controller
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 
+
+
+    /***************** Deletefile ******************/
+    public function actionDeletefile($id, $field, $fileName)
+    {
+        $status = ['success' => false];
+        if (in_array($field, ['spec'])) {
+            $model = $this->findModel($id);
+            $files =  Json::decode($model->{$field});
+            if (array_key_exists($fileName, $files)) {
+                if ($this->deleteFile('file', $model->ref, $fileName)) {
+                    $status = ['success' => true];
+                    unset($files[$fileName]);
+                    $model->{$field} = Json::encode($files);
+                    $model->save();
+                }
+            }
+        }
+        echo json_encode($status);
+    }
+
+    private function deleteFile($type = 'file', $ref, $fileName)
+    {
+        if (in_array($type, ['file', 'thumbnail'])) {
+            if ($type === 'file') {
+                $filePath = ProductSpec::getUploadPath() . $ref . '/' . $fileName;
+            } else {
+                $filePath = ProductSpec::getUploadPath() . $ref . '/thumbnail/' . $fileName;
+            }
+            @unlink($filePath);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+    /***************** Download ******************/
+    public function actionDownload($id, $file, $fullname)
+    {
+        $model = $this->findModel($id);
+        if (!empty($model->ref) && !empty($model->covenant)) {
+            Yii::$app->response->sendFile($model->getUploadPath() . '/' . $model->ref . '/' . $file, $fullname);
+        } else {
+            $this->redirect(['/product/product-spec/view', 'id' => $id]);
+        }
+    }
+
+
+
+
+    /***************** upload MultipleFile ******************/
+    private function uploadMultipleFile($model, $tempFile = null)
+    {
+        $files = [];
+        $json = '';
+        $tempFile = Json::decode($tempFile);
+        $UploadedFiles = UploadedFile::getInstances($model, 'spec');
+        if ($UploadedFiles !== null) {
+            foreach ($UploadedFiles as $file) {
+                try {
+                    $oldFileName = $file->basename . '.' . $file->extension;
+                    $newFileName = md5($file->basename . time()) . '.' . $file->extension;
+                    $file->saveAs(ProductSpec::UPLOAD_FOLDER . '/' . $model->ref . '/' . $newFileName);
+                    $files[$newFileName] = $oldFileName;
+                } catch (Exception $e) {
+                }
+            }
+            $json = json::encode(ArrayHelper::merge($tempFile, $files));
+        } else {
+            $json = $tempFile;
+        }
+        return $json;
+    }
+
+
+    /***************** Create Dir ******************/
+    private function CreateDir($folderName)
+    {
+        if ($folderName != NULL) {
+            $basePath = ProductSpec::getUploadPath();
+            if (BaseFileHelper::createDirectory($basePath . $folderName, 0777)) {
+                BaseFileHelper::createDirectory($basePath . $folderName . '/thumbnail', 0777);
+            }
+        }
+        return;
+    }
+
+
+     /***************** Remove Upload Dir ******************/
+     private function removeUploadDir($dir)
+     {
+         BaseFileHelper::removeDirectory(ProductSpec::getUploadPath() . $dir);
+     }
 }

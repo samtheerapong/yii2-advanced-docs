@@ -78,43 +78,36 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->isoNameArray;
                         }
                     ],
-                    'ref',
-                    // 'spec',
                     [
                         'attribute' => 'spec',
-                        'format' => 'html',
-                        'value' => $model->listDownloadFiles('spec')
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return  $model->generateFileLinks('spec') . '<br> <b>วันหมดอายุ : </b>' .  Yii::$app->formatter->asDate($model->spec_expiration, 'php:d M Y');
+                        },
                     ],
-                    // [
-                    //     'attribute' => 'spec',
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return  $model->generateFileLinks('spec') . '<br> <b>วันหมดอายุ : </b>' .  Yii::$app->formatter->asDate($model->spec_expiration, 'php:d M Y');
-                    //     },
-                    // ],
-                    // [
-                    //     'attribute' => 'process',
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return  $model->generateFileLinks('process') . '<br> <b>วันหมดอายุ : </b>' . Yii::$app->formatter->asDate($model->process_expiration, 'php:d M Y');
-                    //     },
-                    // ],
-                    // [
-                    //     'attribute' => 'fda',
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return  $model->generateFileLinks('fda') . '<br> <b>วันหมดอายุ : </b>' . Yii::$app->formatter->asDate($model->fda_expiration, 'php:d M Y');
-                    //     },
-                    // ],
-                    // [
-                    //     'attribute' => 'nutrition',
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return  $model->generateFileLinks('nutrition') . '<br> <b>วันหมดอายุ : </b>' . Yii::$app->formatter->asDate($model->nutrition_expiration, 'php:d M Y');
-                    //     },
-                    // ],
-                    // 'created_at:date',
-                    // 'updated_at:date',
+                    [
+                        'attribute' => 'process',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return  $model->generateFileLinks('process') . '<br> <b>วันหมดอายุ : </b>' . Yii::$app->formatter->asDate($model->process_expiration, 'php:d M Y');
+                        },
+                    ],
+                    [
+                        'attribute' => 'fda',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return  $model->generateFileLinks('fda') . '<br> <b>วันหมดอายุ : </b>' . Yii::$app->formatter->asDate($model->fda_expiration, 'php:d M Y');
+                        },
+                    ],
+                    [
+                        'attribute' => 'nutrition',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return  $model->generateFileLinks('nutrition') . '<br> <b>วันหมดอายุ : </b>' . Yii::$app->formatter->asDate($model->nutrition_expiration, 'php:d M Y');
+                        },
+                    ],
+                    'created_at:date',
+                    'updated_at:date',
                     // [
                     //     'attribute' => 'created_by',
                     //     'format' => 'html',

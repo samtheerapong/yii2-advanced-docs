@@ -14,6 +14,7 @@ use yii\helpers\ArrayHelper;
 use backend\modules\ncr\models\Department;
 use backend\modules\ncr\models\Problem;
 use common\models\User;
+use dosamigos\gallery\Gallery;
 //
 use yii\behaviors\AttributeBehavior;
 use yii\db\ActiveRecord;
@@ -28,7 +29,7 @@ class Ncr extends \yii\db\ActiveRecord
             TimestampBehavior::class,
             [
                 'class' => 'mdm\autonumber\Behavior',
-                'attribute' => 'event_name',
+                'attribute' => 'ncr_number',
                 'group' => $this->id,
                 'value' => 'NCR-' . date('ym') . '/?',
                 'digit' => 2,
@@ -60,16 +61,16 @@ class Ncr extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            // [['event_name','detail'],'required'],
-            [['event_name'], 'autonumber', 'format' => 'NCR-' . date('ym') . '/?'],
+            // [['ncr_number','detail'],'required'],
+            [['ncr_number'], 'autonumber', 'format' => 'NCR-' . date('ym') . '/?'],
             [['detail', 'recheck'], 'string'],
             [['ref', 'production_date'], 'string', 'max' => 50],
-            [['event_name', 'location', 'product_name', 'lot'], 'string', 'max' => 255],
+            [['ncr_number', 'location', 'product_name', 'lot'], 'string', 'max' => 255],
             [['customer_name'], 'string', 'max' => 150],
             [['customer_mobile_phone'], 'string', 'max' => 20],
             [['ref'], 'unique'],
             // [['status'], 'integer'],
-            [['product_name', 'from_department','notify_by'], 'required'],
+            [['product_name', 'from_department', 'notify_by'], 'required'],
             [['status'], 'exist', 'skipOnError' => true, 'targetClass' => NcrStatus::class, 'targetAttribute' => ['status' => 'id']],
             [['start_date', 'end_date', 'proplem_date', 'created_at', 'updated_at', 'to_department', 'problem'], 'safe'],
         ];
@@ -80,7 +81,7 @@ class Ncr extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ref' => 'ใช้กับ upload ajax',
-            'event_name' => 'เลขที่ NCR',
+            'ncr_number' => 'เลขที่ NCR',
             'problem' => 'กระบวนการที่พบปัญหา',
             'to_department' => 'ถึงหน่วยงาน',
             'product_name' => 'ชื่อสินค้า',
@@ -144,19 +145,7 @@ class Ncr extends \yii\db\ActiveRecord
         return Url::base(true) . '/' . self::UPLOAD_FOLDER . '/';
     }
 
-    public function getThumbnails($ref, $event_name)
-    {
-        $uploadFiles   = Uploads::find()->where(['ref' => $ref])->all();
-        $preview = [];
-        foreach ($uploadFiles as $file) {
-            $preview[] = [
-                'url' => self::getUploadUrl(true) . $ref . '/' . $file->real_filename,
-                'src' => self::getUploadUrl(true) . $ref . '/thumbnail/' . $file->real_filename,
-                'options' => ['title' => $event_name]
-            ];
-        }
-        return $preview;
-    }
+
 
 
     public function todepartmentToArray()
@@ -207,5 +196,48 @@ class Ncr extends \yii\db\ActiveRecord
         }
 
         return $selectedProblemNames;
+    }
+
+
+    public function getThumbnails($ref, $ncr_number)
+    {
+        $uploadFiles   = Uploads::find()->where(['ref' => $ref])->all();
+        $preview = [];
+        foreach ($uploadFiles as $file) {
+            $preview[] = [
+                'url' => self::getUploadUrl(true) . $ref . '/' . $file->real_filename,
+                'src' => self::getUploadUrl(true) . $ref . '/thumbnail/' . $file->real_filename,
+                'options' => [
+                    'title' => $ncr_number,
+                    // 'style' => '<ul style="list-style-type: none; padding: 0;">'
+                ]
+            ];
+        }
+        return $preview;
+    }
+
+
+    function renderGallery($model)
+    {
+        $thumbnails = $model->getThumbnails($model->ref, $model->ncr_number);
+        $galleryItems = [];
+
+        foreach ($thumbnails as $thumbnail) {
+            $galleryItems[] = [
+                'url' => $thumbnail['url'],
+                'src' => $thumbnail['src'],
+                'options' => [
+                    'class' => 'list-group-item mt-1',
+                ],
+            ];
+        }
+
+        return Gallery::widget([
+            'items' => $galleryItems,
+            'options' => [
+                'id' => 'gallery_' . $model->id,
+                
+            ],
+        ]);
     }
 }

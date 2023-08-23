@@ -27,7 +27,7 @@ use kartik\widgets\Select2;
 
             <!-- hiddenInput -->
             <?= $form->field($model, 'ref')->hiddenInput(['maxlength' => 50])->label(false); ?>
-            <?= $form->field($model, 'event_name')->hiddenInput(['disabled' => true])->label(false) ?>
+            <?= $form->field($model, 'ncr_number')->hiddenInput(['disabled' => true])->label(false) ?>
             <?= $form->field($model, 'status')->hiddenInput(['disabled' => true])->label(false) ?>
 
 
@@ -158,17 +158,17 @@ use kartik\widgets\Select2;
                     </div>
                 </div>
             </div>
+        </div>
 
+        <div class="card-footer">
             <div class="row">
-                <div class="col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Save') : Yii::t('app', 'Update'), ['class' => ($model->isNewRecord ? 'btn btn-success' : 'btn btn-primary') . ' btn-lg btn-block']) ?>
+                <div class="form-group">
+                    <div class="d-grid gap-2">
+                        <?= Html::submitButton('<i class="fas fa-save"></i> ' . Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
     <?php ActiveForm::end(); ?>
-
 </div>

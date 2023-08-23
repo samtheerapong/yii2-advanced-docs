@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'ref') ?>
 
-    <?= $form->field($model, 'event_name') ?>
+    <?= $form->field($model, 'ncr_number') ?>
 
     <?= $form->field($model, 'detail') ?>
 
