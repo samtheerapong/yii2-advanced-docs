@@ -64,13 +64,15 @@ return [
 
     // Product Spec
     'Product Spec' => 'รายละเอียดสินค้า',
+    'Products' => 'รายละเอียดสินค้า',
     'Uploads' => 'การอัพโหลดเอกสาร',
     'Product Number' => 'เลขที่ผลิตภัณฑ์',
+    'Category' => 'หมวดหมู่',
     'Revision' => 'ริวิชั่น',
     'Revised Date' => 'วันประกาศใช้',
     'Title' => 'หัวข้อ',
     'Description' => 'รายละเอียด',
-    'ISO Certificate' => 'ใบรับรอง ISO',
+    'ISO Support' => 'ระบบที่รับรอง',
     'Product Specification' => 'รายละเอียดสินค้า (Product Specification)',
     'Spec Expiration' => 'วันหมดอายุ',
     'Process Flow' => 'กระบวนการ (Process Flow)',
@@ -79,6 +81,10 @@ return [
     'Fda Expiration' => 'วันหมดอายุ',
     'Nutrition Label' => 'ฉลากโภชนาการ (Nutrition Label)',
     'Nutrition Expiration' => 'วันหมดอายุ',
+    'Numbers' => 'รหัสเอกสาร',
+    'Product Name' => 'ชื่อสินค้า',
+    'Revision' => 'ริวิชั่น',
+    'Reviesed Date' => 'วันที่แก้ไขเอกสาร',
 
     // Raw Material
     'Raw Material' => 'วัตถุดิบ',

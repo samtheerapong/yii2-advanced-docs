@@ -21,6 +21,10 @@ return [
         ]
     ],
     'modules' => [
+        'qc' => [
+            'class' => 'backend\modules\qc\Module',
+        ],
+        
         'hrm' => [
             'class' => 'backend\modules\hrm\Module',
         ],

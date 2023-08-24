@@ -34,7 +34,7 @@ $this->beginPage();
         ]);
         $menuItems = [
             ['label' => Yii::t('app', 'Documents Center'), 'url' => ['/documents/index']],
-            ['label' => Yii::t('app', 'Product Spec'), 'url' => ['/product/product-spec/index']],
+            ['label' => Yii::t('app', 'Product Spec'), 'url' => ['/qc/products/index']],
             ['label' => Yii::t('app', 'Raw Material'), 'url' => ['/product/raw-material/index']],
             ['label' => Yii::t('app', 'NCR'), 'url' => ['/ncr/ncr/index']],
             // ['label' => Yii::t('app', 'ISO Documents'), 'url' => ['/dc']],
