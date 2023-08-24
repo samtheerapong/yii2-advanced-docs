@@ -158,14 +158,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ])
                         ],
+                        
                         [
                             'attribute' => 'title',
                             'format' => 'html',
-                            'options' => ['style' => 'width:auto;'],
+                            'options' => ['style' => 'width:220px;'],
                             'value' => function ($model) {
-                                return Html::a($model->title, ['view', 'id' => $model->id]);
+                                $truncatedSupplierName = mb_substr($model->title, 0, 20, 'UTF-8');
+                                if (mb_strlen($model->title, 'UTF-8') > 20) {
+                                    $truncatedSupplierName .= '...';
+                                }
+                                return $truncatedSupplierName;
+                                
                             },
-
                         ],
 
                         [
@@ -190,9 +195,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'supplier_name',
                             'format' => 'html',
+                            'options' => ['style' => 'width:220px;'],
                             'value' => function ($model) {
-                                $truncatedSupplierName = mb_substr($model->supplier_name, 0, 50, 'UTF-8');
-                                if (mb_strlen($model->supplier_name, 'UTF-8') > 50) {
+                                $truncatedSupplierName = mb_substr($model->supplier_name, 0, 20, 'UTF-8');
+                                if (mb_strlen($model->supplier_name, 'UTF-8') > 20) {
                                     $truncatedSupplierName .= '...';
                                 }
                                 return $truncatedSupplierName;
@@ -214,7 +220,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'raw_material',
                             'format' => 'html',
                             'contentOptions' => ['class' => 'text-center'],
-                            'options' => ['style' => 'width:120px;'],
+                            'options' => ['style' => 'width:180px;'],
                             'value' => function ($model) {
                                 return '<span class="badge" style="background-color:' . $model->rawMaterial->color . ';"><b>' . $model->rawMaterial->name . '</b></span>';
                             },
@@ -252,6 +258,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'status_id',
                             'format' => 'html',
+                            'options' => ['style' => 'width:100px;'],
                             'contentOptions' => ['class' => 'text-center'],
                             'value' => function ($model) {
                                 $badge = '<span class="badge badge-tooltip" data-bs-toggle="tooltip" data-bs-placement="right" title="' . $model->status_details . '" style="background-color:'
