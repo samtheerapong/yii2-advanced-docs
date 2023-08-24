@@ -158,18 +158,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ])
                         ],
-                        
+
                         [
                             'attribute' => 'title',
                             'format' => 'html',
-                            'options' => ['style' => 'width:220px;'],
                             'value' => function ($model) {
                                 $truncatedSupplierName = mb_substr($model->title, 0, 20, 'UTF-8');
                                 if (mb_strlen($model->title, 'UTF-8') > 20) {
                                     $truncatedSupplierName .= '...';
                                 }
-                                return $truncatedSupplierName;
-                                
+                                return Html::a($truncatedSupplierName, ['view', 'id' => $model->id]);
                             },
                         ],
 
@@ -192,6 +190,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ])
                         ],
+                      
                         [
                             'attribute' => 'supplier_name',
                             'format' => 'html',
@@ -201,8 +200,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 if (mb_strlen($model->supplier_name, 'UTF-8') > 20) {
                                     $truncatedSupplierName .= '...';
                                 }
-                                return $truncatedSupplierName;
-                                
+                                return Html::a($truncatedSupplierName, ['view', 'id' => $model->id]);
                             },
                             'filter' => Select2::widget([
                                 'model' => $searchModel,
