@@ -8,7 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
-    'name' => 'NFC',
+    'name' => 'NorthernFood',
     'language' => 'th',
     'timezone' => 'Asia/Bangkok',
     'basePath' => dirname(__DIR__),
@@ -21,6 +21,10 @@ return [
         ]
     ],
     'modules' => [
+        'qc' => [
+            'class' => 'backend\modules\qc\Module',
+        ],
+        
         'hrm' => [
             'class' => 'backend\modules\hrm\Module',
         ],

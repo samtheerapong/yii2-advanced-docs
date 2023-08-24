@@ -9,11 +9,12 @@ use dosamigos\gallery\Gallery;
 use app\modules\sam\models\NcrStatus;
 use app\modules\sam\models\Department;
 use app\models\Uploads;
+use yii2assets\printthis\PrintThis;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\PhotoLibrary */
 
-$this->title = $model->event_name;
+$this->title = $model->ncr_number;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'NCR'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -24,6 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </p>
 
         <p style="text-align: right;">
+
             <?= Html::a('<i class="fas fa-edit"></i> ' . Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
 
             <?= Html::a('<i class="fas fa-trash"></i> ' . Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
@@ -33,7 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'method' => 'post',
                 ],
             ]) ?>
-
         </p>
     </div>
 
@@ -46,16 +47,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $model,
                 'template' => '<tr><th style="width:250px">{label}</th><td>{value}</td></tr>',
                 'attributes' => [
-
-                    // 'status',
-                    'event_name',
                     [
                         'attribute' => 'status',
                         'format' => 'html',
                         'value' => function ($model) {
-                            return '<b><span style="color:' . $model->ncrStatus->color . ';">' . $model->ncrStatus->status_name . '</span></b>';
+                            return '<span class="badge" style="background-color:'
+                                . $model->ncrStatus->color . ';">'
+                                . $model->ncrStatus->details
+                                . '</span>';
                         },
                     ],
+                    'ncr_number', //เลขที่ NCR
                     'created_at:date',
                     // 'to_department',
                     [
@@ -64,8 +66,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->todepartmentName;
                         }
                     ],
-
-                    // 'problem',
                     [
                         'attribute' => 'problem',
                         'value' => function ($model) {
@@ -77,8 +77,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'product_name',
                     'customer_name',
                     'detail:ntext',
-
-                    // 'from_department',
                     [
                         'attribute' => 'from_department',
                         'format' => 'html',
@@ -93,9 +91,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'images',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Gallery::widget(['items' => $model->getThumbnails($model->ref, $model->event_name)]);
+                            return Gallery::widget(['items' => $model->getThumbnails($model->ref, $model->ncr_number)]);
                         },
                     ],
+                    // [
+                    //     'attribute' => 'images',
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->renderGallery($model);
+                    //     },
+                    // ],
 
                     // 'updated_at:date',
                     // 'customer_mobile_phone',
@@ -104,14 +109,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'end_date:date',
                 ],
             ]) ?>
-            <!-- <div class="card-footer">
-                <div class="panel panel-dark">
-                    <div class="panel-body">
-                        <?= Gallery::widget(['items' => $model->getThumbnails($model->ref, $model->event_name)]); ?>
-                    </div>
-                </div>
-            </div> -->
-            </div>
         </div>
-
     </div>
+</div>

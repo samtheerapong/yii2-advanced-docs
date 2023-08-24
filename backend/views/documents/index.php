@@ -309,7 +309,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             'class' => 'kartik\grid\ActionColumn',
                             'headerOptions' => ['style' => 'width: 140px;'],
                             'contentOptions' => ['class' => 'text-center'],
-                            'buttonOptions' => ['class' => 'btn btn-sm btn-outline-primary btn-group'],
+                            // 'buttonOptions' => ['class' => 'btn btn-sm btn-outline-primary btn-group'],
+                            'buttonOptions' => ['class' => 'btn btn-outline-dark btn-sm'],
+                            'template' => '<div class="btn-group btn-group-xs" role="group"> {view} {update} {delete}</div>',
                             'urlCreator' => function ($action, Documents $model, $key, $index, $column) {
                                 return Url::toRoute([$action, 'id' => $model->id]);
                             }

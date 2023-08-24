@@ -17,7 +17,7 @@ class NcrSearch extends Ncr
             [
                 [
                     'ref',
-                    'event_name',
+                    'ncr_number',
                     'detail',
                     'start_date',
                     'end_date',
@@ -67,7 +67,7 @@ class NcrSearch extends Ncr
         ]);
 
         $query->andFilterWhere(['like', 'ref', $this->ref])
-            ->andFilterWhere(['like', 'event_name', $this->event_name])
+            ->andFilterWhere(['like', 'ncr_number', $this->ncr_number])
             ->andFilterWhere(['like', 'created_at', $this->created_at])
             ->andFilterWhere(['like', 'problem', $this->problem])
             ->andFilterWhere(['like', 'to_department', $this->to_department])

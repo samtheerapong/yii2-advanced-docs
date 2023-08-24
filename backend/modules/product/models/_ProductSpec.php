@@ -212,4 +212,14 @@ class ProductSpec extends \yii\db\ActiveRecord
     {
         return explode(',', $this->nutrition);
     }
+
+      // // generateFileLinks views file
+    // public function generateFileLinks($attribute)
+    // {
+    //     $folder = $this->uploadFolders[$attribute];
+    //     return implode('<br />', array_map(function ($value) use ($folder) {
+    //         return Html::a($value, Url::to(Yii::getAlias('@web') . '/' . $folder . '/' . $value), ['target' => '_blank']);
+    //     }, $this->{"getFiles" . ucfirst($attribute)}()));
+    // }
+
 }

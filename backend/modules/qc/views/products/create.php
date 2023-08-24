@@ -2,24 +2,19 @@
 
 use yii\helpers\Html;
 
-
-/* @var $this yii\web\View */
-/* @var $model app\models\PhotoLibrary */
+/** @var yii\web\View $this */
+/** @var backend\modules\qc\models\Products $model */
 
 $this->title = Yii::t('app', 'Create');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'NCR'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="ncr-create">
-
+<div class="products-create">
     <p>
         <?= Html::a('<i class="fa fa-chevron-left"></i> ' . Yii::t('app', 'Go Back'), ['index'], ['class' => 'btn btn-primary']) ?>
     </p>
-
     <?= $this->render('_form', [
         'model' => $model,
-        'initialPreview' => [],
-        'initialPreviewConfig' => []
     ]) ?>
 
 </div>

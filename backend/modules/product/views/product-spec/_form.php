@@ -58,6 +58,7 @@ use yii\widgets\ActiveForm;
                 <div class="col-md-10 mb-2">
                     <?= $form->field($model, 'iso')->widget(Select2::class, [
                         'language' => 'th',
+                        'theme' => Select2::THEME_KRAJEE_BS5,
                         'data' => ArrayHelper::map(Iso::find()->all(), 'id', 'name'),
                         'options' => [
                             'multiple' => true,
@@ -92,15 +93,23 @@ use yii\widgets\ActiveForm;
 
             <div class="row">
                 <div class="col-md-8 mb-2">
-                    <?= $form->field($model, 'spec[]')->widget(FileInput::class, [
-                        'options' => [
-                            'multiple' => true,
-                        ],
-                        'pluginOptions' => [
-                            'initialPreview' => $model->getInitialPreview('spec')[0],
-                            'initialPreviewConfig' => $model->getInitialPreview('spec')[1],
-                        ],
-                    ]); ?>
+                <?= $form->field($model, 'spec[]')->widget(FileInput::class, [
+                            'options' => [
+                                'multiple' => true
+                            ],
+                            'pluginOptions' => [
+                                'previewFileType' => 'any',
+                                'initialPreview' => $model->initialPreview($model->spec, 'spec', 'file'),
+                                'initialPreviewConfig' => $model->initialPreview($model->spec, 'spec', 'config'),
+                                'allowedFileExtensions' => ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'odt', 'png'],
+                                'showPreview' => true,
+                                'showCaption' => true,
+                                'showRemove' => true,
+                                'showUpload' => false,
+                                'overwriteInitial' => false,
+                                'maxFileCount' => 3,
+                            ]
+                        ]); ?>
                 </div>
                 <div class="col-md-4 mb-2">
                     <?= $form->field($model, 'spec_expiration')->widget(
