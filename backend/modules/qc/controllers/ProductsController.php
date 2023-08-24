@@ -4,7 +4,8 @@ namespace backend\modules\qc\controllers;
 
 use backend\modules\qc\models\Products;
 use backend\modules\qc\models\ProductsSearch;
-
+use common\components\Rule;
+use common\models\User;
 use kartik\mpdf\Pdf;
 
 use Mpdf\Config\ConfigVariables;
@@ -22,6 +23,7 @@ use yii\helpers\BaseFileHelper;
 use yii\helpers\Json;
 
 use mdm\autonumber\AutoNumber;
+use yii\filters\AccessControl;
 
 /**
  * ProductsController implements the CRUD actions for Products model.
@@ -33,17 +35,70 @@ class ProductsController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::class,
+                'ruleConfig' => [
+                    'class' => Rule::class,
+                ],
+                'only' => ['index', 'view', 'create', 'update', 'delete', 'download'],
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => [
+                            User::ROLE_ADMIN,
+                            User::ROLE_MANAGER,
+                            User::ROLE_USER,
+                            User::ROLE_QA,
+                            User::ROLE_SALE,
+                        ],
+                    ],
+                    [
+                        'actions' => ['view'],
+                        'allow' => true,
+                        'roles' => [
+                            User::ROLE_ADMIN,
+                            User::ROLE_MANAGER,
+                            User::ROLE_QA,
+                            User::ROLE_SALE,
+                        ],
+                    ],
+                    [
+                        'actions' => ['update', 'create'],
+                        'allow' => true,
+                        'roles' => [
+                            User::ROLE_ADMIN,
+                            User::ROLE_MANAGER,
+                            User::ROLE_QA
+                        ],
+                    ],
+                    [
+                        'actions' => ['delete'],
+                        'allow' => true,
+                        'roles' => [
+                            User::ROLE_ADMIN
+                        ],
+                    ],
+                    [
+                        'actions' => ['download'],
+                        'allow' => true,
+                        'roles' => [
+                            User::ROLE_ADMIN,
+                            User::ROLE_MANAGER,
+                            User::ROLE_QA,
+                            User::ROLE_SALE,
+                        ],
                     ],
                 ],
-            ]
-        );
+            ],
+        ];
     }
 
     /**
