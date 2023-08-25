@@ -142,6 +142,7 @@ class ProductsController extends Controller
         $model->revision = 1;
 
         if ($model->load(Yii::$app->request->post())) {
+            $model->product_iso = implode(',', $model->product_iso); // Convert array to comma-separated string
             $AutoNumber = AutoNumber::generate('PS' . date('ym') . '-???');
             $model->numbers = $AutoNumber;
             $this->CreateDir($model->ref);
@@ -168,9 +169,11 @@ class ProductsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->productIsoToArray();
         $tempDocs = $model->docs;
 
         if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->product_iso = implode(',', $model->product_iso); // Convert array to comma-separated string
             $this->CreateDir($model->ref);
             $model->docs = $this->uploadMultipleFile($model, $tempDocs);
             $model->save();

@@ -6,8 +6,10 @@ use common\models\User;
 use DateInterval;
 use DateTime;
 use Yii;
+use yii\behaviors\AttributeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 use yii\db\BaseActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -78,10 +80,10 @@ class Products extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title','expiration_date','category','product_name','status','status_details'], 'required'],
-            [['description', 'product_iso', 'status_details'], 'string'],
+            [['reviesed_date', 'expiration_date', 'created_at', 'updated_at', 'product_iso'], 'safe'],
+            [['title', 'expiration_date', 'category', 'product_name', 'status', 'status_details'], 'required'],
+            [['description', 'status_details'], 'string'],
             [['category', 'revision', 'status', 'created_by', 'updated_by'], 'integer'],
-            [['reviesed_date', 'expiration_date', 'created_at', 'updated_at'], 'safe'],
             [['numbers', 'title', 'product_name', 'ref'], 'string', 'max' => 255],
             [['category'], 'exist', 'skipOnError' => true, 'targetClass' => ProductCategory::class, 'targetAttribute' => ['category' => 'id']],
         ];
@@ -131,40 +133,6 @@ class Products extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
     }
-    public function getIso()
-    {
-        return $this->hasOne(ProductIso::class, ['id' => 'product_iso']);
-    }
-
-
-
-    //********** ISO Array **********//
-    public function isoToArray()
-    {
-        return $this->product_iso = explode(',', $this->product_iso);
-        /*  อย่าลืมไปใส่ที่ actionUpdate
-            $model->isoToArray();
-        */
-    }
-    public function getIsoNameArray()
-    {
-        return implode(', ', $this->getIsoNames('product_iso'));
-    }
-    protected function getIsoNames()
-    {
-        $datas = ArrayHelper::map(ProductIso::find()->all(), 'id', 'code');
-        $explodeDatas = explode(',', $this->product_iso);
-        $selectDataNames = [];
-
-        foreach ($datas as $key => $data) {
-            if (in_array((int) $key, $explodeDatas)) {
-                $selectDataNames[] = $data;
-            }
-        }
-        return $selectDataNames;
-    }
-
-
 
     //********** Upload Path*/
     public static function getUploadPath()
@@ -284,5 +252,39 @@ class Products extends \yii\db\ActiveRecord
 
         $options = ['class' => $setClass, 'style' => "text-align: center; color:#fff; background-color: $badgeColor;"];
         return Html::tag('div', $daysToExpiration, $options);
+    }
+
+
+
+    //********** Product ISO Array Selectd **********//
+    public function getProductIso()
+    {
+        return $this->hasOne(ProductIso::class, ['id' => 'code']);
+    }
+
+    public function productIsoToArray()
+    // ใส่  $model->product_iso = implode(',', $model->product_iso); ที่ Create และ update ด้วย
+    {
+        return $this->product_iso = explode(',', $this->product_iso);
+    }
+
+    public function getProductIsoName()
+    {
+        return implode(', ', $this->getProductIsoNames());
+    }
+
+    protected function getProductIsoNames()
+    {
+        $datas = ArrayHelper::map(ProductIso::find()->all(), 'id', 'code');
+        $selectedDatas = explode(',', $this->product_iso);
+        $selectedDataNames = [];
+
+        foreach ($datas as $key => $data) {
+            if (in_array((int) $key, $selectedDatas)) {
+                $selectedDataNames[] = $data;
+            }
+        }
+
+        return $selectedDataNames;
     }
 }

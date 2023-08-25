@@ -282,6 +282,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ])
                         ],
+
                         [
                             'attribute' => 'expiration_date',
                             'label' => Yii::t('app', 'Days left'),
@@ -293,6 +294,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             },
                             'filter' => false
                         ],
+
                         [
                             'attribute' => 'status_id',
                             'format' => 'html',
@@ -320,8 +322,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             ])
                         ],
            
-                       
-
                         [
                             'class' => 'kartik\grid\ActionColumn',
                             'headerOptions' => ['style' => 'width: 140px;'],

@@ -1,6 +1,7 @@
 <?php
 
 use backend\modules\qc\models\ProductCategory;
+use backend\modules\qc\models\ProductIso;
 use backend\modules\qc\models\ProductStatus;
 use kartik\widgets\DatePicker;
 use kartik\widgets\FileInput;
@@ -89,7 +90,15 @@ use yii\widgets\ActiveForm;
                 </div>
 
                 <div class="col-md-12 mt-2">
-                    <?= $form->field($model, 'product_iso')->textInput() ?>
+                    <?= $form->field($model, 'product_iso')->widget(Select2::class, [
+                        'language' => 'th',
+                        'data' => ArrayHelper::map(ProductIso::find()->all(), 'id', 'code'),
+                        'options' => ['multiple' => true, 'placeholder' => Yii::t('app', 'Please Select...')],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]);
+                    ?>
                 </div>
 
                 <div class="col-md-9 mt-2">

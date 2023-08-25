@@ -6,10 +6,10 @@ use yii\helpers\Html;
 /** @var backend\modules\qc\models\Products $model */
 
 $this->title = Yii::t('app', '{name}', [
-    'name' => $model->title,
+    'name' => $model->numbers,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->numbers, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="products-update">

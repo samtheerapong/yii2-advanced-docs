@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var backend\modules\qc\models\Products $model */
 
-$this->title = $model->title . ' : '. $model->product_name  ;
+$this->title = $model->numbers;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -80,9 +80,22 @@ $this->params['breadcrumbs'][] = $this->title;
                             },
                         ],
                         'product_name',
-                        'revision',
-                        'reviesed_date',
-                        'product_iso:ntext',
+                        // 'revision',
+                        [
+                            'attribute' => 'revision',
+                            'format' => 'html',
+                            'value' => function ($model) {
+                                return $model->revision;
+                            },
+                        ],
+                        'reviesed_date:date',
+                        // 'product_iso:ntext',
+                        [
+                            'attribute' => 'product_iso',
+                            'value' => function ($model) {
+                                return $model->ProductIsoName;
+                            }
+                        ],
 
 
                         [
@@ -105,21 +118,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]) ?>
 
             </div>
+        </div>
+    </div>
+</div>
 
 
-            <?php $currentUrl = Yii::$app->request->absoluteUrl; ?>
-            <script>
-                document.getElementById('copy-button').addEventListener('click', function() {
-                    var textArea = document.createElement('textarea');
-                    textArea.value = '<?= $currentUrl ?>';
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    try {
-                        document.execCommand('copy');
-                        alert('URL copied to clipboard.');
-                    } catch (err) {
-                        console.error('Unable to copy URL: ', err);
-                    }
-                    document.body.removeChild(textArea);
-                });
-            </script>
+<?php $currentUrl = Yii::$app->request->absoluteUrl; ?>
+<script>
+    document.getElementById('copy-button').addEventListener('click', function() {
+        var textArea = document.createElement('textarea');
+        textArea.value = '<?= $currentUrl ?>';
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            alert('URL copied to clipboard.');
+        } catch (err) {
+            console.error('Unable to copy URL: ', err);
+        }
+        document.body.removeChild(textArea);
+    });
+</script>
