@@ -272,7 +272,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'raw_material',
                             'format' => 'html',
                             'contentOptions' => ['class' => 'text-center'],
-                            'options' => ['style' => 'width:180px;'],
+                            'options' => ['style' => 'width:130px;'],
                             'value' => function ($model) {
                                 return '<span class="badge" style="background-color:' . $model->rawMaterial->color . ';"><b>' . $model->rawMaterial->name . '</b></span>';
                             },
@@ -292,7 +292,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'types_id',
                             'format' => 'html',
                             'contentOptions' => ['class' => 'text-center'],
-                            'options' => ['style' => 'width:100px;'],
+                            'options' => ['style' => 'width:130px;'],
                             'value' => function ($model) {
                                 return '<span class="badge" style="background-color:' . $model->types->color . ';"><b>' . $model->types->name . '</b></span>';
                             },
@@ -310,7 +310,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'status_id',
                             'format' => 'html',
-                            'options' => ['style' => 'width:100px;'],
+                            'options' => ['style' => 'width:120px;'],
                             'contentOptions' => ['class' => 'text-center'],
                             'value' => function ($model) {
                                 $badge = '<span class="badge badge-tooltip" data-bs-toggle="tooltip" data-bs-placement="right" title="' . $model->status_details . '" style="background-color:'
