@@ -81,7 +81,7 @@ class Products extends \yii\db\ActiveRecord
     {
         return [
             [['reviesed_date', 'expiration_date', 'created_at', 'updated_at', 'product_iso'], 'safe'],
-            [['title', 'expiration_date', 'category', 'product_name', 'status', 'status_details'], 'required'],
+            [['title',  'category', 'product_name', 'status', 'status_details'], 'required'],
             [['description', 'status_details'], 'string'],
             [['category', 'revision', 'status', 'created_by', 'updated_by'], 'integer'],
             [['numbers', 'title', 'product_name', 'ref'], 'string', 'max' => 255],

@@ -34,6 +34,62 @@ $this->params['breadcrumbs'][] = $this->title;
                     ExportMenu::FORMAT_EXCEL_X => false,
                 ],
                 'dataProvider' => $dataProvider,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    'numbers',
+                    [
+                        'attribute' => 'status',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            $badge = '<span class="badge badge-tooltip" data-bs-toggle="tooltip" data-bs-placement="right" title="' . $model->status_details . '" style="background-color:'
+                                . $model->productStatus->color . '; color: white;"><b>'
+                                . $model->productStatus->name
+                                . ' </b></span>';
+
+                            // $link = Html::a($badge, ['view', 'id' => $model->id]);
+
+                            return $badge;
+                        },
+                    ],
+                    'status_details',
+                    'title',
+                    'description',
+                    [
+                        'attribute' => 'category',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            return '<span class="badge" style="background-color:' . $model->productCategory->color . ';"><b>' . $model->productCategory->code . '</b></span>';
+                        },
+                    ],
+                    'product_name',
+                    [
+                        'attribute' => 'revision',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            return $model->revision;
+                        },
+                    ],
+                    'reviesed_date:date',
+                    [
+                        'attribute' => 'product_iso',
+                        'value' => function ($model) {
+                            return $model->ProductIsoName;
+                        }
+                    ],
+                    'expiration_date:date',
+                    [
+                        'attribute' => 'expiration_date',
+                        'label' => Yii::t('app', 'Days left'),
+                        'options' => ['style' => 'width:80px;'],
+                        'contentOptions' => ['class' => 'text-center'],
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            return $model->getDaysToExpirationValue();
+                        },
+                    ],
+                    'created_at:date',
+                    'updated_at:date',
+                ],
             ]); ?>
         </div>
     </div>
@@ -132,20 +188,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ])
                         ],
-                        //'revision',
-                        //'reviesed_date',
-                        //'product_iso:ntext',
-                        //'docs:ntext',
-                        // 'expiration_date:date',
-                        // [
-                        //     'attribute' => 'expiration_date',
-                        //     'format' => 'date',
-                        //     'contentOptions' => ['class' => 'text-center'],
-                        //     'options' => ['style' => 'width:130px;'],
-                        //     'value' => function ($model) {
-                        //         return $model->expiration_date;
-                        //     },
-                        // ],
+
                         [
                             'attribute' => 'category',
                             'format' => 'html',

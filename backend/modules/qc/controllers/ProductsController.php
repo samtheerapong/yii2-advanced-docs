@@ -142,11 +142,16 @@ class ProductsController extends Controller
         $model->revision = 1;
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->product_iso = implode(',', $model->product_iso); // Convert array to comma-separated string
+            $this->convertProductIso($model); // Call the conversion function
             $AutoNumber = AutoNumber::generate('PS' . date('ym') . '-???');
             $model->numbers = $AutoNumber;
             $this->CreateDir($model->ref);
             $model->docs = $this->uploadMultipleFile($model);
+
+            if (empty($model->expiration_date)) {
+                $model->expiration_date = date('Y-m-d', strtotime('+364 days'));
+            }
+
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -173,9 +178,14 @@ class ProductsController extends Controller
         $tempDocs = $model->docs;
 
         if ($this->request->isPost && $model->load($this->request->post())) {
-            $model->product_iso = implode(',', $model->product_iso); // Convert array to comma-separated string
+            $this->convertProductIso($model); // Call the conversion function
             $this->CreateDir($model->ref);
             $model->docs = $this->uploadMultipleFile($model, $tempDocs);
+
+            if (empty($model->expiration_date)) {
+                $model->expiration_date = date('Y-m-d', strtotime('+365 days'));
+            }
+
             $model->save();
             Yii::$app->session->setFlash('success', Yii::t('app', 'Updated Successfully'));
             return $this->redirect(['view', 'id' => $model->id]);
@@ -307,6 +317,19 @@ class ProductsController extends Controller
             $this->redirect(['/qc/products/view', 'id' => $id]);
         }
     }
+
+
+    /*******************convert ProductIso************ */
+    private function convertProductIso($model)
+    {
+        if (is_array($model->product_iso)) {
+            $model->product_iso = implode(',', $model->product_iso); // Convert array to comma-separated string
+        } else {
+            $model->product_iso = ''; // Set to empty string or handle as needed
+        }
+    }
+
+
 
     /***************** View PDF ******************/
     public function actionViewPdf($id)

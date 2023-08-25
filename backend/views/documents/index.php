@@ -40,7 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'dataProvider' => $dataProvider,
                 'columns' => [
-                    'id',
+                    ['class' => 'yii\grid\SerialColumn'],
+                    // 'id',
                     [
                         'attribute' => 'categories_id',
                         'format' => 'html',
