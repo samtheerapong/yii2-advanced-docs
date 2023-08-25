@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         // 'numbers',
                         [
                             'attribute' => 'numbers',
-                            'options' => ['style' => 'width:120px;'],
+                            'options' => ['style' => 'width:130px;'],
                             'format' => 'html',
                             'contentOptions' => ['class' => 'text-center'],
                             'value' => function ($model) {
@@ -74,10 +74,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'title',
                             'format' => 'html',
-                            // 'options' => ['style' => 'width:25%;'],
+                            'options' => ['style' => 'width:300px;'],
                             'value' => function ($model) {
-                                $truncatedSupplierName = mb_substr($model->title, 0, 30, 'UTF-8');
-                                if (mb_strlen($model->title, 'UTF-8') > 30) {
+                                $truncatedSupplierName = mb_substr($model->title, 0, 35, 'UTF-8');
+                                if (mb_strlen($model->title, 'UTF-8') > 35) {
                                     $truncatedSupplierName .= '...';
                                 }
                                 return $truncatedSupplierName;
@@ -96,11 +96,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'product_name',
                             'format' => 'html',
-                            'options' => ['style' => 'width:25%;'],
+                            'options' => ['style' => 'width:350px;'],
                             'value' => function ($model) {
-                                $truncatedSupplierName = mb_substr($model->product_name, 0, 50, 'UTF-8');
-                                if (mb_strlen($model->product_name, 'UTF-8') > 50) {
-                                    $truncatedSupplierName .= '...';
+                                $truncatedSupplierName = mb_substr($model->product_name, 0, 35, 'UTF-8');
+                                if (mb_strlen($model->product_name, 'UTF-8') > 35) {
+                                    $truncatedSupplierName .= '..';
                                 }
                                 return $truncatedSupplierName;
                             },
