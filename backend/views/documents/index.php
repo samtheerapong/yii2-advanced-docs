@@ -283,6 +283,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             ])
                         ],
                         [
+                            'attribute' => 'expiration_date',
+                            'label' => Yii::t('app', 'Days left'),
+                            'options' => ['style' => 'width:80px;'],
+                            'contentOptions' => ['class' => 'text-center'],
+                            'format' => 'html',
+                            'value' => function ($model) {
+                                return $model->getDaysToExpirationValue();
+                            },
+                            'filter' => false
+                        ],
+                        [
                             'attribute' => 'status_id',
                             'format' => 'html',
                             'options' => ['style' => 'width:120px;'],
@@ -309,17 +320,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ])
                         ],
            
-                        [
-                            'attribute' => 'expiration_date',
-                            'label' => Yii::t('app', 'Days left'),
-                            'options' => ['style' => 'width:80px;'],
-                            'contentOptions' => ['class' => 'text-center'],
-                            'format' => 'html',
-                            'value' => function ($model) {
-                                return $model->getDaysToExpirationValue();
-                            },
-                            'filter' => false
-                        ],
+                       
 
                         [
                             'class' => 'kartik\grid\ActionColumn',

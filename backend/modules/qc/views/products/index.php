@@ -70,17 +70,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         // 'description:ntext',
 
-
                         [
                             'attribute' => 'title',
-                            'format' => 'html',
                             'options' => ['style' => 'width:300px;'],
+                            'format' => 'html',
                             'value' => function ($model) {
                                 $truncatedSupplierName = mb_substr($model->title, 0, 35, 'UTF-8');
                                 if (mb_strlen($model->title, 'UTF-8') > 35) {
                                     $truncatedSupplierName .= '...';
                                 }
-                                return $truncatedSupplierName;
+
+                                $tooltipContent = $model->title;
+                                $tooltipLink = '<span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" title="' . $tooltipContent . '">'
+                                    . $truncatedSupplierName
+                                    . '</span>';
+
+                                return Html::a(
+                                    $tooltipLink,
+                                    ['view', 'id' => $model->id],
+                                );
                             },
                             'filter' => Select2::widget([
                                 'model' => $searchModel,
@@ -93,6 +101,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ])
                         ],
+
                         [
                             'attribute' => 'product_name',
                             'format' => 'html',
