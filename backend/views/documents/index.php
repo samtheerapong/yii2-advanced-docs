@@ -161,11 +161,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         [
                             'attribute' => 'title',
-                            'options' => ['style' => 'width:220px;'],
+                            'options' => ['style' => 'width:250px;'],
                             'format' => 'html',
                             'value' => function ($model) {
-                                $truncatedSupplierName = mb_substr($model->title, 0, 20, 'UTF-8');
-                                if (mb_strlen($model->title, 'UTF-8') > 20) {
+                                $truncatedSupplierName = mb_substr($model->title, 0, 22, 'UTF-8');
+                                if (mb_strlen($model->title, 'UTF-8') > 22) {
                                     $truncatedSupplierName .= '...';
                                 }
 
@@ -191,8 +191,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             ])
                         ],
 
-
-
                         [
                             'attribute' => 'occupier_id',
                             'format' => 'html',
@@ -213,36 +211,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             ])
                         ],
 
-                        // [
-                        //     'attribute' => 'supplier_name',
-                        //     'format' => 'html',
-                        //     'options' => ['style' => 'width:220px;'],
-                        //     'value' => function ($model) {
-                        //         $truncatedSupplierName = mb_substr($model->supplier_name, 0, 20, 'UTF-8');
-                        //         if (mb_strlen($model->supplier_name, 'UTF-8') > 20) {
-                        //             $truncatedSupplierName .= '...';
-                        //         }
-                        //         return Html::a($truncatedSupplierName, ['view', 'id' => $model->id]);
-                        //     },
-                        //     'filter' => Select2::widget([
-                        //         'model' => $searchModel,
-                        //         'attribute' => 'supplier_name',
-                        //         'data' => ArrayHelper::map(Documents::find()->all(), 'supplier_name', 'supplier_name'),
-                        //         'options' => ['placeholder' => Yii::t('app', 'Select...')],
-                        //         'language' => 'th',
-                        //         'pluginOptions' => [
-                        //             'allowClear' => true
-                        //         ],
-                        //     ])
-                        // ],
-
                         [
                             'attribute' => 'supplier_name',
-                            'options' => ['style' => 'width:220px;'],
+                            'options' => ['style' => 'width:250px;'],
                             'format' => 'html',
                             'value' => function ($model) {
-                                $truncatedSupplierName = mb_substr($model->supplier_name, 0, 20, 'UTF-8');
-                                if (mb_strlen($model->supplier_name, 'UTF-8') > 20) {
+                                $truncatedSupplierName = mb_substr($model->supplier_name, 0, 22, 'UTF-8');
+                                if (mb_strlen($model->supplier_name, 'UTF-8') > 22) {
                                     $truncatedSupplierName .= '...';
                                 }
 
