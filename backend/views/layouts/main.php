@@ -28,18 +28,54 @@ $this->beginPage();
     <header>
         <?php
         NavBar::begin([
-            'brandLabel' => Yii::$app->name,
+            'brandLabel' => '<img src="https://www.northernfoodcomplex.com/wp-content/uploads/2018/10/logo.png" alt="Logo" style="width: 50px;">',
             'brandUrl' => Yii::$app->homeUrl,
             'options' => ['class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top'],
         ]);
         $menuItems = [
             // ['label' => Yii::t('app', 'Documents Center'), 'url' => ['/documents/index']],
             [
-                'label' => Yii::t('app', 'QC'),
+                'label' => Yii::t('app', 'Documents Center'),
                 'items' => [
                     ['label' => Yii::t('app', 'Documents Center'), 'url' => ['/documents/index']],
                     ['label' => Yii::t('app', 'Documents Expiring Soon'), 'url' => ['/documents/show-wanning']],
+                    [
+                        'label' => Yii::t('app', 'Configuration'),
+                        'items' => [
+                            ['label' => Yii::t('app', 'Categories'), 'url' => ['/categories/index']],
+                            ['label' => Yii::t('app', 'Occupier'), 'url' => ['/occupier/index']],
+                            ['label' => Yii::t('app', 'Types'), 'url' => ['/types/index']],
+                            ['label' => Yii::t('app', 'Statuses'), 'url' => ['/status/index']],
+
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'label' => Yii::t('app', 'Product Spec'),
+                'items' => [
                     ['label' => Yii::t('app', 'Product Spec'), 'url' => ['/qc/products/index']],
+                    [
+                        'label' => Yii::t('app', 'Configuration'),
+                        'items' => [
+                            // ['label' => Yii::t('app', 'Statuses'), 'url' => ['/status/index']],
+
+                        ],
+                    ],
+
+                ],
+            ],
+            [
+                'label' => Yii::t('app', 'Raw Material'),
+                'items' => [
+                    ['label' => Yii::t('app', 'Raw Material'), 'url' => ['/product/raw-material/index']],
+                    [
+                        'label' => Yii::t('app', 'Configuration'),
+                        'items' => [
+                            // ['label' => Yii::t('app', 'Raw Material'), 'url' => ['/raw-material/index']],
+
+                        ],
+                    ],
 
                 ],
             ],

@@ -1,6 +1,5 @@
 <?php
 
-use yii2assets\printthis\PrintThis;
 use yii\helpers\Html;
 
 $this->title = Yii::t('app', 'Documents Expiring Soon');
@@ -18,8 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </div>
 
-
-    <!-- copy-button -->
     <?php $currentUrl = Yii::$app->request->absoluteUrl; ?>
     <script>
         document.getElementById('copy-button').addEventListener('click', function() {
@@ -64,13 +61,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td style="width:120px;"><?= Html::encode($document->numbers) ?></td>
                                     <td style="width:300px;"><?= Html::encode($document->title) ?></td>
                                     <td style="width:100px;"><?= '<span class="badge" style="background-color:' . $document->occupier->color . ';"><b>' . $document->occupier->name . '</b></span>' ?></td>
-                                    <td style="width:100px;"><?= Html::encode($document->supplier_name) ?></td>
-                                    <td style="width:100px;"><?= '<span class="badge" style="background-color:' . $document->rawMaterial->color . ';"><b>' . $document->rawMaterial->name . '</b></span>' ?></td>
+                                    <td style="width:150px;"><?= Html::encode($document->supplier_name) ?></td>
+                                    <td style="width:150px;"><?= '<span class="badge" style="background-color:' . $document->rawMaterial->color . ';"><b>' . $document->rawMaterial->name . '</b></span>' ?></td>
                                     <td style="width:100px;"><?= '<span class="badge" style="background-color:' . $document->types->color . ';"><b>' . $document->types->name . '</b></span>' ?></td>
                                     <td style="width:200px;"><?= Yii::$app->formatter->asDate($document->expiration_date, 'php:d M Y') .
                                                                     ' <span class="badge" style="background-color: ' . ($document->getDaysToExpiration() < $document->document_date ? 'red' : 'green') . ';">' . $document->getDaysToExpiration() . ' days left</span>' ?></td>
                                     <td class="text-center skip-export kv-align-center kv-align-middle w4" style="width:100px;" data-col-seq="9">
-                                        <div class="btn-group btn-group-xs" role="group"> <a class="btn btn-outline-dark btn-sm" href="/backend/web/documents/15" title="ดู" aria-label="ดู" data-pjax="0"><span class="fas fa-eye" aria-hidden="true"></span></a> <a class="btn btn-outline-dark btn-sm" href="/backend/web/documents/update/15" title="ปรับปรุง" aria-label="ปรับปรุง" data-pjax="0"><span class="fas fa-pencil-alt" aria-hidden="true"></span></a></div>
+                                        <div class="btn-group btn-group-xs" role="group">
+                                            <a class="btn btn-outline-danger btn-sm" href="/backend/web/documents/<?= Html::encode($document->id) ?>" title="ดู" aria-label="ดู" data-pjax="0"><span class="fas fa-eye" aria-hidden="true"></span></a>
+                                            <a class="btn btn-outline-danger btn-sm" href="/backend/web/documents/update/<?= Html::encode($document->id) ?>" title="ปรับปรุง" aria-label="ปรับปรุง" data-pjax="0"><span class="fas fa-pencil-alt" aria-hidden="true"></span></a>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -82,4 +82,8 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
+    <div class="row mt-2">
+        <p><b><u><?= Yii::t('app', 'Note') ?></u></b> <?= Yii::t('app', 'Show documents less than 60 days old') ?></p>
+    </div>
+
 </div>
