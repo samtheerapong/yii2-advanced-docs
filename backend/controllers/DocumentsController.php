@@ -22,6 +22,7 @@ use yii\helpers\BaseFileHelper;
 // use kartik\mpdf\Pdf;
 use Mpdf\Config\ConfigVariables;
 use Mpdf\Config\FontVariables;
+use yii\db\Expression;
 
 /**
  * DocumentsController implements the CRUD actions for Documents model.
@@ -218,6 +219,25 @@ class DocumentsController extends Controller
     }
 
 
+    /**************** */
+
+    public function actionShowWanning()
+    {
+        // Fetch documents with expiration date between 0 and 30 days from now
+        $documents = Documents::find()
+            ->select('*')
+            ->select([
+                '*',
+                new Expression('DATEDIFF(expiration_date, NOW()) AS daysToExpiration')
+            ])
+            ->where(['between', 'DATEDIFF(expiration_date, NOW())', 0, 60])
+            ->all();
+
+        return $this->render('show-wanning', [
+            'documents' => $documents,
+        ]);
+    }
+
     /***************** action Deletefile ******************/
     public function actionDeletefile($id, $field, $fileName)
     {
@@ -307,7 +327,7 @@ class DocumentsController extends Controller
         }
     }
 
-     /***************** View PDF ******************/
+    /***************** View PDF ******************/
     public function actionViewPdf($id)
     {
         $model = $this->findModel($id);

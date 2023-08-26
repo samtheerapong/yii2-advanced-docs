@@ -24,11 +24,11 @@ return [
         'qc' => [
             'class' => 'backend\modules\qc\Module',
         ],
-        
+
         'hrm' => [
             'class' => 'backend\modules\hrm\Module',
         ],
-        
+
         'ex' => [
             'class' => 'backend\modules\ex\Module',
         ],
@@ -51,6 +51,21 @@ return [
             'class' => 'yii\image\ImageDriver',
             'driver' => 'GD',  //GD or Imagick
         ],
+        
+        'assetManager' => [
+            'bundles' => [
+                'kartik\form\ActiveFormAsset' => [
+                    'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
+                ],
+            ],
+        ],
+        // 'view' => [
+        //     'theme' => [
+        //         'pathMap' => [
+        //             '@backend/views' => '@backend/themes/admin',
+        //         ],
+        //     ],
+        // ],
 
         'request' => [
             'csrfParam' => '_csrf-backend',
