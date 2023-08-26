@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::button('<i class="fas fa-share"></i> ' . Yii::t('app', 'Share'), ['class' => 'btn btn-secondary', 'id' => 'copy-button']) ?>
         </p>
 
-       
+
     </div>
 
 
@@ -44,9 +44,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="card-body">
             <div class="table-responsive">
                 <?php if (!empty($documents)) : ?>
-                    <table class="table">
-                        <thead>
 
+                    <table class="kv-grid-table table table-bordered table-striped kv-table-wrap">
+                        <thead>
                             <tr>
                                 <th><?= Yii::t('app', 'DocumentID') ?></th>
                                 <th><?= Yii::t('app', 'Title') ?></th>
@@ -54,8 +54,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <th><?= Yii::t('app', 'Supplier Name') ?></th>
                                 <th><?= Yii::t('app', 'Raw Material') ?></th>
                                 <th><?= Yii::t('app', 'Types') ?></th>
-                                <!-- <th><?= Yii::t('app', 'Raw Material') ?></th> -->
                                 <th><?= Yii::t('app', 'Expiration') ?></th>
+                                <th class="kv-align-middle skip-export kv-merged-header"> <?= Yii::t('app', 'Actions') ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -67,7 +67,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td style="width:100px;"><?= Html::encode($document->supplier_name) ?></td>
                                     <td style="width:100px;"><?= '<span class="badge" style="background-color:' . $document->rawMaterial->color . ';"><b>' . $document->rawMaterial->name . '</b></span>' ?></td>
                                     <td style="width:100px;"><?= '<span class="badge" style="background-color:' . $document->types->color . ';"><b>' . $document->types->name . '</b></span>' ?></td>
-                                    <!-- <td style="width:100px;"><?= '<span class="badge" style="background-color:' . $document->rawMaterial->color . ';"><b>' . $document->rawMaterial->name . '</b></span>' ?></td> -->
                                     <td style="width:200px;"><?= Yii::$app->formatter->asDate($document->expiration_date, 'php:d M Y') .
                                                                     ' <span class="badge" style="background-color: ' . ($document->getDaysToExpiration() < $document->document_date ? 'red' : 'green') . ';">' . $document->getDaysToExpiration() . ' days left</span>' ?></td>
                                     <td class="text-center skip-export kv-align-center kv-align-middle w4" style="width:100px;" data-col-seq="9">
@@ -78,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </tbody>
                     </table>
                 <?php else : ?>
-                    <p>No documents found with daysToExpiration between 0 and 30.</p>
+                    <p>No documents found.</p>
                 <?php endif; ?>
             </div>
         </div>

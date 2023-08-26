@@ -33,8 +33,16 @@ $this->beginPage();
             'options' => ['class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top'],
         ]);
         $menuItems = [
-            ['label' => Yii::t('app', 'Documents Center'), 'url' => ['/documents/index']],
-            ['label' => Yii::t('app', 'Product Spec'), 'url' => ['/qc/products/index']],
+            // ['label' => Yii::t('app', 'Documents Center'), 'url' => ['/documents/index']],
+            [
+                'label' => Yii::t('app', 'QC'),
+                'items' => [
+                    ['label' => Yii::t('app', 'Documents Center'), 'url' => ['/documents/index']],
+                    ['label' => Yii::t('app', 'Documents Expiring Soon'), 'url' => ['/documents/show-wanning']],
+                    ['label' => Yii::t('app', 'Product Spec'), 'url' => ['/qc/products/index']],
+
+                ],
+            ],
             // ['label' => '3. ' . Yii::t('app', 'Raw Material'), 'url' => ['/product/raw-material/index']],
             // ['label' => '4. ' . Yii::t('app', 'NCR'), 'url' => ['/ncr/ncr/index']],
             // ['label' => '5. ' . Yii::t('app', 'ISO Documents'), 'url' => ['/dc']],
@@ -42,29 +50,29 @@ $this->beginPage();
             //     'label' => Yii::t('app', 'AC'),
             //     'items' => [
             //         ['label' => '1. ' . Yii::t('app', 'Demo'), 'url' => ['/']],
-                    
+
             //     ],
             // ],   
             // [
             //     'label' => Yii::t('app', 'EN'),
             //     'items' => [
             //         ['label' => '1. ' . Yii::t('app', 'Demo'), 'url' => ['/']],
-                    
+
             //     ],
             // ],
             // [
             //     'label' => Yii::t('app', 'HR'),
             //     'items' => [
             //         ['label' => '1. ' . Yii::t('app', 'Demo'), 'url' => ['/']],
-                    
+
             //     ],
             // ],
-            
+
             // [
             //     'label' => Yii::t('app', 'PD'),
             //     'items' => [
             //         ['label' => '1. ' . Yii::t('app', 'Demo'), 'url' => ['/']],
-                    
+
             //     ],
             // ],
 
@@ -89,7 +97,7 @@ $this->beginPage();
             //         ['label' => '5. ' . Yii::t('app', 'ISO Documents'), 'url' => ['/dc']],
             //     ],
             // ],
-         
+
         ];
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
@@ -132,7 +140,7 @@ $this->beginPage();
         }
         NavBar::end();
         ?>
-        
+
     </header>
     <main role="main" class="flex-shrink-0">
         <div class="container">
