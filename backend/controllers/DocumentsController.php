@@ -15,6 +15,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\UploadedFile;
 use Exception;
+use Faker\Documentor;
 use kartik\mpdf\Pdf;
 use yii\filters\AccessControl;
 use yii\helpers\BaseFileHelper;
@@ -22,6 +23,7 @@ use yii\helpers\BaseFileHelper;
 // use kartik\mpdf\Pdf;
 use Mpdf\Config\ConfigVariables;
 use Mpdf\Config\FontVariables;
+use yii\db\Expression;
 
 /**
  * DocumentsController implements the CRUD actions for Documents model.
@@ -218,6 +220,32 @@ class DocumentsController extends Controller
     }
 
 
+    /**************** show-Wanning page ******************/
+    public function actionShowWanning()
+    {
+        // Fetch documents with expiration date between 0 and 30 days from now
+        $model = Documents::find()
+            ->select('*')
+            ->select([
+                '*',
+                new Expression('DATEDIFF(expiration_date, NOW()) AS daysToExpiration')
+            ])
+            ->where(['between', 'DATEDIFF(expiration_date, NOW())', 0, 60])
+            ->all();
+
+        // Create a data provider using the fetched model
+        $dataProvider = new \yii\data\ArrayDataProvider([
+            'allModels' => $model,
+            'pagination' => false, // You can configure pagination here if needed
+        ]);
+
+        return $this->render('show-wanning', [
+            'model' => $model, // Pass the dataProvider to the view
+            'dataProvider' => $dataProvider, // Pass the dataProvider to the view
+        ]);
+    }
+
+
     /***************** action Deletefile ******************/
     public function actionDeletefile($id, $field, $fileName)
     {
@@ -307,7 +335,7 @@ class DocumentsController extends Controller
         }
     }
 
-     /***************** View PDF ******************/
+    /***************** View PDF ******************/
     public function actionViewPdf($id)
     {
         $model = $this->findModel($id);

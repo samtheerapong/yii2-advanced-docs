@@ -27,6 +27,8 @@ return [
     'Created Successfully' => 'เพิ่มข้อมูลสำเร็จ',
     'Updated Successfully' => 'ปรับปรุงข้อมูลสำเร็จ',
     'Days' => 'วัน',
+    'Share' => 'แชร์',
+    'Actions' => 'ดำเนินการ',
     
     // documents
     'DocumentID' => 'รหัสเอกสาร',
@@ -48,6 +50,9 @@ return [
     'Supplier Name' => 'ชื่อผู้ขาย',
     'This document has expired.' => 'เอกสารหมดอายุไปแล้ว',
     'This document will expire in' => 'เอกสารจะหมดอายุในอีก',
+    'Documents Expiring Soon' => 'เอกสารจะหมดอายุ',
+    'Note' => 'หมายเหตุ',
+    'Show documents less than 60 days old' => 'แสดงเอกสารที่มีอายุน้อยกว่า 60 วัน',
 
     // User
     'Users' => 'สมาชิก',

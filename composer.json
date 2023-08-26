@@ -36,6 +36,7 @@
         "unclead/yii2-multiple-input": "^2.27",
         "wbraganca/yii2-dynamicform": "^2.0",
         "yurkinx/yii2-image": "dev-master",
+        "hail812/yii2-adminlte3": "~1.1",
         "2amigos/yii2-gallery-widget": "^1.1"
     },
     "require-dev": {

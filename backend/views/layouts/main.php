@@ -28,44 +28,112 @@ $this->beginPage();
     <header>
         <?php
         NavBar::begin([
-            'brandLabel' => Yii::$app->name,
+            'brandLabel' => '<img src="https://www.northernfoodcomplex.com/wp-content/uploads/2018/10/logo.png" alt="Logo" style="width: 50px;">',
             'brandUrl' => Yii::$app->homeUrl,
             'options' => ['class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top'],
         ]);
         $menuItems = [
-            ['label' => Yii::t('app', 'Documents Center'), 'url' => ['/documents/index']],
-            ['label' => Yii::t('app', 'Product Spec'), 'url' => ['/qc/products/index']],
-            ['label' => Yii::t('app', 'Raw Material'), 'url' => ['/product/raw-material/index']],
-            ['label' => Yii::t('app', 'NCR'), 'url' => ['/ncr/ncr/index']],
-            // ['label' => Yii::t('app', 'ISO Documents'), 'url' => ['/dc']],
+            // ['label' => Yii::t('app', 'Documents Center'), 'url' => ['/documents/index']],
+            [
+                'label' => Yii::t('app', 'Documents Center'),
+                'items' => [
+                    ['label' => Yii::t('app', 'Documents Center'), 'url' => ['/documents/index']],
+                    ['label' => Yii::t('app', 'Documents Expiring Soon'), 'url' => ['/documents/show-wanning']],
+                    [
+                        'label' => Yii::t('app', 'Configuration'),
+                        'items' => [
+                            ['label' => Yii::t('app', 'Categories'), 'url' => ['/categories/index']],
+                            ['label' => Yii::t('app', 'Occupier'), 'url' => ['/occupier/index']],
+                            ['label' => Yii::t('app', 'Types'), 'url' => ['/types/index']],
+                            ['label' => Yii::t('app', 'Statuses'), 'url' => ['/status/index']],
+
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'label' => Yii::t('app', 'Product Spec'),
+                'items' => [
+                    ['label' => Yii::t('app', 'Product Spec'), 'url' => ['/qc/products/index']],
+                    [
+                        'label' => Yii::t('app', 'Configuration'),
+                        'items' => [
+                            // ['label' => Yii::t('app', 'Statuses'), 'url' => ['/status/index']],
+
+                        ],
+                    ],
+
+                ],
+            ],
+            [
+                'label' => Yii::t('app', 'Raw Material'),
+                'items' => [
+                    ['label' => Yii::t('app', 'Raw Material'), 'url' => ['/product/raw-material/index']],
+                    [
+                        'label' => Yii::t('app', 'Configuration'),
+                        'items' => [
+                            // ['label' => Yii::t('app', 'Raw Material'), 'url' => ['/raw-material/index']],
+
+                        ],
+                    ],
+
+                ],
+            ],
+            // ['label' => '3. ' . Yii::t('app', 'Raw Material'), 'url' => ['/product/raw-material/index']],
+            // ['label' => '4. ' . Yii::t('app', 'NCR'), 'url' => ['/ncr/ncr/index']],
+            // ['label' => '5. ' . Yii::t('app', 'ISO Documents'), 'url' => ['/dc']],
             // [
-            //     'label' => Yii::t('app', 'QC'),
+            //     'label' => Yii::t('app', 'AC'),
             //     'items' => [
-            //         ['label' => '1. ' . Yii::t('app', 'Documents Center'), 'url' => ['/documents/index']],
-            //         ['label' => '2. ' . Yii::t('app', 'Product Spec'), 'url' => ['/product/product-spec/index']],
-            //         ['label' => '3. ' . Yii::t('app', 'Raw Material'), 'url' => ['/product/raw-material/index']],
-            //         ['label' => '4. ' . Yii::t('app', 'NCR'), 'url' => ['/ncr/ncr/index']],
-            //         ['label' => '5. ' . Yii::t('app', 'ISO Documents'), 'url' => ['/dc']],
+            //         ['label' => '1. ' . Yii::t('app', 'Demo'), 'url' => ['/']],
+
+            //     ],
+            // ],   
+            // [
+            //     'label' => Yii::t('app', 'EN'),
+            //     'items' => [
+            //         ['label' => '1. ' . Yii::t('app', 'Demo'), 'url' => ['/']],
+
             //     ],
             // ],
             // [
             //     'label' => Yii::t('app', 'HR'),
             //     'items' => [
-            //         ['label' => Yii::t('app', 'HR'), 'url' => ['/hr']],
+            //         ['label' => '1. ' . Yii::t('app', 'Demo'), 'url' => ['/']],
+
             //     ],
             // ],
+
             // [
-            //     'label' => Yii::t('app', 'Engineer'),
+            //     'label' => Yii::t('app', 'PD'),
             //     'items' => [
-            //         ['label' => Yii::t('app', 'Engineer'), 'url' => ['/en']],
+            //         ['label' => '1. ' . Yii::t('app', 'Demo'), 'url' => ['/']],
+
             //     ],
             // ],
+
             // [
-            //     'label' => Yii::t('app', 'IT'),
+            //     'label' => Yii::t('app', 'QC'),
             //     'items' => [
-            //         ['label' => Yii::t('app', 'IT'), 'url' => ['/it']],
+            //         ['label' => '1.- ' . Yii::t('app', 'Documents Center'), 'url' => ['/documents/index']],
+            //         [
+            //             'label' => '   1.1 - ' . Yii::t('app', 'Configuration'),
+            //             'items' => [
+            //                 ['label' => Yii::t('app', 'Categories'), 'url' => ['/categories/index']],
+            //                 ['label' => Yii::t('app', 'Occupier'), 'url' => ['/occupier/index']],
+            //                 ['label' => Yii::t('app', 'Types'), 'url' => ['/types/index']],
+            //                 ['label' => Yii::t('app', 'Statuses'), 'url' => ['/status/index']],
+            //                 ['label' => Yii::t('app', 'Raw Material'), 'url' => ['/raw-material/index']],
+            //                 ['label' => Yii::t('app', 'Users'), 'url' => ['/user/index']],
+            //             ],
+            //         ],
+            //         ['label' => '2. ' . Yii::t('app', 'Product Spec'), 'url' => ['/qc/products/index']],
+            //         ['label' => '3. ' . Yii::t('app', 'Raw Material'), 'url' => ['/product/raw-material/index']],
+            //         ['label' => '4. ' . Yii::t('app', 'NCR'), 'url' => ['/ncr/ncr/index']],
+            //         ['label' => '5. ' . Yii::t('app', 'ISO Documents'), 'url' => ['/dc']],
             //     ],
             // ],
+
         ];
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
@@ -108,6 +176,7 @@ $this->beginPage();
         }
         NavBar::end();
         ?>
+
     </header>
     <main role="main" class="flex-shrink-0">
         <div class="container">
