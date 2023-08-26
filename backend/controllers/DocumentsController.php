@@ -15,6 +15,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\UploadedFile;
 use Exception;
+use Faker\Documentor;
 use kartik\mpdf\Pdf;
 use yii\filters\AccessControl;
 use yii\helpers\BaseFileHelper;
@@ -219,12 +220,11 @@ class DocumentsController extends Controller
     }
 
 
-    /**************** */
-
+    /**************** show-Wanning page ******************/
     public function actionShowWanning()
     {
         // Fetch documents with expiration date between 0 and 30 days from now
-        $documents = Documents::find()
+        $model = Documents::find()
             ->select('*')
             ->select([
                 '*',
@@ -233,10 +233,18 @@ class DocumentsController extends Controller
             ->where(['between', 'DATEDIFF(expiration_date, NOW())', 0, 60])
             ->all();
 
+        // Create a data provider using the fetched model
+        $dataProvider = new \yii\data\ArrayDataProvider([
+            'allModels' => $model,
+            'pagination' => false, // You can configure pagination here if needed
+        ]);
+
         return $this->render('show-wanning', [
-            'documents' => $documents,
+            'model' => $model, // Pass the dataProvider to the view
+            'dataProvider' => $dataProvider, // Pass the dataProvider to the view
         ]);
     }
+
 
     /***************** action Deletefile ******************/
     public function actionDeletefile($id, $field, $fileName)
