@@ -52,6 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'name',
                         'format' => 'html',
+                        'contentOptions' => ['class' => 'text-center'],
                         'value' => function ($model) {
                             $truncatedSupplierName = mb_substr($model->name, 0, 30, 'UTF-8');
                             if (mb_strlen($model->name, 'UTF-8') > 30) {
