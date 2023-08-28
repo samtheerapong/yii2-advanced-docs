@@ -19,9 +19,16 @@ $this->params['breadcrumbs'][] = $this->title;
 <meta http-equiv="refresh" content="360">
 <div class="status-index">
 
-    <p>
-        <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('app', 'Create Data'), ['create'], ['class' => 'btn btn-danger']) ?>
-    </p>
+    <div style="display: flex; justify-content: space-between;">
+        <p>
+            <?= Html::a('<i class="fas fa-table"></i> ' . Yii::t('app', 'Documents'), ['/documents/index'], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('app', 'Create Data'), ['create'], ['class' => 'btn btn-danger']) ?>
+        </p>
+        <p style="text-align: right;">
+        <p>
+            <?= Html::a('<i class="fas fa-cog"></i> ' . Yii::t('app', 'Configuration'), ['/documents/configs'], ['class' => 'btn btn-success']) ?>
+        </p>
+    </div>
 
     <div class="card border-secondary">
         <div class="card-header text-white bg-secondary">

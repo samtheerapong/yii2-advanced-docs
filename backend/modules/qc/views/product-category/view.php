@@ -13,28 +13,48 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-category-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div style="display: flex; justify-content: space-between;">
+        <p>
+            <?= Html::a('<i class="fas fa-chevron-left"></i> ' . Yii::t('app', 'Go Back'), ['index'], ['class' => 'btn btn-primary']) ?>
+        </p>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+        <p style="text-align: right;">
+            <?= Html::a('<i class="fas fa-edit"></i> ' . Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'code',
-            'name',
-            'details:ntext',
-            'color',
-        ],
-    ]) ?>
+            <?= Html::a('<i class="fas fa-trash"></i> ' . Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                    'method' => 'post',
+                ],
+            ]) ?>
 
+        </p>
+    </div>
+
+    <div class="card border-primary">
+        <div class="card-header text-white bg-primary">
+            <?= Html::encode($this->title) ?>
+        </div>
+        <div class="card-body">
+
+            <?= DetailView::widget([
+                'model' => $model,
+                'attributes' => [
+                    // 'id',
+                    'code',
+                    'name',
+                    'details:ntext',
+                    [
+                        'attribute' => 'color',
+                        'format' => 'html',
+                        'value' => function ($model) {
+                            return '<span class="badge" style="background-color:' . $model->color . ';"><b>' . $model->color . '</b></span>';
+                        },
+                    ],
+                ],
+            ]) ?>
+
+        </div>
+    </div>
 </div>

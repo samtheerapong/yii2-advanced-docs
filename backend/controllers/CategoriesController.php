@@ -4,12 +4,13 @@ namespace backend\controllers;
 
 use backend\models\Categories;
 use backend\models\CategoriesSearch;
-use common\components\Rule;
-use common\models\User;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use common\components\Rule;
+use common\models\User;
 
 /**
  * CategoriesController implements the CRUD actions for Categories model.
@@ -33,14 +34,15 @@ class CategoriesController extends Controller
                 'ruleConfig' => [
                     'class' => Rule::class,
                 ],
-                'only' => ['index', 'view', 'create', 'update', 'delete', 'download'],
+                'only' => ['index', 'view', 'create', 'update', 'delete'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'download'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
                         'allow' => true,
                         'roles' => [
                             User::ROLE_ADMIN,
-                            User::ROLE_MANAGER
+                            User::ROLE_MANAGER,
+                            User::ROLE_QA,
                         ],
                     ],
                 ],

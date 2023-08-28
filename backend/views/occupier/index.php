@@ -15,10 +15,16 @@ $this->title = Yii::t('app', 'Occupier');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="occupier-index">
-
-    <p>
-        <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('app', 'Create Data'), ['create'], ['class' => 'btn btn-danger']) ?>
-    </p>
+    <div style="display: flex; justify-content: space-between;">
+        <p>
+            <?= Html::a('<i class="fas fa-table"></i> ' . Yii::t('app', 'Documents'), ['/documents/index'], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('<i class="fa fa-plus"></i> ' . Yii::t('app', 'Create Data'), ['create'], ['class' => 'btn btn-danger']) ?>
+        </p>
+        <p style="text-align: right;">
+        <p>
+            <?= Html::a('<i class="fas fa-cog"></i> ' . Yii::t('app', 'Configuration'), ['/documents/configs'], ['class' => 'btn btn-success']) ?>
+        </p>
+    </div>
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
     ?>
 

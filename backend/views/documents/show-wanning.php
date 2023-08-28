@@ -155,7 +155,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'categories_id',
                         'format' => 'html',
                         'contentOptions' => ['class' => 'text-center'],
-                        'options' => ['style' => 'width:120px;'],
+                        // 'options' => ['style' => 'width:120px;'],
                         'value' => function ($model) {
                             return '<span class="badge" style="background-color:' . $model->categories->color . ';"><b>' . $model->categories->name . '</b></span>';
                         },
@@ -164,7 +164,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     [
                         'attribute' => 'title',
-                        'options' => ['style' => 'width:250px;'],
+                        // 'options' => ['style' => 'width:250px;'],
                         'format' => 'html',
                         'value' => function ($model) {
                             $truncatedSupplierName = mb_substr($model->title, 0, 22, 'UTF-8');
@@ -189,7 +189,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'occupier_id',
                         'format' => 'html',
                         'contentOptions' => ['class' => 'text-center'],
-                        'options' => ['style' => 'width:80px;'],
+                        // 'options' => ['style' => 'width:80px;'],
                         'value' => function ($model) {
                             return '<span class="badge" style="background-color:' . $model->occupier->color . ';"><b>' . $model->occupier->name . '</b></span>';
                         },
@@ -198,7 +198,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     [
                         'attribute' => 'supplier_name',
-                        'options' => ['style' => 'width:250px;'],
+                        // 'options' => ['style' => 'width:250px;'],
                         'format' => 'html',
                         'value' => function ($model) {
                             $truncatedSupplierName = mb_substr($model->supplier_name, 0, 22, 'UTF-8');
@@ -223,7 +223,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'raw_material',
                         'format' => 'html',
                         'contentOptions' => ['class' => 'text-center'],
-                        'options' => ['style' => 'width:130px;'],
+                        // 'options' => ['style' => 'width:130px;'],
                         'value' => function ($model) {
                             return '<span class="badge" style="background-color:' . $model->rawMaterial->color . ';"><b>' . $model->rawMaterial->name . '</b></span>';
                         },
@@ -234,7 +234,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'types_id',
                         'format' => 'html',
                         'contentOptions' => ['class' => 'text-center'],
-                        'options' => ['style' => 'width:130px;'],
+                        // 'options' => ['style' => 'width:130px;'],
                         'value' => function ($model) {
                             return '<span class="badge" style="background-color:' . $model->types->color . ';"><b>' . $model->types->name . '</b></span>';
                         },
@@ -244,7 +244,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'expiration_date',
                         // 'label' => Yii::t('app', 'Days left'),
-                        'options' => ['style' => 'width:150px;'],
+                        // 'options' => ['style' => 'width:150px;'],
                         'contentOptions' => ['class' => 'text-center'],
                         'format' => 'html',
                         'value' => function ($model) {
@@ -254,7 +254,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'expiration_date',
                         'label' => Yii::t('app', 'Days left'),
-                        'options' => ['style' => 'width:80px;'],
+                        // 'options' => ['style' => 'width:80px;'],
                         'contentOptions' => ['class' => 'text-center'],
                         'format' => 'html',
                         'value' => function ($model) {
@@ -263,27 +263,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'filter' => false
                     ],
 
-                    // [
-                    //     'attribute' => 'status_id',
-                    //     'format' => 'html',
-                    //     'options' => ['style' => 'width:80px;'],
-                    //     'contentOptions' => ['class' => 'text-center'],
-                    //     'value' => function ($model) {
-                    //         $badge = '<span class="badge badge-tooltip" data-bs-toggle="tooltip" data-bs-placement="right" title="' . $model->status_details . '" style="background-color:'
-                    //             . $model->status->color . '; color: white;"><b>'
-                    //             . $model->status->name
-                    //             . ' </b></span>';
-
-                    //         $link = Html::a($badge, ['view', 'id' => $model->id]);
-
-                    //         return $link;
-                    //     },
-
-                    // ],
-
                     [
                         'class' => 'kartik\grid\ActionColumn',
-                        'headerOptions' => ['style' => 'width: 100px;'],
+                        // 'headerOptions' => ['style' => 'width: 100px;'],
                         'contentOptions' => ['class' => 'text-center'],
                         'buttonOptions' => ['class' => 'btn btn-outline-dark btn-sm'],
                         'template' => '<div class="btn-group btn-group-xs" role="group"> {view} {update}</div>',
@@ -296,55 +278,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
         </div>
     </div>
-
-    <!-- <div class="card border-danger">
-        <div class="card-header text-white bg-danger">
-        <?= Html::encode($this->title) ?>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <?php if (!empty($documents)) : ?>
-
-                    <table class="kv-grid-table table table-bordered table-striped kv-table-wrap">
-                        <thead>
-                            <tr>
-                                <th><?= Yii::t('app', 'Categories') ?></th>
-                                <th><?= Yii::t('app', 'Title') ?></th>
-                                <th><?= Yii::t('app', 'Categories') ?></th>
-                                <th><?= Yii::t('app', 'Supplier Name') ?></th>
-                                <th><?= Yii::t('app', 'Raw Material') ?></th>
-                                <th><?= Yii::t('app', 'Types') ?></th>
-                                <th><?= Yii::t('app', 'Expiration') ?></th>
-                                <th class="kv-align-middle skip-export kv-merged-header"> <?= Yii::t('app', 'Actions') ?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($documents as $document) : ?>
-                                <tr>
-                                    <td style="width:120px;" class="text-center"><?= '<span class="badge" style="background-color:' . $document->categories->color . ';"><b>' . $document->categories->name . '</b></span>' ?></td>
-                                    <td style="width:300px;"><?= Html::encode($document->title) ?></td>
-                                    <td style="width:100px;" class="text-center"><?= '<span class="badge" style="background-color:' . $document->occupier->color . ';"><b>' . $document->occupier->name . '</b></span>' ?></td>
-                                    <td style="width:200px;"><?= Html::encode($document->supplier_name) ?></td>
-                                    <td style="width:120px;" class="text-center"><?= '<span class="badge" style="background-color:' . $document->rawMaterial->color . ';"><b>' . $document->rawMaterial->name . '</b></span>' ?></td>
-                                    <td style="width:100px;" class="text-center"><?= '<span class="badge" style="background-color:' . $document->types->color . ';"><b>' . $document->types->name . '</b></span>' ?></td>
-                                    <td style="width:200px;"><?= Yii::$app->formatter->asDate($document->expiration_date, 'php:d M Y') .
-                                                                    ' <span class="badge" style="background-color: ' . ($document->getDaysToExpiration() < $document->document_date ? 'red' : 'green') . ';">' . $document->getDaysToExpiration() . ' days left</span>' ?></td>
-                                    <td class="text-center skip-export kv-align-center kv-align-middle w4" style="width:90px;" data-col-seq="9">
-                                        <div class="btn-group btn-group-xs" role="group">
-                                            <a class="btn btn-outline-danger btn-sm" href="/backend/web/documents/<?= Html::encode($document->id) ?>" title="ดู" aria-label="ดู" data-pjax="0"><span class="fas fa-eye" aria-hidden="true"></span></a>
-                                            <a class="btn btn-outline-danger btn-sm" href="/backend/web/documents/update/<?= Html::encode($document->id) ?>" title="ปรับปรุง" aria-label="ปรับปรุง" data-pjax="0"><span class="fas fa-pencil-alt" aria-hidden="true"></span></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                <?php else : ?>
-                    <p>No documents found.</p>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div> -->
 
     <div class="row mt-2">
         <p><b><u><?= Yii::t('app', 'Note') ?></u></b> <?= Yii::t('app', 'Show documents less than 60 days old') ?></p>

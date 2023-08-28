@@ -39,30 +39,14 @@ $this->beginPage();
                 'items' => [
                     ['label' => Yii::t('app', 'Documents Center'), 'url' => ['/documents/index']],
                     ['label' => Yii::t('app', 'Documents Expiring Soon'), 'url' => ['/documents/show-wanning']],
-                    [
-                        'label' => Yii::t('app', 'Configuration'),
-                        'items' => [
-                            ['label' => Yii::t('app', 'Categories'), 'url' => ['/categories/index']],
-                            ['label' => Yii::t('app', 'Occupier'), 'url' => ['/occupier/index']],
-                            ['label' => Yii::t('app', 'Types'), 'url' => ['/types/index']],
-                            ['label' => Yii::t('app', 'Statuses'), 'url' => ['/status/index']],
-
-                        ],
-                    ],
+                    ['label' => Yii::t('app', 'Configuration'), 'url' => ['/documents/configs']],
                 ],
             ],
             [
                 'label' => Yii::t('app', 'Product Spec'),
                 'items' => [
                     ['label' => Yii::t('app', 'Product Spec'), 'url' => ['/qc/products/index']],
-                    [
-                        'label' => Yii::t('app', 'Configuration'),
-                        'items' => [
-                            // ['label' => Yii::t('app', 'Statuses'), 'url' => ['/status/index']],
-
-                        ],
-                    ],
-
+                    ['label' => Yii::t('app', 'Configuration'), 'url' => ['/qc/products/configs']],
                 ],
             ],
             [
@@ -79,60 +63,7 @@ $this->beginPage();
 
                 ],
             ],
-            // ['label' => '3. ' . Yii::t('app', 'Raw Material'), 'url' => ['/product/raw-material/index']],
-            // ['label' => '4. ' . Yii::t('app', 'NCR'), 'url' => ['/ncr/ncr/index']],
-            // ['label' => '5. ' . Yii::t('app', 'ISO Documents'), 'url' => ['/dc']],
-            // [
-            //     'label' => Yii::t('app', 'AC'),
-            //     'items' => [
-            //         ['label' => '1. ' . Yii::t('app', 'Demo'), 'url' => ['/']],
 
-            //     ],
-            // ],   
-            // [
-            //     'label' => Yii::t('app', 'EN'),
-            //     'items' => [
-            //         ['label' => '1. ' . Yii::t('app', 'Demo'), 'url' => ['/']],
-
-            //     ],
-            // ],
-            // [
-            //     'label' => Yii::t('app', 'HR'),
-            //     'items' => [
-            //         ['label' => '1. ' . Yii::t('app', 'Demo'), 'url' => ['/']],
-
-            //     ],
-            // ],
-
-            // [
-            //     'label' => Yii::t('app', 'PD'),
-            //     'items' => [
-            //         ['label' => '1. ' . Yii::t('app', 'Demo'), 'url' => ['/']],
-
-            //     ],
-            // ],
-
-            // [
-            //     'label' => Yii::t('app', 'QC'),
-            //     'items' => [
-            //         ['label' => '1.- ' . Yii::t('app', 'Documents Center'), 'url' => ['/documents/index']],
-            //         [
-            //             'label' => '   1.1 - ' . Yii::t('app', 'Configuration'),
-            //             'items' => [
-            //                 ['label' => Yii::t('app', 'Categories'), 'url' => ['/categories/index']],
-            //                 ['label' => Yii::t('app', 'Occupier'), 'url' => ['/occupier/index']],
-            //                 ['label' => Yii::t('app', 'Types'), 'url' => ['/types/index']],
-            //                 ['label' => Yii::t('app', 'Statuses'), 'url' => ['/status/index']],
-            //                 ['label' => Yii::t('app', 'Raw Material'), 'url' => ['/raw-material/index']],
-            //                 ['label' => Yii::t('app', 'Users'), 'url' => ['/user/index']],
-            //             ],
-            //         ],
-            //         ['label' => '2. ' . Yii::t('app', 'Product Spec'), 'url' => ['/qc/products/index']],
-            //         ['label' => '3. ' . Yii::t('app', 'Raw Material'), 'url' => ['/product/raw-material/index']],
-            //         ['label' => '4. ' . Yii::t('app', 'NCR'), 'url' => ['/ncr/ncr/index']],
-            //         ['label' => '5. ' . Yii::t('app', 'ISO Documents'), 'url' => ['/dc']],
-            //     ],
-            // ],
 
         ];
         echo Nav::widget([
@@ -147,24 +78,26 @@ $this->beginPage();
             $menuItems = [
                 [
                     'label' => Yii::t('app', 'Configuration'),
+                    'visible' => Yii::$app->user->identity->username ==='admin', // Hide if user ID is not  1
                     'items' => [
-                        ['label' => Yii::t('app', 'Categories'), 'url' => ['/categories/index']],
-                        ['label' => Yii::t('app', 'Occupier'), 'url' => ['/occupier/index']],
-                        ['label' => Yii::t('app', 'Types'), 'url' => ['/types/index']],
-                        ['label' => Yii::t('app', 'Statuses'), 'url' => ['/status/index']],
-                        ['label' => Yii::t('app', 'Raw Material'), 'url' => ['/raw-material/index']],
-                        ['label' => Yii::t('app', 'Users'), 'url' => ['/user/index']],
+                        [
+                            'label' => Yii::t('app', 'Profile'),
+                            'url' => ['/user/view', 'id' => Yii::$app->user->identity->id],
+                        ],
+                        [
+                            'label' => Yii::t('app', 'Users'),
+                            'url' => ['/user/index'],
+                        ],
                     ],
                 ],
                 [
-                    'label' => Yii::$app->language == 'th-TH' ? 'EN' : 'TH',
+                    'label' => Yii::$app->language == 'th-TH' ? 'TH' : 'EN',
                     'url' => Url::current(['language' => Yii::$app->language == 'th-TH' ? 'en-US' : 'th-TH']),
                     'linkOptions' => ['class' => 'active'],
                 ],
                 [
                     'label' => "( $nameToDisplay )",
                     'items' => [
-                        ['label' => Yii::t('app', 'Profile'), 'url' => ['/user/view', 'id' => Yii::$app->user->identity->id]],
                         ['label' => Yii::t('app', 'Logout'), 'url' => ['/site/logout'], 'linkOptions' => ['class' => 'logout-link', 'data-method' => 'post']],
                     ],
                 ],

@@ -80,7 +80,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'expiration_date',
                         'label' => Yii::t('app', 'Days left'),
-                        'options' => ['style' => 'width:80px;'],
                         'contentOptions' => ['class' => 'text-center'],
                         'format' => 'html',
                         'value' => function ($model) {
