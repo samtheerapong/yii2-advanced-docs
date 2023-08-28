@@ -91,7 +91,7 @@ $this->beginPage();
                     ],
                 ],
                 [
-                    'label' => Yii::$app->language == 'th-TH' ? 'EN' : 'TH',
+                    'label' => Yii::$app->language == 'th-TH' ? 'TH' : 'EN',
                     'url' => Url::current(['language' => Yii::$app->language == 'th-TH' ? 'en-US' : 'th-TH']),
                     'linkOptions' => ['class' => 'active'],
                 ],

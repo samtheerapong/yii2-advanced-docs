@@ -4,12 +4,13 @@ namespace backend\controllers;
 
 use backend\models\Categories;
 use backend\models\CategoriesSearch;
-use common\components\Rule;
-use common\models\User;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use common\components\Rule;
+use common\models\User;
 
 /**
  * CategoriesController implements the CRUD actions for Categories model.
