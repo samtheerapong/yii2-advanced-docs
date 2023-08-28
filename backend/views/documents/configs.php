@@ -15,8 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
         </p>
     </div>
    
-    <div class="card border-primary">
-        <div class="card-header text-white bg-primary">
+    <div class="card border-secondary">
+        <div class="card-header text-white bg-secondary">
             <?= Html::encode($this->title) ?>
         </div>
         <div class="card-body">
