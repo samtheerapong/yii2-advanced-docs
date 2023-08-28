@@ -4,6 +4,9 @@ namespace backend\controllers;
 
 use backend\models\RawMaterial;
 use backend\models\RawMaterialSearch;
+use common\components\Rule;
+use common\models\User;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -18,17 +21,32 @@ class RawMaterialController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::class,
+                'ruleConfig' => [
+                    'class' => Rule::class,
+                ],
+                'only' => ['index', 'view', 'create', 'update', 'delete',],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete',],
+                        'allow' => true,
+                        'roles' => [
+                            User::ROLE_ADMIN,
+                            User::ROLE_MANAGER,
+                            User::ROLE_QA,
+                        ],
                     ],
                 ],
-            ]
-        );
+            ],
+        ];
     }
 
     /**

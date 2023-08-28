@@ -90,6 +90,9 @@ return [
     'Product Name' => 'ชื่อสินค้า',
     'Revision' => 'ริวิชั่น',
     'Reviesed Date' => 'วันที่แก้ไขเอกสาร',
+    'Product Category' => 'หมวดหมู่',
+    'Product Iso' => 'ระบบที่รับรอง',
+    'Product Status' => 'สถานะ',
 
     // Raw Material
     'Raw Material' => 'วัตถุดิบ',

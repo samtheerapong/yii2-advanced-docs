@@ -33,10 +33,10 @@ class UserController extends Controller
                 'ruleConfig' => [
                     'class' => Rule::class,
                 ],
-                'only' => ['index', 'view', 'create', 'update', 'delete', 'download'],
+                'only' => ['index', 'view', 'create', 'update', 'delete'],
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'download'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
                         'allow' => true,
                         'roles' => [
                             User::ROLE_ADMIN,

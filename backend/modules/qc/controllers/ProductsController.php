@@ -47,7 +47,7 @@ class ProductsController extends Controller
                 'ruleConfig' => [
                     'class' => Rule::class,
                 ],
-                'only' => ['index', 'view', 'create', 'update', 'delete', 'download'],
+                'only' => ['index', 'view', 'create', 'update', 'delete', 'download', 'configs'],
                 'rules' => [
                     [
                         'actions' => ['index'],
@@ -80,10 +80,11 @@ class ProductsController extends Controller
                         ],
                     ],
                     [
-                        'actions' => ['delete'],
+                        'actions' => ['delete', 'configs'],
                         'allow' => true,
                         'roles' => [
-                            User::ROLE_ADMIN
+                            User::ROLE_ADMIN,
+                            User::ROLE_QA
                         ],
                     ],
                     [
@@ -225,6 +226,11 @@ class ProductsController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    public function actionConfigs()
+    {
+        return $this->render('configs');
     }
 
 

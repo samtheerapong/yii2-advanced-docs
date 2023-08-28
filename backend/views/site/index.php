@@ -17,14 +17,13 @@ $this->title = Yii::t('app', 'Dashboard');
 ?>
 
 <div class="site-index">
-
-    <div class="row">
-        <div class="col-md-6 mt-2">
-            <div class="card border-secondary">
-                <div class="card-header text-white bg-secondary">
-                    <?= Yii::t('app', 'Categories') ?>
-                </div>
-                <div class="card-body">
+    <div class="card border-secondary">
+        <div class="card-header text-white bg-secondary">
+            <?= Yii::t('app', 'Documents') ?>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3 col-sm-12">
                     <?= Highcharts::widget([
                         'scripts' => ['modules/exporting', 'themes/grid-light'],
                         'options' => [
@@ -51,15 +50,7 @@ $this->title = Yii::t('app', 'Dashboard');
                     ]);
                     ?>
                 </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 mt-2">
-            <div class="card border-secondary">
-                <div class="card-header text-white bg-secondary">
-                    <?= Yii::t('app', 'Raw Material') ?>
-                </div>
-                <div class="card-body">
+                <div class="col-md-3 col-sm-12">
                     <?= Highcharts::widget([
                         'scripts' => ['modules/exporting', 'themes/grid-light'],
                         'options' => [
@@ -86,15 +77,8 @@ $this->title = Yii::t('app', 'Dashboard');
                     ]);
                     ?>
                 </div>
-            </div>
-        </div>
 
-        <div class="col-md-6 mt-2">
-            <div class="card border-secondary">
-                <div class="card-header text-white bg-secondary">
-                    <?= Yii::t('app', 'Types') ?>
-                </div>
-                <div class="card-body">
+                <div class="col-md-3 col-sm-12">
                     <?= Highcharts::widget([
                         'scripts' => ['modules/exporting', 'themes/grid-light'],
                         'options' => [
@@ -121,15 +105,7 @@ $this->title = Yii::t('app', 'Dashboard');
                     ]);
                     ?>
                 </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 mt-2">
-            <div class="card border-secondary">
-                <div class="card-header text-white bg-secondary">
-                    <?= Yii::t('app', 'Status') ?>
-                </div>
-                <div class="card-body">
+                <div class="col-md-3 col-sm-12">
                     <?= Highcharts::widget([
                         'scripts' => ['modules/exporting', 'themes/grid-light'],
                         'options' => [
@@ -159,4 +135,3 @@ $this->title = Yii::t('app', 'Dashboard');
             </div>
         </div>
     </div>
-</div>
