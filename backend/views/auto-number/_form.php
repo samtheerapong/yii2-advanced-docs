@@ -1,5 +1,6 @@
 <?php
 
+use kartik\widgets\DatePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -11,19 +12,33 @@ use yii\widgets\ActiveForm;
 <div class="auto-number-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <div class="card border-success">
+        <div class="card-header text-white bg-success">
+            <?= Html::encode($this->title) ?>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 mt-2">
+                    <?= $form->field($model, 'group')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-4 mt-2">
+                    <?= $form->field($model, 'number')->textInput() ?>
+                </div>
+                <div class="col-md-4 mt-2">
+                    <?= $form->field($model, 'optimistic_lock')->textInput() ?>
+                </div>
 
-    <?= $form->field($model, 'group')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'number')->textInput() ?>
-
-    <?= $form->field($model, 'optimistic_lock')->textInput() ?>
-
-    <?= $form->field($model, 'update_time')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="form-group">
+                    <div class="d-grid gap-2">
+                        <?= Html::submitButton('<i class="fas fa-save"></i> ' . Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
     <?php ActiveForm::end(); ?>
-
 </div>

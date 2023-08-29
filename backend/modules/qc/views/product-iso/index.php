@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'code',
                         'format' => 'html',
-                        'contentOptions' => ['class' => 'text-center'],
+                        // 'contentOptions' => ['class' => 'text-center'],
                         'value' => function ($model) {
                             $codevalue = $model->code;
                             return Html::a(
