@@ -74,6 +74,10 @@ $this->beginPage();
                     'visible' => Yii::$app->user->identity->username === 'admin', // Hide if user ID is not  1
                     'items' => [
                         [
+                            'label' => Yii::t('app', 'Auto Number'),
+                            'url' => ['/auto-number/index'],
+                        ],
+                        [
                             'label' => Yii::t('app', 'Profile'),
                             'url' => ['/user/view', 'id' => Yii::$app->user->identity->id],
                         ],
