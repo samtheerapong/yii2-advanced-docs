@@ -52,15 +52,8 @@ $this->beginPage();
             [
                 'label' => Yii::t('app', 'Raw Material'),
                 'items' => [
-                    ['label' => Yii::t('app', 'Raw Material'), 'url' => ['/product/raw-material/index']],
-                    [
-                        'label' => Yii::t('app', 'Configuration'),
-                        'items' => [
-                            // ['label' => Yii::t('app', 'Raw Material'), 'url' => ['/raw-material/index']],
-
-                        ],
-                    ],
-
+                    ['label' => Yii::t('app', 'Raw Material'), 'url' => ['/qc/rawmats/index']],
+                    ['label' => Yii::t('app', 'Configuration'), 'url' => ['/qc/rawmats/configs']],
                 ],
             ],
 
@@ -78,7 +71,7 @@ $this->beginPage();
             $menuItems = [
                 [
                     'label' => Yii::t('app', 'Configuration'),
-                    'visible' => Yii::$app->user->identity->username ==='admin', // Hide if user ID is not  1
+                    'visible' => Yii::$app->user->identity->username === 'admin', // Hide if user ID is not  1
                     'items' => [
                         [
                             'label' => Yii::t('app', 'Profile'),
