@@ -2,33 +2,29 @@
 
 namespace backend\modules\qc\controllers;
 
-use backend\modules\qc\models\Products;
-use backend\modules\qc\models\ProductsSearch;
+use backend\modules\qc\models\Rawmats;
+use backend\modules\qc\models\RawmatsSearch;
 use common\components\Rule;
 use common\models\User;
+use Exception;
 use kartik\mpdf\Pdf;
-
+use mdm\autonumber\AutoNumber;
 use Mpdf\Config\ConfigVariables;
 use Mpdf\Config\FontVariables;
-
-use Exception;
 use Yii;
-
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\UploadedFile;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\BaseFileHelper;
 use yii\helpers\Json;
-
-use mdm\autonumber\AutoNumber;
-use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 
 /**
- * ProductsController implements the CRUD actions for Products model.
+ * RawmatsController implements the CRUD actions for Rawmats model.
  */
-class ProductsController extends Controller
+class RawmatsController extends Controller
 {
     /**
      * @inheritDoc
@@ -102,14 +98,15 @@ class ProductsController extends Controller
         ];
     }
 
+
     /**
-     * Lists all Products models.
+     * Lists all Rawmats models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new ProductsSearch();
+        $searchModel = new RawmatsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -119,7 +116,7 @@ class ProductsController extends Controller
     }
 
     /**
-     * Displays a single Products model.
+     * Displays a single Rawmats model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -132,19 +129,17 @@ class ProductsController extends Controller
     }
 
     /**
-     * Creates a new Products model.
+     * Creates a new Rawmats model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Products();
+        $model = new Rawmats();
         $ref = substr(Yii::$app->getSecurity()->generateRandomString(), 10);
-        $model->revision = 1;
 
         if ($model->load(Yii::$app->request->post())) {
-            $this->convertProductIso($model); // Call the conversion function
-            $AutoNumber = AutoNumber::generate('PS' . date('ym') . '-???');
+            $AutoNumber = AutoNumber::generate('RM' . date('ym') . '-???');
             $model->numbers = $AutoNumber;
             $this->CreateDir($model->ref);
             $model->docs = $this->uploadMultipleFile($model);
@@ -166,7 +161,7 @@ class ProductsController extends Controller
     }
 
     /**
-     * Updates an existing Products model.
+     * Updates an existing Rawmats model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -175,11 +170,9 @@ class ProductsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->productIsoToArray();
         $tempDocs = $model->docs;
 
         if ($this->request->isPost && $model->load($this->request->post())) {
-            $this->convertProductIso($model); // Call the conversion function
             $this->CreateDir($model->ref);
             $model->docs = $this->uploadMultipleFile($model, $tempDocs);
 
@@ -198,7 +191,7 @@ class ProductsController extends Controller
     }
 
     /**
-     * Deletes an existing Products model.
+     * Deletes an existing Rawmats model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -213,15 +206,15 @@ class ProductsController extends Controller
     }
 
     /**
-     * Finds the Products model based on its primary key value.
+     * Finds the Rawmats model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Products the loaded model
+     * @return Rawmats the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Products::findOne(['id' => $id])) !== null) {
+        if (($model = Rawmats::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
@@ -232,8 +225,6 @@ class ProductsController extends Controller
     {
         return $this->render('configs');
     }
-
-
 
     /***************** action Deletefile ******************/
     public function actionDeletefile($id, $field, $fileName)
@@ -259,9 +250,9 @@ class ProductsController extends Controller
     {
         if (in_array($type, ['file', 'thumbnail'])) {
             if ($type === 'file') {
-                $filePath = Products::getUploadPath() . $ref . '/' . $fileName;
+                $filePath = Rawmats::getUploadPath() . $ref . '/' . $fileName;
             } else {
-                $filePath = Products::getUploadPath() . $ref . '/thumbnail/' . $fileName;
+                $filePath = Rawmats::getUploadPath() . $ref . '/thumbnail/' . $fileName;
             }
             @unlink($filePath);
             return true;
@@ -282,7 +273,7 @@ class ProductsController extends Controller
                 try {
                     $oldFileName = $file->basename . '.' . $file->extension;
                     $newFileName = md5($file->basename . time()) . '.' . $file->extension;
-                    $file->saveAs(Products::UPLOAD_FOLDER . '/' . $model->ref . '/' . $newFileName);
+                    $file->saveAs(Rawmats::UPLOAD_FOLDER . '/' . $model->ref . '/' . $newFileName);
                     $files[$newFileName] = $oldFileName;
                 } catch (Exception $e) {
                 }
@@ -298,7 +289,7 @@ class ProductsController extends Controller
     private function CreateDir($folderName)
     {
         if ($folderName != NULL) {
-            $basePath = Products::getUploadPath();
+            $basePath = Rawmats::getUploadPath();
             if (BaseFileHelper::createDirectory($basePath . $folderName, 0777)) {
                 BaseFileHelper::createDirectory($basePath . $folderName . '/thumbnail', 0777);
             }
@@ -309,7 +300,7 @@ class ProductsController extends Controller
     /***************** Remove Upload Dir ******************/
     private function removeUploadDir($dir)
     {
-        BaseFileHelper::removeDirectory(Products::getUploadPath() . $dir);
+        BaseFileHelper::removeDirectory(Rawmats::getUploadPath() . $dir);
     }
 
 
@@ -320,22 +311,9 @@ class ProductsController extends Controller
         if (!empty($model->ref) && !empty($model->docs)) {
             Yii::$app->response->sendFile($model->getUploadPath() . '/' . $model->ref . '/' . $file, $fullname);
         } else {
-            $this->redirect(['/qc/products/view', 'id' => $id]);
+            $this->redirect(['/qc/rawmats/view', 'id' => $id]);
         }
     }
-
-
-    /*******************convert ProductIso************ */
-    private function convertProductIso($model)
-    {
-        if (is_array($model->product_iso)) {
-            $model->product_iso = implode(',', $model->product_iso); // Convert array to comma-separated string
-        } else {
-            $model->product_iso = ''; // Set to empty string or handle as needed
-        }
-    }
-
-
 
     /***************** View PDF ******************/
     public function actionViewPdf($id)
