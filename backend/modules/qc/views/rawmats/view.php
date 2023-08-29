@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var backend\modules\qc\models\Rawmats $model */
 
 $this->title = $model->numbers;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Rawmats'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Raw Material'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>

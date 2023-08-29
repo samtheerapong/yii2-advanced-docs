@@ -96,4 +96,7 @@ return [
 
     // Raw Material
     'Raw Material' => 'วัตถุดิบ',
+    'Raw Material Category' => 'ประเภท',
+    'Raw Material Status' => 'สถานะ',
+    'Raw Material Name' => 'ชื่อวัตถุดิบ',
 ];

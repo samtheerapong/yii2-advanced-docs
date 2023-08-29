@@ -16,7 +16,7 @@ use yii\helpers\ArrayHelper;
 /** @var backend\modules\qc\models\RawmatsSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('app', 'Rawmats');
+$this->title = Yii::t('app', 'Raw Material');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="rawmats-index">
@@ -133,6 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'supplier_name',
                         'format' => 'html',
+                        'options' => ['style' => 'width:300px;'],
                         'value' => function ($model) {
                             $truncatedSupplierName = mb_substr($model->supplier_name, 0, 30, 'UTF-8');
                             if (mb_strlen($model->supplier_name, 'UTF-8') > 30) {
