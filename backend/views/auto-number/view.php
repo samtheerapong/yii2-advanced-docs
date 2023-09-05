@@ -12,28 +12,46 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="auto-number-view">
+    <div style="display: flex; justify-content: space-between;">
+        <p>
+            <?= Html::a('<i class="fas fa-chevron-left"></i> ' . Yii::t('app', 'Go Back'), ['index'], ['class' => 'btn btn-primary']) ?>
+            <?= Html::button('<i class="fas fa-share"></i> ' . Yii::t('app', 'Share'), ['class' => 'btn btn-success', 'id' => 'copy-button']) ?>
+        </p>
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <p style="text-align: right;">
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'group' => $model->group], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'group' => $model->group], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+            <?= Html::a('<i class="fas fa-edit"></i> ' . Yii::t('app', 'Update'), ['update', 'group' => $model->group], ['class' => 'btn btn-warning']) ?>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'group',
-            'number',
-            'optimistic_lock',
-            'update_time:datetime',
-        ],
-    ]) ?>
+            <?= Html::a('<i class="fas fa-trash"></i> ' . Yii::t('app', 'Delete'), ['delete', 'group' => $model->group], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                    'method' => 'post',
+                ],
+            ]) ?>
+        </p>
+    </div>
+    <div class="card border-success">
+        <div class="card-header text-white bg-success">
+            <?= Html::encode($this->title) ?>
+        </div>
 
+        <div id="PrintThis">
+
+            <div class="card-body">
+                <?= DetailView::widget([
+                    'model' => $model,
+                    'template' => '<tr><th style="width: 300px;">{label}</th><td> {value}</td></tr>',
+                    'attributes' => [
+                        'group',
+                        'number',
+                        'optimistic_lock',
+                        'update_time:datetime',
+                    ],
+                ]) ?>
+
+            </div>
+
+        </div>
+    </div>
 </div>

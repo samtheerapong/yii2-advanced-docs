@@ -91,7 +91,7 @@ use yii\widgets\ActiveForm;
                         [
                             'language' => 'th',
                             'options' => [
-                                'placeholder' => Yii::t('app', 'Select...'),
+                                'placeholder' => Yii::t('app', 'Default 10 years'),
                                 // 'required' => true,
                             ],
                             'pluginOptions' => [

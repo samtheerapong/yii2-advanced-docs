@@ -145,7 +145,7 @@ class RawmatsController extends Controller
             $model->docs = $this->uploadMultipleFile($model);
 
             if (empty($model->expiration_date)) {
-                $model->expiration_date = date('Y-m-d', strtotime('+3649 days'));
+                $model->expiration_date = date('Y-m-d', strtotime('+3652 days'));
             }
 
             if ($model->save()) {
@@ -177,7 +177,7 @@ class RawmatsController extends Controller
             $model->docs = $this->uploadMultipleFile($model, $tempDocs);
 
             if (empty($model->expiration_date)) {
-                $model->expiration_date = date('Y-m-d', strtotime('+3649 days'));
+                $model->expiration_date = date('Y-m-d', strtotime('+3652 days'));
             }
 
             $model->save();

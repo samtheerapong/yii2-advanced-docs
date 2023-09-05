@@ -43,10 +43,10 @@ class RawmatStatus extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'code' => Yii::t('app', 'รหัส'),
-            'name' => Yii::t('app', 'สถานะ'),
-            'details' => Yii::t('app', 'รายละเอียด'),
-            'color' => Yii::t('app', 'สี'),
+            'code' => Yii::t('app', 'Code'),
+            'name' => Yii::t('app', 'Name'),
+            'details' => Yii::t('app', 'Details'),
+            'color' => Yii::t('app', 'Color'),
         ];
     }
 }

@@ -4,7 +4,7 @@ return [
     'Start App' => 'เริ่มใช้งาน',
     'Register' => 'สมัครสมาชิก',
     'Documents Center' => 'ตารางเอกสาร',
-    'Create' => 'เพิ่ม',
+    'Create' => 'เพิ่มข้อมูล',
     'Create Document' => 'เพิ่มเอกสาร',
     'Create Categories' => 'เพิ่มหมวดหมู่',
     'Create Status' => 'เพิ่มสถานะ',
@@ -29,7 +29,14 @@ return [
     'Days' => 'วัน',
     'Share' => 'แชร์',
     'Actions' => 'ดำเนินการ',
+    'Auto Number' => 'รหัสอัตโนมัติ',
     
+    //
+    'Code' => 'รหัส',
+    'Name' => 'ชื่อ',
+    'Details' => 'รายละเอียด',
+    'Color' => 'สี',
+
     // documents
     'DocumentID' => 'รหัสเอกสาร',
     'Title' => 'ชื่อเรื่อง',
@@ -93,6 +100,7 @@ return [
     'Product Category' => 'หมวดหมู่',
     'Product Iso' => 'ระบบที่รับรอง',
     'Product Status' => 'สถานะ',
+    'Default 10 years' => 'ค่าเริ่มต้น 10 ปี',
 
     // Raw Material
     'Raw Material' => 'วัตถุดิบ',
