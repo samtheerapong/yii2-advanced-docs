@@ -49,7 +49,7 @@ return [
     'Ref' => 'อ้างอิง',
     'Docs' => 'ไฟล์เอกสาร',
     'Status' => 'สถานะ',
-    'Expiration' => 'วันหมดอายุเอกสาร',
+    'Expiration' => 'อายุเอกสาร',
     'Notify Date' => 'กำหนดเตือน(วัน)',
     'Days left' => 'วันที่เหลือ',
     'Status Details' => 'รายละเอียดสถานะ',
