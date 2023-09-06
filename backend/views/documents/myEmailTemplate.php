@@ -38,23 +38,24 @@ use yii\widgets\DetailView;
     </ul>
 
     <?php if (!empty($data['model']->docs)) : ?>
-        <p style="color: Blue;"> Documents Files : </p>
-        <ul>
-            <?php
-            $docs = json_decode($data['model']->docs, true);
-            if (!empty($docs) && is_array($docs)) {
-                foreach ($docs as $key => $value) {
-                    $fileUrl = Yii::$app->urlManager->createAbsoluteUrl(['documents/download', 'id' => $data['model']->id, 'file' => $key, 'fullname' => $value]);
-            ?>
-                    <li>
-                        <?= Html::a($value, $fileUrl, ['target' => '_blank']) ?>
-                    </li>
-            <?php
-                }
+    <p style="color: Blue;"> Documents Files : </p>
+    <ul>
+        <?php
+        $docs = json_decode($data['model']->docs, true);
+        if (!empty($docs) && is_array($docs)) {
+            foreach ($docs as $key => $value) {
+                $fileUrl = Yii::$app->urlManager->createAbsoluteUrl(['documents/download', 'id' => $data['model']->id, 'file' => $key, 'fullname' => $value]);
+                $downloadLink = Html::a($value, $fileUrl, ['target' => '_blank']);
+        ?>
+                <li>
+                    <?= $downloadLink ?>
+                </li>
+        <?php
             }
-            ?>
-        </ul>
-    <?php endif; ?>
+        }
+        ?>
+    </ul>
+<?php endif; ?>
 
     <p>
     <h3>โดย ระบบเอกสารกลาง บริษัท นอร์ธเทอร์น ฟู้ด คอมเพล็กซ์ จำกัด</h3>

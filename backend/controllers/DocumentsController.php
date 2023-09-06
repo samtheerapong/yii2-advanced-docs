@@ -412,7 +412,10 @@ class DocumentsController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
-        $recipients = ['theerapong.khan@gmail.com'];
+        $recipients = [
+            'theerapong.khan@gmail.com',
+            'itnfc@northernfoodcomplex.com',
+        ];
         $subject = 'Document Center Notification';
         $templateView = 'myEmailTemplate';
 
