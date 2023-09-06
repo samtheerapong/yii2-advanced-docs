@@ -23,7 +23,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </p>
 
         <p style="text-align: right;">
-
+            <?= Html::a('<i class="fa fa-bell"></i> ' . Yii::t('app', 'Notify'), ['send-line-notify', 'id' => $model->id], [
+                'class' => 'btn btn-success',
+                'data' => [
+                    'confirm' => Yii::t('app', 'Are you sure you want to send a Line Notify message for this document?'),
+                    'method' => 'post',
+                ],
+            ]) ?>
             <?php
             echo PrintThis::widget([
                 'htmlOptions' => [
@@ -46,6 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]
             ]);
             ?>
+
 
             <?= Html::a(
                 '<i class="fas fa-file"></i> ' . Yii::t('app', 'PDF'),
@@ -97,9 +104,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-md-12">
                     <div class="<?= $model->getDaysToExpiration() <= 0 ? 'alert alert-danger' : 'alert alert-success' ?>">
                         <?php if ($model->getDaysToExpiration() <= 0) : ?>
-                        <?= Yii::t('app', 'This document has expired.') ?>  <?= $model->getDaysToExpiration() ?>  <?= Yii::t('app', 'Days') ?> 
+                            <?= Yii::t('app', 'This document has expired.') ?> <?= $model->getDaysToExpiration() ?> <?= Yii::t('app', 'Days') ?>
                         <?php else : ?>
-                        <?= Yii::t('app', 'This document will expire in') ?> <?= $model->getDaysToExpiration() ?> <?= Yii::t('app', 'Days') ?> 
+                            <?= Yii::t('app', 'This document will expire in') ?> <?= $model->getDaysToExpiration() ?> <?= Yii::t('app', 'Days') ?>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -189,7 +196,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     . ' </b></span>';
                             },
                         ],
-                        
+
                         'supplier_name',
 
                         [

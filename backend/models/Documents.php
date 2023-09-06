@@ -284,4 +284,61 @@ class Documents extends \yii\db\ActiveRecord
         $options = ['class' => $setClass, 'style' => "text-align: center; color:#fff; background-color: $badgeColor;"];
         return Html::tag('div', $daysToExpiration, $options);
     }
+
+
+    public function LineNotify()
+    {
+        // NFC-DocumentCenter
+        $lineapi = "Eon0aRHg9A3Y8j4RH1F1hYvdgGYhhnyiTBfNAKQrDmX";
+
+        //ดึงข้อคว่าม
+        $categories = $this->categories->name;
+        $title = $this->title;
+        $occupier = $this->occupier->name;
+        $rawMaterial = $this->rawMaterial->name;
+        $types = $this->types->name;
+        $daylife = $this->getDaysToExpiration();
+        $status = $this->status->name;
+        $statusDetails = $this->status_details;
+        $created_at = date($this->created_at);
+        $absoluteUrl = Url::to(['view', 'id' => $this->id], true);
+
+
+        //ข้อคว่าม
+        $massage =
+            Yii::t('app', 'Status') . " : " . $status . "\n" .
+            Yii::t('app', 'Status Details') . " : " . $statusDetails . "\n" .
+            Yii::t('app', 'Expiration') . " : " . $daylife . "\n" .
+            Yii::t('app', 'Categories') . " : " . $categories . "\n" .
+            Yii::t('app', 'Title') . " : " . $title . "\n" .
+            Yii::t('app', 'Occupier') . " : " . $occupier . "\n" .
+            Yii::t('app', 'Raw Material') . " : " . $rawMaterial . "\n" .
+            Yii::t('app', 'Types') . " : " . $types . "\n" .
+            Yii::t('app', 'Created At') . " : " . $created_at . "\n" .
+            Yii::t('app', 'Url Link') . " : " . $absoluteUrl;
+
+        $mms = trim($massage);
+
+        //การทำงานของระบบ
+        date_default_timezone_set("Asia/Bangkok");
+        $chOne = curl_init();
+        curl_setopt($chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify");
+        curl_setopt($chOne, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($chOne, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($chOne, CURLOPT_POST, 1);
+        curl_setopt($chOne, CURLOPT_POSTFIELDS, "message=$mms");
+        curl_setopt($chOne, CURLOPT_FOLLOWLOCATION, 1);
+        $headers = array('Content-type: application/x-www-form-urlencoded', 'Authorization: Bearer ' . $lineapi . '',);
+        curl_setopt($chOne, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($chOne, CURLOPT_RETURNTRANSFER, 1);
+        $result = curl_exec($chOne);
+        if (curl_error($chOne)) {
+            echo 'error:' . curl_error($chOne);
+        } else {
+            $result_ = json_decode($result, true);
+            echo "status : " . $result_['status'];
+            echo "message : " . $result_['message'];
+        }
+        curl_close($chOne);
+    }
 }
