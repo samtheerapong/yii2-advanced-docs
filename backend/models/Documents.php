@@ -297,23 +297,25 @@ class Documents extends \yii\db\ActiveRecord
         $occupier = $this->occupier->name;
         $rawMaterial = $this->rawMaterial->name;
         $types = $this->types->name;
-        $daylife = $this->getDaysToExpirationValue();
+        $daylife = $this->getDaysToExpiration();
         $status = $this->status->name;
         $statusDetails = $this->status_details;
         $created_at = date($this->created_at);
+        $absoluteUrl = Url::to(['view', 'id' => $this->id], true);
 
 
         //ข้อคว่าม
         $massage =
-            Yii::t('app', 'Categories') . " : ". $categories ."\n" .
-            Yii::t('app', 'Title') . " : ". $title ."\n" .
-            Yii::t('app', 'Occupier') . " : ". $occupier ."\n" .
-            Yii::t('app', 'Raw Material') . " : ". $rawMaterial ."\n" .
-            Yii::t('app', 'Types') . " : ". $types ."\n" .
-            Yii::t('app', 'Expiration') . " : ". $daylife ."\n" .
-            Yii::t('app', 'Status') . " : ". $status ."\n" .
-            Yii::t('app', 'Status Details') . " : ". $statusDetails ."\n" .
-            Yii::t('app', 'Created At') . " : ". $created_at;
+            Yii::t('app', 'Status') . " : " . $status . "\n" .
+            Yii::t('app', 'Status Details') . " : " . $statusDetails . "\n" .
+            Yii::t('app', 'Expiration') . " : " . $daylife . "\n" .
+            Yii::t('app', 'Categories') . " : " . $categories . "\n" .
+            Yii::t('app', 'Title') . " : " . $title . "\n" .
+            Yii::t('app', 'Occupier') . " : " . $occupier . "\n" .
+            Yii::t('app', 'Raw Material') . " : " . $rawMaterial . "\n" .
+            Yii::t('app', 'Types') . " : " . $types . "\n" .
+            Yii::t('app', 'Created At') . " : " . $created_at . "\n" .
+            Yii::t('app', 'Url Link') . " : " . $absoluteUrl;
 
         $mms = trim($massage);
 

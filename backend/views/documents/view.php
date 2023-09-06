@@ -23,10 +23,10 @@ $this->params['breadcrumbs'][] = $this->title;
         </p>
 
         <p style="text-align: right;">
-            <?= Html::a(Yii::t('app', 'Send Line'), ['send-line-notify', 'id' => $model->id], [
+            <?= Html::a('<i class="fa fa-bell"></i> ' . Yii::t('app', 'Notify'), ['send-line-notify', 'id' => $model->id], [
                 'class' => 'btn btn-success',
                 'data' => [
-                    'confirm' => 'Are you sure you want to send a Line Notify message for this document?',
+                    'confirm' => Yii::t('app', 'Are you sure you want to send a Line Notify message for this document?'),
                     'method' => 'post',
                 ],
             ]) ?>
