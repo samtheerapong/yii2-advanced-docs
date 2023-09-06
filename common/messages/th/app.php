@@ -62,6 +62,7 @@ return [
     'Show documents less than 60 days old' => 'แสดงเอกสารที่มีอายุน้อยกว่า 60 วัน',
     'Are you sure you want to send a Line Notify message for this document?' => 'คุณแน่ใจหรือไม่ว่าต้องการส่งข้อความ Line Notify สำหรับเอกสารนี้?',
     'Notify' => 'แจ้งเตือน',
+    'Line Notify message sent successfully' => 'ส่งข้อความผ่านไลน์เรียบร้อยแล้ว',
 
     // User
     'Users' => 'สมาชิก',

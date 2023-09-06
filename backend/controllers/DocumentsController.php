@@ -401,20 +401,17 @@ class DocumentsController extends Controller
         return $pdf->render();
     }
 
+    //actionSendLineNotify
     public function actionSendLineNotify($id)
     {
         $model = $this->findModel($id);
-
         // Check if the model exists
         if (!$model) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-
         // Send Line Notify
         $model->LineNotify();
-
-        Yii::$app->session->setFlash('success', 'Line Notify message sent successfully.');
-
+        Yii::$app->session->setFlash('success', Yii::t('app', 'Line Notify message sent successfully'));
         // Redirect back to the view page or any other page you prefer
         return $this->redirect(['view', 'id' => $model->id]);
     }
