@@ -16,6 +16,7 @@ use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\helpers\Url;
 use yii2assets\pdfjs\PdfJs;
+use yii\swiftmailer\Message;
 
 /**
  * This is the model class for table "documents".
@@ -341,4 +342,6 @@ class Documents extends \yii\db\ActiveRecord
         }
         curl_close($chOne);
     }
+
+    
 }

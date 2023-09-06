@@ -51,7 +51,7 @@ return [
             'class' => 'yii\image\ImageDriver',
             'driver' => 'GD',  //GD or Imagick
         ],
-        
+
         'assetManager' => [
             'bundles' => [
                 'kartik\form\ActiveFormAsset' => [
@@ -113,6 +113,19 @@ return [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'location', 'except' => ['delete', 'GET', 'HEAD', 'POST', 'OPTIONS'], 'pluralize' => false],
                 '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
                 // 'export/pdf' => 'export/export-pdf',
+            ],
+        ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'viewPath' => '@common/mail', // Customize this based on your project structure
+            'useFileTransport' => false, // Set this to false to enable email sending
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp-mail.outlook.com', // Hotmail SMTP server
+                'username' => 'northernfood.it@hotmail.com', // Your Hotmail/Outlook email address
+                'password' => 'Nfc@053673985', // Your Hotmail/Outlook password
+                'port' => '587', // The SMTP server port for Hotmail
+                'encryption' => 'tls', // Use TLS encryption (required for Hotmail)
             ],
         ],
         //     'urlManagerFrontend' => [

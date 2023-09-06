@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <p style="text-align: right;">
             <?php
             if (Yii::$app->user->identity->role == 10 || Yii::$app->user->identity->role == 9) {
-                echo Html::a('<i class="fa fa-bell"></i> ' . Yii::t('app', 'Notify'), ['send-line-notify', 'id' => $model->id], [
+                echo Html::a('<i class="fa fa-bell"></i> ' . Yii::t('app', 'Notify'), ['send-notify', 'id' => $model->id], [
                     'class' => 'btn btn-success',
                     'data' => [
                         'confirm' => Yii::t('app', 'Are you sure you want to send a Line Notify message for this document?'),

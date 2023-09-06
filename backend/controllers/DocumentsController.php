@@ -24,6 +24,8 @@ use yii\helpers\BaseFileHelper;
 use Mpdf\Config\ConfigVariables;
 use Mpdf\Config\FontVariables;
 use yii\db\Expression;
+use yii\helpers\Url;
+use yii\swiftmailer\Message;
 
 /**
  * DocumentsController implements the CRUD actions for Documents model.
@@ -401,18 +403,44 @@ class DocumentsController extends Controller
         return $pdf->render();
     }
 
-    //actionSendLineNotify
-    public function actionSendLineNotify($id)
+    //sent mail and line
+    public function actionSendNotify($id)
     {
         $model = $this->findModel($id);
-        // Check if the model exists
+
         if (!$model) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-        // Send Line Notify
-        $model->LineNotify();
-        Yii::$app->session->setFlash('success', Yii::t('app', 'Line Notify message sent successfully'));
-        // Redirect back to the view page or any other page you prefer
+
+        $recipients = ['theerapong.khan@gmail.com'];
+        $subject = 'Document Center Notification';
+        $templateView = 'myEmailTemplate';
+
+        $data = [
+            'model' => $model,
+            'url' => Url::to(['view', 'id' => $model->id], true)
+        ];
+
+        if ($this->sendMail($recipients, $subject, $templateView, $data)) {
+            $model->LineNotify();
+            Yii::$app->session->setFlash('success', Yii::t('app', 'Notify message sent successfully'));
+        } else {
+            Yii::$app->session->setFlash('error', 'Notify message sending failed.');
+        }
+
         return $this->redirect(['view', 'id' => $model->id]);
+    }
+
+    protected function sendMail($recipient, $subject, $templateView, $data = [])
+    {
+        $mailer = Yii::$app->mailer;
+        $message = new Message();
+
+        $message->setTo($recipient);
+        $message->setFrom(['northernfood.it@hotmail.com' => 'NFC-DocumentCenter']);
+        $message->setSubject($subject);
+        $message->setHtmlBody($this->renderPartial($templateView, ['data' => $data]));
+
+        return $mailer->send($message);
     }
 }
