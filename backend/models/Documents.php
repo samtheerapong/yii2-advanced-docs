@@ -289,10 +289,8 @@ class Documents extends \yii\db\ActiveRecord
 
     public function LineNotify()
     {
-        // NFC-DocumentCenter
         $lineapi = "Eon0aRHg9A3Y8j4RH1F1hYvdgGYhhnyiTBfNAKQrDmX";
 
-        //ดึงข้อคว่าม
         $categories = $this->categories->name;
         $title = $this->title;
         $occupier = $this->occupier->name;
@@ -304,32 +302,33 @@ class Documents extends \yii\db\ActiveRecord
         $created_at = date($this->created_at);
         $absoluteUrl = Url::to(['view', 'id' => $this->id], true);
 
+        $message = implode("\n", [
+            Yii::t('app', 'Status') . " : " . $status,
+            Yii::t('app', 'Status Details') . " : " . $statusDetails,
+            Yii::t('app', 'Expiration') . " : " . $daylife,
+            Yii::t('app', 'Categories') . " : " . $categories,
+            Yii::t('app', 'Title') . " : " . $title,
+            Yii::t('app', 'Occupier') . " : " . $occupier,
+            Yii::t('app', 'Raw Material') . " : " . $rawMaterial,
+            Yii::t('app', 'Types') . " : " . $types,
+            Yii::t('app', 'Created At') . " : " . $created_at,
+            Yii::t('app', 'Url Link') . " : " . $absoluteUrl,
+        ]);
 
-        //ข้อคว่าม
-        $massage =
-            Yii::t('app', 'Status') . " : " . $status . "\n" .
-            Yii::t('app', 'Status Details') . " : " . $statusDetails . "\n" .
-            Yii::t('app', 'Expiration') . " : " . $daylife . "\n" .
-            Yii::t('app', 'Categories') . " : " . $categories . "\n" .
-            Yii::t('app', 'Title') . " : " . $title . "\n" .
-            Yii::t('app', 'Occupier') . " : " . $occupier . "\n" .
-            Yii::t('app', 'Raw Material') . " : " . $rawMaterial . "\n" .
-            Yii::t('app', 'Types') . " : " . $types . "\n" .
-            Yii::t('app', 'Created At') . " : " . $created_at . "\n" .
-            Yii::t('app', 'Url Link') . " : " . $absoluteUrl;
+        $message = trim($message);
 
-        $mms = trim($massage);
-
-        //การทำงานของระบบ
         date_default_timezone_set("Asia/Bangkok");
         $chOne = curl_init();
         curl_setopt($chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify");
         curl_setopt($chOne, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($chOne, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($chOne, CURLOPT_POST, 1);
-        curl_setopt($chOne, CURLOPT_POSTFIELDS, "message=$mms");
+        curl_setopt($chOne, CURLOPT_POSTFIELDS, "message=$message");
         curl_setopt($chOne, CURLOPT_FOLLOWLOCATION, 1);
-        $headers = array('Content-type: application/x-www-form-urlencoded', 'Authorization: Bearer ' . $lineapi . '',);
+        $headers = array(
+            'Content-type: application/x-www-form-urlencoded',
+            'Authorization: Bearer ' . $lineapi . '',
+        );
         curl_setopt($chOne, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($chOne, CURLOPT_RETURNTRANSFER, 1);
         $result = curl_exec($chOne);
@@ -342,6 +341,4 @@ class Documents extends \yii\db\ActiveRecord
         }
         curl_close($chOne);
     }
-
-    
 }
