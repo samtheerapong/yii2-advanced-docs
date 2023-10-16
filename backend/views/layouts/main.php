@@ -117,13 +117,15 @@ $this->beginPage();
     </main>
     <footer class="footer mt-auto py-3 text-muted">
         <div class="container">
-            <p class="float-start">&copy; NFC <?= date('Y') ?></p>
-            &nbsp; Created By SAM-IT
+          
+            
+            <p class="float-start"> Document Online System (DOS) &copy; NFC <?= date('Y') ?></p>
+            &nbsp; IT Department
             <span>
                 <?= Html::a(Html::img('https://cdn.pixabay.com/photo/2013/07/12/17/58/thailand-152711_1280.png', ['width' => '20px']), Url::current(['language' => 'th-TH']), ['class' => (Yii::$app->request->cookies['language'] == 'th-TH' ? 'active' : '')]); ?>
                 <?= Html::a(Html::img('https://cdn.pixabay.com/photo/2015/11/06/13/29/union-jack-1027898_1280.jpg', ['width' => '20px']), Url::current(['language' => 'en-US']), ['class' => (Yii::$app->request->cookies['language'] == 'en-US' ? 'active' : '')]); ?>
             </span>
-            <p class="float-end">Version 1.1.0</p>
+            <p class="float-end">Version 1.1.1</p>
         </div>
     </footer>
     <?php $this->endBody(); ?>
