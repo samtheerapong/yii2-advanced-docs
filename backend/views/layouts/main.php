@@ -71,10 +71,11 @@ $this->beginPage();
             $menuItems = [
                 [
                     'label' => Yii::t('app', 'Configuration'),
-                    'visible' => Yii::$app->user->identity->username === 'admin', // Hide if user ID is not  1
+                    'visible' => in_array(Yii::$app->user->identity->username, ['admin', 'phitchai']),
                     'items' => [
                         [
                             'label' => Yii::t('app', 'Auto Number'),
+                            'visible' => in_array(Yii::$app->user->identity->username, ['admin']),
                             'url' => ['/auto-number/index'],
                         ],
                         [
