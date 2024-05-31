@@ -145,16 +145,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ['view', 'id' => $model->id],
                                 );
                             },
-                            'filter' => Select2::widget([
-                                'model' => $searchModel,
-                                'attribute' => 'title',
-                                'data' => ArrayHelper::map(Products::find()->all(), 'title', 'title'),
-                                'options' => ['placeholder' => Yii::t('app', 'Select...')],
-                                'language' => 'th',
-                                'pluginOptions' => [
-                                    'allowClear' => true
-                                ],
-                            ])
+                            // 'filter' => Select2::widget([
+                            //     'model' => $searchModel,
+                            //     'attribute' => 'title',
+                            //     'data' => ArrayHelper::map(Products::find()->all(), 'title', 'title'),
+                            //     'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                            //     'language' => 'th',
+                            //     'pluginOptions' => [
+                            //         'allowClear' => true
+                            //     ],
+                            // ])
                         ],
 
                         [
@@ -176,16 +176,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ['view', 'id' => $model->id],
                                 );
                             },
-                            'filter' => Select2::widget([
-                                'model' => $searchModel,
-                                'attribute' => 'product_name',
-                                'data' => ArrayHelper::map(Products::find()->all(), 'product_name', 'product_name'),
-                                'options' => ['placeholder' => Yii::t('app', 'Select...')],
-                                'language' => 'th',
-                                'pluginOptions' => [
-                                    'allowClear' => true
-                                ],
-                            ])
+                            // 'filter' => Select2::widget([
+                            //     'model' => $searchModel,
+                            //     'attribute' => 'product_name',
+                            //     'data' => ArrayHelper::map(Products::find()->all(), 'product_name', 'product_name'),
+                            //     'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                            //     'language' => 'th',
+                            //     'pluginOptions' => [
+                            //         'allowClear' => true
+                            //     ],
+                            // ])
                         ],
 
                         [
