@@ -46,7 +46,9 @@ return [
             'class' => '\kartik\grid\Module'
         ],
     ],
+    
     'components' => [
+        
         'image' => [
             'class' => 'yii\image\ImageDriver',
             'driver' => 'GD',  //GD or Imagick
