@@ -327,17 +327,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         ])
                     ],
 
-                    // [
-                    //     'class' => 'kartik\grid\ActionColumn',
-                    //     'header' => Yii::t('app', 'View'),  // เปลี่ยนข้อความหัวข้อที่นี่
-                    //     'headerOptions' => ['style' => 'width: 140px;'],
-                    //     'contentOptions' => ['class' => 'text-center'],
-                    //     'buttonOptions' => ['class' => 'btn btn-outline-dark btn-sm'],
-                    //     'template' => '<div class="btn-group btn-group-xs" role="group"> {view}</div>',
-                    //     'urlCreator' => function ($action, Documents $model, $key, $index, $column) {
-                    //         return Url::toRoute([$action, 'id' => $model->id]);
-                    //     }
-                    // ],
+                    [
+                        'class' => 'kartik\grid\ActionColumn',
+                        'header' => Yii::t('app', 'View'),  // เปลี่ยนข้อความหัวข้อที่นี่
+                        'headerOptions' => ['style' => 'width: 140px;'],
+                        'contentOptions' => ['class' => 'text-center'],
+                        'buttonOptions' => ['class' => 'btn btn-outline-dark btn-sm'],
+                        'template' => '<div class="btn-group btn-group-xs" role="group"> {view}</div>',
+                        'urlCreator' => function ($action, Documents $model, $key, $index, $column) {
+                            return Url::toRoute([$action, 'id' => $model->id]);
+                        }
+                    ],
                 ],
             ]); ?>
 
