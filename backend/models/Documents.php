@@ -15,28 +15,7 @@ use yii\db\BaseActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\helpers\Url;
-use yii2assets\pdfjs\PdfJs;
-use yii\swiftmailer\Message;
-
-/**
- * This is the model class for table "documents".
- *
- * @property int $id
- * @property string $numbers รหัสเอกสาร
- * @property string $title ชื่อเอกสาร
- * @property string|null $description รายละเอียด
- * @property string|null $created_at วันที่เอกสาร
- * @property string|null $updated_at วันที่ปรับปรุง
- * @property int|null $created_by ผู้สร้าง
- * @property int|null $updated_by ผู้ปรับปรุง
- * @property int|null $categories_id หมวดหมู่
- * @property int|null $status_id สถานะ
- * @property string|null $ref อ้างอิง
- * @property string|null $docs ไฟล์เอกสาร
- *
- * @property Categories $categories
- * @property Status $status
- */
+ 
 class Documents extends \yii\db\ActiveRecord
 {
 
@@ -101,10 +80,7 @@ class Documents extends \yii\db\ActiveRecord
             [['docs'], 'file', 'maxFiles' => 10, 'skipOnEmpty' => true]
         ];
     }
-
-    /**
-     * {@inheritdoc}
-     */
+ 
     public function attributeLabels()
     {
         return [
@@ -290,7 +266,8 @@ class Documents extends \yii\db\ActiveRecord
     public function LineNotify()
     {
         // NFC-DocumentCenter
-        $lineapi = "Eon0aRHg9A3Y8j4RH1F1hYvdgGYhhnyiTBfNAKQrDmX";
+        $lineapi = "";
+        // $lineapi = "Eon0aRHg9A3Y8j4RH1F1hYvdgGYhhnyiTBfNAKQrDmX";
 
         //ดึงข้อคว่าม
         $categories = $this->categories->name;

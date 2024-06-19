@@ -41,7 +41,8 @@ class DocumentsSearch extends Documents
      */
     public function search($params)
     {
-        $query = Documents::find();
+        $query = Documents::find()
+            ->orderBy(['status_id' => 1]);
 
         // add conditions that should always apply here
 
@@ -50,7 +51,7 @@ class DocumentsSearch extends Documents
             // เรียงล่าสุดก่อน จาก id
             'sort' => ['defaultOrder' => [
                 // 'id' => 'DESC'
-                'status_id' => SORT_DESC,
+                'categories_id' => SORT_DESC,
             ]]
         ]);
 

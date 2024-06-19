@@ -30,6 +30,7 @@ return [
     'Share' => 'แชร์',
     'Actions' => 'ดำเนินการ',
     'Auto Number' => 'รหัสอัตโนมัติ',
+    'View' => 'ดู',
     
     //
     'Code' => 'รหัส',
@@ -51,7 +52,7 @@ return [
     'Status' => 'สถานะ',
     'Expiration' => 'อายุเอกสาร',
     'Notify Date' => 'กำหนดเตือน(วัน)',
-    'Days left' => 'วันที่เหลือ',
+    'Days left' => 'หมดอายุ',
     'Status Details' => 'รายละเอียดสถานะ',
     'Raw Material' => 'วัตถุดิบ',
     'Supplier Name' => 'ชื่อผู้ขาย',

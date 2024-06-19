@@ -1,10 +1,11 @@
 @import url("https://use.fontawesome.com/releases/v5.3.1/css/all.css");
-@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500&&family=Kanit&family=Itim&family=Mali:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400&&family=Kanit&family=Itim&family=Mali:wght@500&display=swap");
 @import url("https://cdn.jsdelivr.net/npm/sweetalert2@11");
 
 /* font */
 *,
 .panel-title {
+  /* font-family: 'Sarabun', sans-serif; */
   /* font-family: 'Mali', cursive; */
   font-family: "Chakra Petch", sans-serif;
   /* font-family: 'Kanit', sans-serif; */

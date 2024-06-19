@@ -10,12 +10,16 @@ use yii\helpers\Url;
 
 AppAsset::register($this);
 $this->beginPage();
+$this->registerCssFile('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500&family=Kanit&family=Sriracha&family=Sarabun:wght@500&display=swap');
 ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-100">
 
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Application For Northernfood complex">
+    <meta name="author" content="Theerapong Khanta">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="refresh" content="360">
     <?= $this->registerCsrfMetaTags() ?>
@@ -28,7 +32,7 @@ $this->beginPage();
     <header>
         <?php
         NavBar::begin([
-            'brandLabel' => '<img src="https://www.northernfoodcomplex.com/wp-content/uploads/2018/10/logo.png" alt="Logo" style="width: 50px;">',
+            'brandLabel' => Html::img(Yii::getAlias('@web') . '/images/logo.png', ['class' => 'img-fluid', 'width' => '50px']),
             'brandUrl' => Yii::$app->homeUrl,
             'options' => ['class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top'],
         ]);
@@ -118,13 +122,23 @@ $this->beginPage();
     </main>
     <footer class="footer mt-auto py-3 text-muted">
         <div class="container">
-          
-            
+
+
             <p class="float-start"> Document Online System (DOS) &copy; NFC <?= date('Y') ?></p>
             &nbsp; IT Department
             <span>
-                <?= Html::a(Html::img('https://cdn.pixabay.com/photo/2013/07/12/17/58/thailand-152711_1280.png', ['width' => '20px']), Url::current(['language' => 'th-TH']), ['class' => (Yii::$app->request->cookies['language'] == 'th-TH' ? 'active' : '')]); ?>
-                <?= Html::a(Html::img('https://cdn.pixabay.com/photo/2015/11/06/13/29/union-jack-1027898_1280.jpg', ['width' => '20px']), Url::current(['language' => 'en-US']), ['class' => (Yii::$app->request->cookies['language'] == 'en-US' ? 'active' : '')]); ?>
+                <?= Html::a(
+                    Html::img(Yii::getAlias('@web') . '/images/thai.png', ['class' => 'img-fluid', 'width' => '20px']),
+                    Url::current(['language' => 'th-TH']),
+                    ['class' => (Yii::$app->request->cookies->getValue('language') == 'th-TH' ? 'active' : '')]
+                ); ?>
+
+
+                <?= Html::a(
+                    Html::img(Yii::getAlias('@web') . '/images/en.png', ['class' => 'img-fluid', 'width' => '20px']),
+                    Url::current(['language' => 'en-US']),
+                    ['class' => (Yii::$app->request->cookies['language'] == 'en-US' ? 'active' : '')]
+                ); ?>
             </span>
             <p class="float-end">Version 1.1.1</p>
         </div>

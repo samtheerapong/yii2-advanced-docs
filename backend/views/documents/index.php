@@ -138,13 +138,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'linkOptions' => ['class' => 'page-link'],
                 ],
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                      [
+                        'class' => 'yii\grid\SerialColumn',
+                        'contentOptions' => ['class' => 'text-center', 'style' => 'width:45px;'], //กำหนด ความกว้างของ #
+                    ],
 
                     [
                         'attribute' => 'categories_id',
                         'format' => 'html',
                         'contentOptions' => ['class' => 'text-center'],
-                        // 'options' => ['style' => 'width:120px;'],
+                        'options' => ['style' => 'width:150px;'],
                         'value' => function ($model) {
                             return '<span class="badge" style="background-color:' . $model->categories->color . ';"><b>' . $model->categories->name . '</b></span>';
                         },
@@ -180,16 +183,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ['view', 'id' => $model->id],
                             );
                         },
-                        'filter' => Select2::widget([
-                            'model' => $searchModel,
-                            'attribute' => 'title',
-                            'data' => ArrayHelper::map(Documents::find()->all(), 'title', 'title'),
-                            'options' => ['placeholder' => Yii::t('app', 'Select...')],
-                            'language' => 'th',
-                            'pluginOptions' => [
-                                'allowClear' => true
-                            ],
-                        ])
+                        // 'filter' => Select2::widget([
+                        //     'model' => $searchModel,
+                        //     'attribute' => 'title',
+                        //     'data' => ArrayHelper::map(Documents::find()->all(), 'title', 'title'),
+                        //     'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                        //     'language' => 'th',
+                        //     'pluginOptions' => [
+                        //         'allowClear' => true
+                        //     ],
+                        // ])
                     ],
 
                     [
@@ -227,21 +230,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                 . $truncatedSupplierName
                                 . '</span>';
 
-                            return Html::a(
-                                $tooltipLink,
-                                ['view', 'id' => $model->id],
-                            );
+                            // return Html::a(
+                            //     $tooltipLink,
+                            //     ['view', 'id' => $model->id],
+                            // );
+                            return  $tooltipLink;
                         },
-                        'filter' => Select2::widget([
-                            'model' => $searchModel,
-                            'attribute' => 'supplier_name',
-                            'data' => ArrayHelper::map(Documents::find()->all(), 'supplier_name', 'supplier_name'),
-                            'options' => ['placeholder' => Yii::t('app', 'Select...')],
-                            'language' => 'th',
-                            'pluginOptions' => [
-                                'allowClear' => true
-                            ],
-                        ])
+                        // 'filter' => Select2::widget([
+                        //     'model' => $searchModel,
+                        //     'attribute' => 'supplier_name',
+                        //     'data' => ArrayHelper::map(Documents::find()->all(), 'supplier_name', 'supplier_name'),
+                        //     'options' => ['placeholder' => Yii::t('app', 'Select...')],
+                        //     'language' => 'th',
+                        //     'pluginOptions' => [
+                        //         'allowClear' => true
+                        //     ],
+                        // ])
                     ],
 
                     [
@@ -268,7 +272,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'types_id',
                         'format' => 'html',
                         'contentOptions' => ['class' => 'text-center'],
-                        // 'options' => ['style' => 'width:130px;'],
+                        'options' => ['style' => 'width:130px;'],
                         'value' => function ($model) {
                             return '<span class="badge" style="background-color:' . $model->types->color . ';"><b>' . $model->types->name . '</b></span>';
                         },
@@ -323,16 +327,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         ])
                     ],
 
-                    [
-                        'class' => 'kartik\grid\ActionColumn',
-                        'headerOptions' => ['style' => 'width: 140px;'],
-                        'contentOptions' => ['class' => 'text-center'],
-                        'buttonOptions' => ['class' => 'btn btn-outline-dark btn-sm'],
-                        'template' => '<div class="btn-group btn-group-xs" role="group"> {view} {update} {delete}</div>',
-                        'urlCreator' => function ($action, Documents $model, $key, $index, $column) {
-                            return Url::toRoute([$action, 'id' => $model->id]);
-                        }
-                    ],
+                    // [
+                    //     'class' => 'kartik\grid\ActionColumn',
+                    //     'header' => Yii::t('app', 'View'),  // เปลี่ยนข้อความหัวข้อที่นี่
+                    //     'headerOptions' => ['style' => 'width: 140px;'],
+                    //     'contentOptions' => ['class' => 'text-center'],
+                    //     'buttonOptions' => ['class' => 'btn btn-outline-dark btn-sm'],
+                    //     'template' => '<div class="btn-group btn-group-xs" role="group"> {view}</div>',
+                    //     'urlCreator' => function ($action, Documents $model, $key, $index, $column) {
+                    //         return Url::toRoute([$action, 'id' => $model->id]);
+                    //     }
+                    // ],
                 ],
             ]); ?>
 
