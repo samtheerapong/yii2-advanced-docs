@@ -60,7 +60,7 @@ return [
     'This document will expire in' => 'เอกสารจะหมดอายุในอีก',
     'Documents Expiring Soon' => 'เอกสารจะหมดอายุ',
     'Note' => 'หมายเหตุ',
-    'Show documents less than 60 days old' => 'แสดงเอกสารที่มีอายุน้อยกว่า 60 วัน',
+    'Show documents less than 90 days old' => 'แสดงเอกสารที่มีอายุน้อยกว่า 90 วัน',
     'Are you sure you want to send a Line Notify message for this document?' => 'คุณแน่ใจหรือไม่ว่าต้องการส่งข้อความ Line Notify สำหรับเอกสารนี้?',
     'Notify' => 'แจ้งเตือน',
     'Notify message sent successfully' => 'ส่งแจ้งเตือนเรียบร้อยแล้ว',

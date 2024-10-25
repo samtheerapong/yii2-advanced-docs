@@ -280,7 +280,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="row mt-2">
-        <p><b><u><?= Yii::t('app', 'Note') ?></u></b> <?= Yii::t('app', 'Show documents less than 60 days old') ?></p>
+        <p><b><u><?= Yii::t('app', 'Note') ?></u></b> <?= Yii::t('app', 'Show documents less than 90 days old') ?></p>
     </div>
 
 </div>
