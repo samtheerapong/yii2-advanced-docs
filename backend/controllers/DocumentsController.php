@@ -231,28 +231,32 @@ class DocumentsController extends Controller
     /**************** show-Wanning page ******************/
     public function actionShowWanning()
     {
-        // Fetch documents with expiration date between 0 and 30 days from now
+        // Fetch documents with expiration date between 0 and 90 days from now
         $model = Documents::find()
-            ->select('*')
             ->select([
                 '*',
                 new Expression('DATEDIFF(expiration_date, NOW()) AS daysToExpiration')
             ])
-            ->where(['between', 'DATEDIFF(expiration_date, NOW())', 0, 60])
+            ->where(['between', new Expression('DATEDIFF(expiration_date, NOW())'), 0, 90])
+            ->orderBy(['expiration_date' => SORT_DESC]) // Order directly in the query
             ->all();
-
+    
         // Create a data provider using the fetched model
         $dataProvider = new \yii\data\ArrayDataProvider([
             'allModels' => $model,
-            'pagination' => false, // You can configure pagination here if needed
+            'pagination' => false,
+            'sort' => [
+                'attributes' => ['expiration_date'],
+                'defaultOrder' => ['expiration_date' => SORT_ASC], // Sort in ArrayDataProvider
+            ],
         ]);
-
+    
         return $this->render('show-wanning', [
-            'model' => $model, // Pass the dataProvider to the view
-            'dataProvider' => $dataProvider, // Pass the dataProvider to the view
+            'model' => $model,
+            'dataProvider' => $dataProvider,
         ]);
     }
-
+    
 
     /***************** action Deletefile ******************/
     public function actionDeletefile($id, $field, $fileName)
