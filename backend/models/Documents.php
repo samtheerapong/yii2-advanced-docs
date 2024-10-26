@@ -248,9 +248,9 @@ class Documents extends \yii\db\ActiveRecord
         $setClass = 'badge';
 
         if ($daysToExpiration < 1) {
-            $badgeColor = '#D80032';
+            $badgeColor = '#FF1E00';
         } elseif ($daysToExpiration >= 0 && $daysToExpiration <= 30) {
-            $badgeColor = '#F5004F';
+            $badgeColor = '#FF8551';
             $setClass .= ' blink';
         } elseif ($daysToExpiration > 30 && $daysToExpiration <= 60) {
             $badgeColor = '#6439FF';
